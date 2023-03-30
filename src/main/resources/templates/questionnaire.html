@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Cabal Blanc - Mai 2023 - Questionnaire</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/ChevalIco.png" rel="icon">
+  <link href="assets/img/chevalBlanc.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+<!--         <img src="assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle"> -->
+<!--         <h1 class="text-light"><a href="index.html"></a></h1> -->
+      </div>
+
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Bonjour!</span></a></li>
+          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Pourquoi un questionnaire?</span></a></li>
+          <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Informations personnelles</span></a></li>
+          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Questionnaire</span></a></li>
+          <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="hero-container" data-aos="fade-in">
+      <h1>Pré-inscription Cabal Blanc</h1>
+      <p>Pour mieux vous <span class="typed" data-typed-items="Accompagner, Guider, Comprendre, Faire rêver!"></span></p>
+    </div>
+   </section><!--End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about" >
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Pourquoi ce questionnaire?</h2>
+          <div class="row">
+          	<div class="col-md-4 ">
+          		<img alt="archie" src="assets/img/archie.jpg" class="img-fluid rounded-circle">
+          	</div>
+          	<div class="col-md-8">
+	          	Et oui nous avons décidé cette fois-ci de passer par un questionnaire! Pourquoi?<br/>
+	          	Pour faire une première connaissance, même si nous nous sommes certainement déjà contacté par téléphone. 
+	          	Cela nous permet également de mieux cibler sur quels points nous allons oeuvrer ensemble.<br/>
+	          	Il faut savoir également que nous prenons très à coeur la sécurité des participants et qu'il nous est donc nécessaire de connaitre vos antécédents.
+	          	<br/><br/><br/><br/><br/>
+	          	
+	          	<small>
+	          	Les organisateurs de l'évènement se donnent le droit de refuser certaine candidatures.<br/>
+	          	Ce formulaire restera confidentiel aux organisateurs jusqu'à la fin de l'évènement où toutes les données seront supprimées.
+	          	</small>
+          	</div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+
+<form method="post" modelAttribute="questionnairePayload" th:action="@{/questionnaire}" th:object="${questionnairePayload}">
+<!-- <form action="forms/contact.php" method="post" role="form" class="php-email-form"> -->
+    <!-- ======= Skills Section ======= -->
+    <section id="skills" class="skills section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Informations personnelles</h2>
+        </div>
+
+        <div class="row skills-content">
+			<div class="col-md-8">
+	          <div class="col-lg-12" data-aos="fade-up">
+	             
+	              <div class="row">
+	                <div class="form-group col-md-3">
+	                <br/>
+	                  <label for="name">Prénom</label>
+	                  <input type="text" name="name" class="form-control" id="name" th:field="*{prenom}" required>
+	                </div>
+	                <div class="form-group col-md-3">
+	                <br/>
+	                  <label for="name"> NOM</label>
+	                  <input type="text" name="nom" class="form-control" id="nom" th:field="*{nom}" required>
+	                </div>
+	                	                
+	                <div class="form-group col-md-6">
+	                <br/>
+	                  <label for="name">Adresse email</label>
+	                  <input type="email" class="form-control" name="email" id="email" th:field="*{email}" required>
+	                </div>
+	              </div>
+	              <div class="row">
+	                <div class="form-group col-md-6">
+	                	<br/>
+	                  <label for="name">Numéro de téléphone</label>
+	                  <input type="text" name="phone" class="form-control" id="phone" th:field="*{telephone}" required>
+	                </div>
+	                <div class="form-group col-md-6">
+	                  <label for="name">En cas d'urgence, Prénom et Numéro de la personne à contacter</label>
+	                  <input type="text" class="form-control" name="hurry" id="hurry" th:field="*{urgence}" required>
+	                </div>
+	              </div>
+	            </div>
+			</div>
+			<div class="col-md-4">
+				<img alt="archie" src="assets/img/ayahuasca-experience.jpg" class="img-fluid rounded-circle">
+			</div>
+        </div>
+
+      </div>
+    </section><!-- End Skills Section -->
+
+    <!-- ======= Resume Section ======= -->
+    <section id="resume" class="resume">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Questionnaire</h2>
+        </div>
+        <div data-aos="fade-up" class="row">
+        	<div class="col-md-4">
+        		<br/>
+				<img alt="archie" src="assets/img/chaman-sorcier-des-villages-amazonie.jpg" class="img-fluid">
+			</div>
+        
+			<div class="col-md-8">
+	        	<div class="row" >
+	                <div class="form-group col-md-6">
+	                  <label for="name">Quelle est votre intention de départ?<br/> Pourquoi souhaitez-vous faire une cérémonie?</label>
+	                  <textarea name="intention" class="form-control" id="intention" th:field="*{intention}" required >
+	                  </textarea>
+	                </div>
+	                <div class="form-group col-md-6">
+	                <br/>
+	                  <label for="name">Avez-vous déjà réalisé des expériences similaires?</label>
+	                  <textarea  class="form-control" name="experiences" id="experiences" th:field="*{experience}" required>
+	                  </textarea>
+	                </div>
+	            </div>
+	            <br/>
+	              <div class="row" >
+	                <div class="form-group col-md-6">
+	                  <label for="name">Avez-vous des problèmes de santé? <br/>Physique ou psychique? Suivez-vous un traitement? </label>
+	                  <textarea  name="sante" class="form-control" id="sante" th:field="*{sante}" required>
+	                  </textarea>
+	                </div>
+	                <div class="form-group col-md-6">
+	                  <label for="name">Pourriez-vous nous dire votre plus grand défi émotionnel?</label>
+	                  <textarea  class="form-control" name="defis" id="defis" th:field="*{defi}" required>
+	                  </textarea>
+	                </div>
+	              </div>
+			</div>
+		</div>
+      </div>
+    </section><!-- End Resume Section -->
+    
+    
+    <!-- ======= Skills Section ======= -->
+    <section id="envies" class="skills section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Qu'est ce que vous souhaiteriez faire?</h2>
+          <p>
+          Il ne s'agit pas d'un choix définitif mais ça nous permet d'avoir un ordre d'idée des personnes présentes. <br/>
+          <small>(Les horaires sont à titre indicatif du moment de la journée!)</small>
+          </p>
+        </div>
+
+		
+        <div class="row skills-content" data-aos="fade-up">
+          <div class="col-lg-7" >
+          <br/><br/>
+          <u>Mardi :</u>
+              <div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Temaz Mardi" id="temazMardi" th:field="*{temazcalMardi}">
+					  <label class="form-check-label" for="temazMardi">
+					    18h18 : <strong>Temazcal</strong>
+					  </label>
+			  		</div>
+                </div>
+              </div>
+              
+          <br/><u>Mercredi : </u>
+			<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Tambours" id="tambour" th:field="*{tambour}">
+					  <label class="form-check-label" for="tambour">
+					    La journée : <strong>Création de Tambours chamanique</strong> <br/><small>(possibilité de le faire un autre jour, nous en informer)</small>
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Mineraux" id="mineraux1" th:field="*{mineraux}">
+					  <label class="form-check-label" for="mineraux1">
+					    14h14 : <strong>Cercle de reliance au monde minéral</strong>
+					  </label>
+			  		</div>
+                </div>
+         	</div>
+         	<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Cercle Romé" id="rome" th:field="*{rome}">
+					  <label class="form-check-label" for="rome">
+					    19h19 : <strong>Cercle de Romé Poto</strong>
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Cercle Chants" id="chants" th:field="*{chant}">
+					  <label class="form-check-label" for="chants">
+					    19h19 : <strong>Cercle de Chants</strong>
+					  </label>
+			  		</div>
+                </div>
+         	</div>
+
+          <br/><u>Jeudi : </u>
+         	<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Prepa intent" id="prepaintentions" th:field="*{prepaIntention}">
+					  <label class="form-check-label" for="prepaintentions">
+					    18h18 : <strong>Cercle de préparation aux intentions des cérémonies</strong>
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="GM Jeudi" id="grandmereJeudi" th:field="*{grandMereJeudi}" >
+					  <label class="form-check-label" for="grandmereJeudi">
+					    20h20 : <strong>Cérémonie de la Grand-Mère</strong>
+					  </label>
+			  		</div>
+                </div>
+         	</div>
+
+          <br/><u>Vendredi : </u>
+			<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" th:value="Wilka" id="princesse" th:field="*{princesse}">
+					  <label class="form-check-label" for="princesse">
+					    17h17 : <strong>Cérémonie de la Princesse</strong>
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="GM Vendredi" id="grandmereVendredi" th:field="*{grandMereVendredi}">
+					  <label class="form-check-label" for="grandmereVendredi">
+					    20h20 : <strong>Cérémonie de la Grand-Mère</strong>
+					  </label>
+			  		</div>
+                </div>
+         	</div>
+         	
+
+
+          <br/><u>Samedi : </u>
+			<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Ninos" id="ninos" th:field="*{ninos}">
+					  <label class="form-check-label" for="ninos">
+					    10h10 : <strong>Cérémonie des Niños</strong>
+					  </label>
+			  		</div>
+                </div>
+                
+         	</div>
+         	
+
+          <br/><u>Dimanche : </u>
+			<div class="row">
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Hom Lieu" id="hommage" th:field="*{hommage}">
+					  <label class="form-check-label" for="hommage">
+					    14h14 : <strong>Cérémonie en hommage aux gardiens du lieu</strong>
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-6">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Temaz Dim" id="temazDim" th:field="*{temazcalCloture}">
+					  <label class="form-check-label" for="temazDim">
+					    16h16 : <strong>Temazcal de clôture</strong>
+					  </label>
+			  		</div>
+                </div>
+                
+         	</div>
+         	
+         	<br/><u><strong>Grenouille</strong>, tous les jours à partir de 09h09 : </u>
+			<div class="row">
+                <div class="form-group col-md-4">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Kambo x1" id="grenouille1" th:field="*{grenouille1}">
+					  <label class="form-check-label" for="grenouille1">
+					     <strong>1x</strong> Grenouille
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-4">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Kambo x2" id="grenouille2" th:field="*{grenouille2}">
+					  <label class="form-check-label" for="grenouille2">
+					    <strong>2x</strong> Grenouille
+					  </label>
+			  		</div>
+                </div>
+                <div class="form-group col-md-4">
+	                <div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="Kambo x3" id="grenouille3" th:field="*{grenouille3}">
+					  <label class="form-check-label" for="grenouille3">
+					    <strong>3x</strong> Grenouille
+					  </label>
+			  		</div>
+                </div>
+                
+         	</div>
+
+
+
+
+          </div>
+              <div class="col-md-5">
+			<img alt="archie" src="assets/img/chamane.jpeg" class="img-fluid rounded">
+		</div>
+
+              
+        </div>
+		
+
+      </div>
+    </section><!-- End Skills Section -->
+    
+    
+    <!-- ======= Resume Section ======= -->
+    <section id="libre" class="resume">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Questions? Remarques?</h2>
+          <p>
+          Si vous avez des questions, des remarques ou d'éventuels compléments d'informations, n'hésitez pas à nous écrire ci-dessous :
+          </p>
+        </div>
+        <div data-aos="fade-up" class="row">
+        	<div class="col-md-4">
+				<img alt="archie" src="assets/img/initiation-chamanique-amazonie.jpg" class="img-fluid">
+			</div>
+        
+			<div class="col-md-8">
+	        	<textarea rows="12" name="complements" class="form-control" id="complements" th:field="*{remarques}">
+	            </textarea>
+			</div>
+		</div>
+		<br/>
+		<div data-aos="fade-up" class="row">
+			<div class="col-md-12">
+			    <h2 class="text-center">N'oubliez pas de valider votre formulaire :</h2>  	
+				<div class="my-3">
+		        </div>
+		        <br/>
+		        <div class="text-center"><button type="submit" name="action" value="validate">Envoyer le formulaire</button></div>
+			</div>
+		</div>
+      </div>
+    </section><!-- End Resume Section -->
+    
+</form>
+    
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>Pour toutes demandes, n'hésitez pas à nous contacter.</p>
+        </div>
+
+        <div class="row" data-aos="fade-in">
+
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="info">
+              <img alt="Ghis" src="assets/img/Ghis.png" class="img-fluid rounded-circle"><br/><br/>
+              
+              <div class="name">
+                <i class="bi bi-person-vcard-fill"></i>
+                <h4 >Ghislaine</h4>
+                <p></p>
+              </div>
+              
+              <div class="address">
+                <i class="bi bi-magic"></i>
+                <h4>La Messagère de la forêt</h4>
+                <p></p>
+              </div>
+
+
+              <div class="phone">
+                <i class="bi bi-telegram"></i>
+                <h4>Telegram:</h4>
+                <p>@Ghislaine</p>
+              </div>
+
+<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
+            </div>
+
+          </div>
+
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="info">
+            <img alt="Aude" src="assets/img/Aude2.jpg" class="img-fluid rounded-circle"><br/><br/>
+            
+            <div class="name">
+                <i class="bi bi-person-vcard-fill"></i>
+                <h4>Aude</h4>
+                <p></p>
+              </div>
+              
+            
+              <div class="address">
+              
+                <i class="bi bi-magic"></i>
+                <h4>La Liseuse des coeurs de cristal</h4>
+                <p></p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-telegram"></i>
+                <h4>Telegram:</h4>
+                <p>@Misseau2</p>
+              </div>
+
+<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
+            </div>
+
+          </div>
+
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="info">
+            <img alt="Clem" src="assets/img/Clem2.jpg" class="img-fluid rounded-circle"><br/><br/>
+            
+              <div class="name">
+                <i class="bi bi-person-vcard-fill"></i>
+                <h4>Clément-Aurélien</h4>
+                <p></p>
+              </div>
+              
+              <div class="address">
+              	
+                <i class="bi bi-magic"></i>
+                <h4>Le Magicien du lieu</h4>
+                <p></p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-telegram"></i>
+                <h4>Telegram:</h4>
+                <p>@ClementAurelien</p>
+              </div>
+
+<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
+            </div>
+
+          </div>
+
+<!--           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch"> -->
+<!--             <form action="forms/contact.php" method="post" role="form" class="php-email-form"> -->
+<!--               <div class="row"> -->
+<!--                 <div class="form-group col-md-6"> -->
+<!--                   <label for="name">Your Name</label> -->
+<!--                   <input type="text" name="name" class="form-control" id="name" required> -->
+<!--                 </div> -->
+<!--                 <div class="form-group col-md-6"> -->
+<!--                   <label for="name">Your Email</label> -->
+<!--                   <input type="email" class="form-control" name="email" id="email" required> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="name">Subject</label> -->
+<!--                 <input type="text" class="form-control" name="subject" id="subject" required> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="name">Message</label> -->
+<!--                 <textarea class="form-control" name="message" rows="10" required></textarea> -->
+<!--               </div> -->
+<!--               <div class="my-3"> -->
+<!--                 <div class="loading">Loading</div> -->
+<!--                 <div class="error-message"></div> -->
+<!--                 <div class="sent-message">Your message has been sent. Thank you!</div> -->
+<!--               </div> -->
+<!--               <div class="text-center"><button type="submit">Send Message</button></div> -->
+<!--             </form> -->
+<!--           </div> -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+<!--       <div class="copyright"> -->
+<!--         &copy; Copyright <strong><span>iPortfolio</span></strong> -->
+<!--       </div> -->
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/ -->
+        Designed by Clem
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

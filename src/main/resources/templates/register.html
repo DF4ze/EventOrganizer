@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Spring Security Example </title>
+    </head>
+    <body>
+        
+    	<span th:text="${exception}"> Exception </span>
+    	<div th:if="${ok}">
+    		<span> Création de votre compte avec succès.<br/>
+    			Venez vous <a th:href="@{/login}">identifier</a></span>
+    	</div>
+    	<ul th:each="error: ${errors}">
+    		<li><span th:text="${error}"> erreur </span></li>
+    	</ul>
+    	
+		<form method="post" modelAttribute="signUpRequest" th:action="@{/api/auth/signupForm}" th:object="${signUpRequest}"><br/>
+		    <label> User Name : <input type="text"  th:field="*{username}" name="username" id="username" placeholder="Name"/></label><br/>
+		    <label> User Email : <input type="text" th:field="*{email}" placeholder="Email"></label><br/>
+		    <label> User Password : <input type="password" th:field="*{password}" placeholder="Password"></label><br/>
+		    <label> User Confirmation : <input type="password" th:field="*{verifPassword}" placeholder="Confirmation Password"></label><br/>
+		    <label> Roles:
+		        <input type="checkbox" name="roles"
+		            th:each="role : ${allRoles}"
+		            th:text="${role.name.pretty}"
+		            th:value="${role.id}"
+		            th:field="*{roles}"
+		        />
+		    </label><br/>
+		    <button type="submit" >Créer</button>
+		</form>
+    </body>
+</html>
