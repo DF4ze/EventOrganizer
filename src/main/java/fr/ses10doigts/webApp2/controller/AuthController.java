@@ -169,10 +169,9 @@ public class AuthController {
 	    return mav;
 	}
 
-	ModelAndView mav = new ModelAndView();
+	ModelAndView mav = new ModelAndView("redirect:/home");
 	mav.addObject("loggued", true);
 	mav.addObject("username", loginRequest.getUserName());
-	mav.setViewName("/home");
 	return mav;
     }
 

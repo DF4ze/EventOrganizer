@@ -2,7 +2,9 @@ package fr.ses10doigts.webApp2.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,10 @@ import fr.ses10doigts.webApp2.model.Display;
 import fr.ses10doigts.webApp2.model.Note;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Questionnaire;
+import fr.ses10doigts.webApp2.model.Souhait;
+import fr.ses10doigts.webApp2.model.payload.CeremoniePayload;
 import fr.ses10doigts.webApp2.model.payload.NotePayLoad;
+import fr.ses10doigts.webApp2.model.payload.ParticipantPayload;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
 import fr.ses10doigts.webApp2.model.payload.SouhaitsPayLoad;
 import fr.ses10doigts.webApp2.security.model.Role;
@@ -78,6 +83,57 @@ public class MainController {
 	    List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.SOUHAIT);
 	    model.addAttribute("ceremonies", ceremonies);
 
+	    Map<String, Integer> partCerem = new HashMap<>();
+	    for (Ceremonie ceremonie : ceremonies) {
+		for (Participant participant : participants) {
+		    for (Souhait souhait : participant.getSouhaits()) {
+			if (souhait.getCeremonie().getNom().equals(ceremonie.getNom())) {
+			    if (partCerem.containsKey(ceremonie.getNom())) {
+				int val = partCerem.get(ceremonie.getNom()) + 1;
+				partCerem.put(ceremonie.getNom(), val);
+			    } else {
+				partCerem.put(ceremonie.getNom(), 1);
+			    }
+			}
+		    }
+		}
+	    }
+	    model.addAttribute("souhaitsParCeremonie", partCerem);
+
+	    List<SouhaitsPayLoad> souhaitsPayLoads = new ArrayList<>();
+	    for (Participant participant : participants) {
+		SouhaitsPayLoad paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
+		souhaitsPayLoads.add(paylLoad);
+	    }
+	    model.addAttribute("souhaits", souhaitsPayLoads);
+
+	    logger.debug("Nombre de participants : " + participants.size());
+
+	} catch (RuntimeException e) {
+	    LoginRequest loginRequest = new LoginRequest();
+	    model.addAttribute("loginRequest", loginRequest);
+	    view = "login";
+	}
+
+	return view;
+    }
+
+    @GetMapping("/home")
+    public String homeParam(Model model) {
+	User user = null;
+
+	String view = "home";
+	try {
+	    user = authenticationFacade.getConnectedUser();
+	    model.addAttribute("loggued", true);
+	    model.addAttribute("username", user.getUsername());
+
+	    List<Participant> participants = partService.getAllParticipants();
+	    model.addAttribute("participants", participants);
+
+	    List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.SOUHAIT);
+	    model.addAttribute("ceremonies", ceremonies);
+
 	    List<SouhaitsPayLoad> souhaitsPayLoads = new ArrayList<>();
 	    for (Participant participant : participants) {
 		SouhaitsPayLoad paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
@@ -99,8 +155,6 @@ public class MainController {
     @GetMapping("/login")
     public String login(Model model) {
 	LoginRequest loginRequest = new LoginRequest();
-	loginRequest.setUserName("admin2");
-	loginRequest.setPassword("123456");
 	model.addAttribute("loginRequest", loginRequest);
 
 	return "login";
@@ -171,10 +225,12 @@ public class MainController {
 	List<Participant> allParticipants = partService.getAllParticipants();
 	Participant participant = null;
 	NotePayLoad npl = new NotePayLoad();
+	ParticipantPayload pp = new ParticipantPayload();
 
 	model.addAttribute("participants", allParticipants);
 	model.addAttribute("search", participant);
 	model.addAttribute("notePayload", npl);
+	model.addAttribute("participantPayload", pp);
 
 	return "participant";
     }
@@ -184,18 +240,110 @@ public class MainController {
     public ModelAndView participantById(@PathVariable("id") long id) {
 	List<Participant> allParticipants = partService.getAllParticipants();
 	Participant participant = partService.getParticipant(id);
+
 	NotePayLoad npl = new NotePayLoad();
 	npl.idParticipant = id;
+
+	ParticipantPayload pp = new ParticipantPayload();
 
 	ModelAndView modelAndView = new ModelAndView("participant");
 	modelAndView.addObject("participants", allParticipants);
 	modelAndView.addObject("search", participant);
 	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
 
 	return modelAndView;
     }
 
-    @PostMapping(value = "/participant", params = "action=validate")
+    @PostMapping(value = "/participant", params = "action=addParticipant")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView addParticipant(@ModelAttribute ParticipantPayload dto) {
+	Participant participant = new Participant();
+	participant.setEmail(dto.email);
+	participant.setNom(dto.nom);
+	participant.setPrenom(dto.prenom);
+	participant.setTel(dto.tel);
+	participant.setUrgence(dto.urgence);
+
+	partService.save(participant);
+
+	ParticipantPayload pp = new ParticipantPayload();
+	List<Participant> allParticipants = partService.getAllParticipants();
+	NotePayLoad npl = new NotePayLoad();
+
+	ModelAndView modelAndView = new ModelAndView("participant");
+	modelAndView.addObject("participants", allParticipants);
+	modelAndView.addObject("search", participant);
+	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/deleteParticipant{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView deleteParticipant(@PathVariable("id") long id) {
+
+	partService.delete(id);
+
+	ParticipantPayload pp = new ParticipantPayload();
+	List<Participant> allParticipants = partService.getAllParticipants();
+	NotePayLoad npl = new NotePayLoad();
+
+	ModelAndView modelAndView = new ModelAndView("participant");
+	modelAndView.addObject("participants", allParticipants);
+	modelAndView.addObject("search", null);
+	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/desactiverParticipant{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView desactiverParticipant(@PathVariable("id") long id) {
+
+	Participant participant = partService.getParticipant(id);
+	participant.setActif(false);
+	partService.save(participant);
+
+	List<Participant> allParticipants = partService.getAllParticipants();
+	ParticipantPayload pp = new ParticipantPayload();
+	NotePayLoad npl = new NotePayLoad();
+
+	ModelAndView modelAndView = new ModelAndView("participant");
+	modelAndView.addObject("participants", allParticipants);
+	modelAndView.addObject("search", null);
+	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/activerParticipant{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView activerParticipant(@PathVariable("id") long id) {
+
+	Participant participant = partService.getParticipant(id);
+	participant.setActif(true);
+	partService.save(participant);
+
+	List<Participant> allParticipants = partService.getAllParticipants();
+	ParticipantPayload pp = new ParticipantPayload();
+	NotePayLoad npl = new NotePayLoad();
+
+	ModelAndView modelAndView = new ModelAndView("participant");
+	modelAndView.addObject("participants", allParticipants);
+	modelAndView.addObject("search", null);
+	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
+
+	return modelAndView;
+    }
+
+    /**** Note section ******/
+
+    @PostMapping(value = "/participant", params = "action=addNote")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView addNote(@ModelAttribute NotePayLoad dto) {
 	Participant participant = partService.getParticipant(dto.getIdParticipant());
@@ -210,8 +358,9 @@ public class MainController {
 	}
 	participant.getNotes().add(note);
 
-	partService.saveParticipant(participant);
+	partService.save(participant);
 
+	ParticipantPayload pp = new ParticipantPayload();
 	List<Participant> allParticipants = partService.getAllParticipants();
 	dto.texte = "";
 
@@ -219,6 +368,7 @@ public class MainController {
 	modelAndView.addObject("participants", allParticipants);
 	modelAndView.addObject("search", participant);
 	modelAndView.addObject("notePayload", dto);
+	modelAndView.addObject("participantPayload", pp);
 
 	return modelAndView;
     }
@@ -234,9 +384,10 @@ public class MainController {
 		break;
 	    }
 	}
-	partService.saveParticipant(note.getParticipant());
+	partService.save(note.getParticipant());
 	noteService.deleteNote(id);
 
+	ParticipantPayload pp = new ParticipantPayload();
 	List<Participant> allParticipants = partService.getAllParticipants();
 	NotePayLoad npl = new NotePayLoad();
 
@@ -244,6 +395,79 @@ public class MainController {
 	modelAndView.addObject("participants", allParticipants);
 	modelAndView.addObject("search", note.getParticipant());
 	modelAndView.addObject("notePayload", npl);
+	modelAndView.addObject("participantPayload", pp);
+
+	return modelAndView;
+    }
+
+    /**** Ceremonie section ******/
+    @GetMapping("/ceremonie")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String ceremonies(Model model) {
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+
+	CeremoniePayload pp = new CeremoniePayload();
+
+	model.addAttribute("ceremonies", ceremonies);
+	model.addAttribute("ceremoniePayload", pp);
+
+	return "ceremonie";
+    }
+
+    @GetMapping("/desactiverCeremonie{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView desactiverCeremonie(@PathVariable("id") long id) {
+
+	Ceremonie participant = ceremService.getCeremonie(id);
+	participant.setActif(false);
+	ceremService.save(participant);
+
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	CeremoniePayload pp = new CeremoniePayload();
+
+	ModelAndView modelAndView = new ModelAndView("ceremonie");
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("ceremoniePayload", pp);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/activerCeremonie{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView activerCeremonie(@PathVariable("id") long id) {
+
+	Ceremonie participant = ceremService.getCeremonie(id);
+	participant.setActif(true);
+	ceremService.save(participant);
+
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	CeremoniePayload pp = new CeremoniePayload();
+
+	ModelAndView modelAndView = new ModelAndView("ceremonie");
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("ceremoniePayload", pp);
+
+	return modelAndView;
+    }
+
+    @PostMapping(value = "/ceremonie", params = "action=addCeremonie")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView addCeremonie(@ModelAttribute CeremoniePayload dto) {
+	Ceremonie cerem = new Ceremonie();
+	cerem.setDisplay(Display.BOTH);
+	cerem.setJour(dto.jour);
+	cerem.setNom(dto.nom);
+	cerem.setPrix(dto.prix);
+	cerem.setType(dto.type);
+
+	ceremService.save(cerem);
+
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	CeremoniePayload pp = new CeremoniePayload();
+
+	ModelAndView modelAndView = new ModelAndView("ceremonie");
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("ceremoniePayload", pp);
 
 	return modelAndView;
     }

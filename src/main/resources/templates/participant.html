@@ -59,13 +59,13 @@
 	    <div class="section-body">
 	    <div class="row">
 		    <div class="col-1">
-		      <u>Prénom :</u> 
+		      <u>Prénom:</u> 
 		    </div>
 		    <div class="col-5">
 		      <span th:text="|${search.prenom}|"></span>
 		    </div>
 		    <div class="col-1">
-		      <u>Nom :</u> 
+		      <u>Nom:</u> 
 		    </div>
 		    <div class="col-5">
 		      <span th:text="|${search.nom}|"></span>
@@ -73,13 +73,13 @@
 	    </div>
 	    <div class="row">
 		    <div class="col-1">
-		      <u>Tel :</u> 
+		      <u>Tel:</u> 
 		    </div>
 		    <div class="col-5">
 		      <span th:text="|${search.tel}|"></span>
 		    </div>
 		    <div class="col-1">
-		      <u>Email :</u> 
+		      <u>Email:</u> 
 		    </div>
 		    <div class="col-5">
 		      <span th:text="|${search.email}|"></span>
@@ -87,7 +87,7 @@
 	    </div>
 	    <div class="row">
 	    	<div class="col-1">
-	      		<u>Urgence :</u> 
+	      		<u>Urgence:</u> 
 	      	</div>
 	      	<div class="col-5">
 	      		<span th:text="|${search.urgence}|"></span>
@@ -101,17 +101,31 @@
 	    </div>
 	    <div class="row mt-3">
 		    <br/>
-		    <div class="col-4">	    
-		      <u>Questionnaire :</u>
-		      <a th:href="|questRead${search.questionnaire.id}|"><i class="bi bi-patch-question"></i></a>
+		    <div class="col-4">	  
+		     <div >  
+		      	<u>Questionnaire:</u>
+		      	<a th:if="${search.questionnaire} != null" th:href="|questRead${search.questionnaire.id}|"><i class="bi bi-patch-question"></i></a>
+		      	<i th:unless="${search.questionnaire} != null" class="bi bi-bag-x"></i>
+		      </div>
 		    </div>
+		    
+		    
+<!-- 		    REMPLACER PAR SOUHAITS ET PARTICIPATION 	-->
+<!-- 		    PAR LA SUITE 								-->
+		    
 		    <div class="col-4">  
-		      <u>Souhaits :</u>
-		      <a th:href="|questRead${search.questionnaire.id}|"><i class="bi bi-chat-right-heart"></i></a>
+		      <div >  
+		         <u>Souhaits:</u>
+		         <a th:if="${search.souhaits} != null" th:href="|souhaitsRead${search.id}|"><i class="bi bi-chat-right-heart"></i></a>
+		         <i th:unless="${search.souhaits} != null" class="bi bi-bag-x"></i>
+		       </div>
 		     </div>
 		    <div class="col-4">  
-		      <u>Participations :</u>
-		      <a th:href="|questRead${search.questionnaire.id}|"><i class="bi bi-airplane-engines"></i></a>
+		      <div >  
+		         <u>Participations:</u>
+		         <a th:if="${search.participations} != null" th:href="|participationsRead${search.id}|"><i class="bi bi-airplane-engines"></i></a>
+		         <i th:unless="${search.participations} != null" class="bi bi-bag-x"></i>
+		      </div>
 			</div> 
 		</div>
 		
@@ -134,7 +148,10 @@
 	      	</form>
 	      </div>
 	      
-	      
+	      <div thif="${#lists.size(part.notes)} == 0">
+	      	Pas de notes sur ce participant.<br/>
+	      	Cliquez sur le "+" pour en ajouter une.
+	      </div>
 	      <div th:each="note: ${search.notes}" class="row border border-primary rounded mx-1 mt-2">
 	      		<div class="col-1 bg-danger">
 	      			<i class="bi bi-trash3" th:onClick="|switchHidden('idNote_${note.id}')|"></i>
@@ -167,7 +184,7 @@
 
      
 
-    <!-- ======= Liste Souhaits Participations Section ======= -->
+    <!-- ======= Liste Participants Section ======= -->
     <section id="about" class="about" >
       <div class="container">
 
@@ -175,26 +192,32 @@
           <h2>Liste des Participants <a onClick="switchHidden('addParticipant')"><i class="bi bi-clipboard-plus"></i></a></h2>
           
           <div id="addParticipant" hidden>
- 			<form method="post" modelAttribute="notePayload" th:action="@{/participant}" th:object="${notePayload}">
+ 			<form method="post" modelAttribute="participantPayload" th:action="@{/participant}" th:object="${participantPayload}">
 			  <div class="row">
 	      		<div class="form-group col-md-6">
 	              <label for="note">Ajouter un participant : </label>
-                  <textarea name="note" class="form-control" id="note" th:field="*{texte}"></textarea>
+	              <input type="text" name="prenom" class="form-control mt-2 bg-white" th:field="*{prenom}" placeholder="Prénom"/>
+                  <input type="text" name="nom" class="form-control mt-2 bg-white" th:field="*{nom}" placeholder="Nom"/>
+	              <input type="text" name="tel" class="form-control mt-2 bg-white" th:field="*{tel}" placeholder="Téléphone"/>
+	              <input type="text" name="email" class="form-control mt-2 bg-white" th:field="*{email}" placeholder="Email"/>
+                  <input type="text" name="urgence" class="form-control mt-2 bg-white" th:field="*{urgence}" placeholder="Urgence"/>
 	            </div>
-	          </div>
-	          <div class="row">
-	      		  <div class="form-group col-md-6">
-	            	<button type="submit" name="action" value="validate" class="btn btn-primary">Enregistrer la note</button>
+<!-- 	          </div> -->
+<!-- 	          <div class="row"> -->
+	      		  <div class="mt-2 mb-4">
+	            	<button type="submit" name="action" value="addParticipant" class="btn btn-primary">Enregistrer le participant</button>
 	            </div>
 	          </div>
 	      	</form>
 	      </div>
           
-          <div class="row table-responsive"> <!-- table-responsive -->
+          <div class="row table-responsive "> <!-- table-responsive -->
 			<table class="table table-striped">
 			  <thead>
 
 			    <tr >
+			      <th > </th>
+			      <th> Actif</th>
 			      <th >Nom</th>
 			      <th >Tel</th>
 			      <th >Email</th>
@@ -208,7 +231,44 @@
 			  </thead>
 			  <tbody>
 			    <tr th:each="part: ${participants}">
-			    
+			      <td>
+			      	<span class="text-danger"><i class="bi bi-trash3" th:onClick="|switchHidden('idPart_${part.id}')|"></i></span>
+	      			<div th:id="|idPart_${part.id}|" hidden>
+	      				Supprimer?<br/>
+	      					
+							<a th:href="|deleteParticipant${part.id}|">
+							<button type="button" class="btn btn-danger border-dark" name="action" value="deleteParticipant">Oui</button>
+							</a>
+		      				 
+		      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPart_${part.id}')|">Non</button>
+	      				
+	      			</div>
+			      </td>
+			      
+			      <td th:if="${part.actif}">
+			      	<i class="bi bi-check-square-fill" th:onClick="|switchHidden('idPartActif_${part.id}')|"></i>
+			      	<div th:id="|idPartActif_${part.id}|" hidden>
+	      				Désactiver?<br/>
+						<a th:href="|desactiverParticipant${part.id}|">
+							<button type="button" class="btn btn-danger border-dark" name="action" value="desactiverParticipant">Oui</button>
+						</a>
+	      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPartActif_${part.id}')|">Non</button>
+	      			</div>
+			      </td>
+			      <td th:unless="${part.actif}" th:onClick="|switchHidden('idPartActif_${part.id}')|">
+			      	<i class="bi bi-square"></i>
+			      	<div th:id="|idPartActif_${part.id}|" hidden>
+	      				Activer?<br/>
+						<a th:href="|activerParticipant${part.id}|">
+							<button type="button" class="btn btn-danger border-dark" name="action" value="activerParticipant">Oui</button>
+						</a>
+	      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPartActif_${part.id}')|">Non</button>
+	      			</div>
+			      </td>
+			      
+
+			      
+			      
 			      <td>
 			      	<a th:href="|participant${part.id}|"><span th:text="|${part.prenom} ${part.nom}|"></span></a>
 			      </td>
@@ -224,11 +284,28 @@
 			      	<i class="bi bi-bag-x"></i>
 			      </td>
 			      
-			      <td>
-			      	<a th:href="|questRead${part.questionnaire.id}|"><i class="bi bi-chat-right-heart"></i></a>
+			      
+<!-- 			      REMPLACER 		-->
+<!-- 			      PAR 				-->
+<!-- 			      SOUHAITS 			-->
+<!-- 			      ET 				-->
+<!-- 			      CEREMONIE  		-->
+<!-- 			      PAR  				-->
+<!-- 			      LA 				-->
+<!-- 			      SUITE 			-->
+			      
+			      <td th:if="${ part.souhaits != null }">
+			      	<a th:href="|souhaitsRead${part.id}|"><i class="bi bi-chat-right-heart"></i></a>
 			      </td>
-			      <td>
-			      	<a th:href="|questRead${part.questionnaire.id}|"><i class="bi bi-airplane-engines"></i></a>
+			      <td th:unless="${ part.souhaits != null }" >
+			      	<i class="bi bi-bag-x"></i>
+			      </td>
+			      
+			      <td th:if="${ part.participations != null }">
+			      	<a th:href="|participationsRead${part.id}|"><i class="bi bi-airplane-engines"></i></a>
+			      </td>
+			      <td th:unless="${ part.participations != null }" >
+			      	<i class="bi bi-bag-x"></i>
 			      </td>
 			      
 			      <td th:text="${#lists.size(part.notes)}"/>

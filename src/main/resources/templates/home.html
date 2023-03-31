@@ -27,6 +27,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- Jquery Call -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -44,6 +46,14 @@
       </div>
 
       <nav id="navbar" class="nav-menu navbar">
+<!--       <ul> -->
+<!--   <li> -->
+<!--   	<a href="/" class="nav-link scrollto" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"> -->
+<!--   		<i class="bx bx-home"></i> <span>Souhaits et Participations</span> -->
+<!--   	</a> -->
+
+<!--   </li> -->
+<!--   </ul> -->
 			<div w3-include-html="navbar"></div>
       </nav><!-- .nav-menu -->
     </div>
@@ -65,7 +75,7 @@
 
         <div class="section-title">
           <h2>Liste des Souhaits</h2>
-          <div class="row table-responsive">
+           <div class="row table-responsive" data-aos="fade-in">
 			<table class="table table-striped">
 			  <thead>
 
@@ -73,18 +83,6 @@
 			      <th >Prénom</th>
 			      <th >Rep. Quest.</th>
 			      <th  th:each="cerem: ${ceremonies}" th:text="|${cerem.nom}|"></th>
-<!-- 			      <th scope="col">Tambour</th> -->
-<!-- 			      <th scope="col">Temazcal Mardi</th> -->
-<!-- 			      <th scope="col">Cercle Romé</th> -->
-<!-- 			      <th scope="col">Cercle Chants</th> -->
-<!-- 			      <th scope="col">Prépa Intentions</th> -->
-<!-- 			      <th scope="col">Grand-Mère Jeudi</th> -->
-<!-- 			      <th scope="col">Grand-Mère Vendredi</th> -->
-<!-- 			      <th scope="col">Wilka</th> -->
-<!-- 			      <th scope="col">Ninos</th> -->
-<!-- 			      <th scope="col">Hommage</th> -->
-<!-- 			      <th scope="col">Temazcal Dimanche</th> -->
-<!-- 			      <th scope="col">Kambo</th> -->
 			    </tr>
 			    
 			  </thead>
@@ -103,10 +101,10 @@
 			      
 			      <td  th:each="cerem: ${ceremonies}">
 			      	<div th:if="${#lists.contains(souhait.souhaits, cerem.nom)}">
-			      		<i class="bi bi-check-square-fill"></i>
+			      		<i class="bi bi-check-square-fill" th:id="|check${cerem.id}${souhait.participantId}|" th:onClick="|switchSouhait(${cerem.id}, ${souhait.participantId})|"></i>
 			      	</div>
-			      	<div th:unless="${#lists.contains(souhait.souhaits, cerem.nom)}">
-			      		<i class="bi bi-app"></i>
+			      	<div th:unless="${#lists.contains(souhait.souhaits, cerem.nom)}" >
+			      		<i class="bi bi-square" th:id="|check${cerem.id}${souhait.participantId}|" th:onClick="|switchSouhait(${cerem.id}, ${souhait.participantId})|"></i>
 			      	</div>
 			      </td>
 			      
@@ -130,125 +128,54 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Contact</h2>
-          <p>Pour toutes demandes, n'hésitez pas à nous contacter.</p>
+          <h2>Souhaits par Cérémonie</h2>
         </div>
 
         <div class="row" data-aos="fade-in">
 
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="info">
-              <img alt="Ghis" src="assets/img/Ghis.png" class="img-fluid rounded-circle"><br/><br/>
-              
-              <div class="name">
-                <i class="bi bi-person-vcard-fill"></i>
-                <h4 >Ghislaine</h4>
-                <p></p>
-              </div>
-              
-              <div class="address">
-                <i class="bi bi-magic"></i>
-                <h4>La Messagère de la forêt</h4>
-                <p></p>
-              </div>
+		  <div class="row table-responsive" data-aos="fade-in">
+			<table class="table table-striped">
+			  <thead>
 
+			    <tr>
+			      <th>Cérémonie</th>
+			      <th>Nombre Souhaits</th>
+			    </tr>
+			    
+			  </thead>
+			  <tbody>
+			    <tr th:each="spc: ${ceremonies}">
+			    
+			      <td>
+			      	<span th:text="${spc.nom}"></span>
+			      </td>
+			       <td>
+			      	<span th:text="${souhaitsParCeremonie.get(spc.nom)}"></span>
+			      </td>
+			      
+<!-- 			      <td th:if="${ souhait.questionnaireId != null }"> -->
+<!-- 			      	<a th:href="|questRead${souhait.questionnaireId}|"><i class="bi bi-patch-question"></i></a> -->
+<!-- 			      </td> -->
+<!-- 			      <td th:unless="${ souhait.questionnaireId != null }" > -->
+<!-- 			      	<i class="bi bi-bag-x"></i> -->
+<!-- 			      </td> -->
+			      
+<!-- 			      <td  th:each="cerem: ${ceremonies}"> -->
+<!-- 			      	<div th:if="${#lists.contains(souhait.souhaits, cerem.nom)}"> -->
+<!-- 			      		<i class="bi bi-check-square-fill" th:id="|check${cerem.id}${souhait.participantId}|" th:onClick="|switchSouhait(${cerem.id}, ${souhait.participantId})|"></i> -->
+<!-- 			      	</div> -->
+<!-- 			      	<div th:unless="${#lists.contains(souhait.souhaits, cerem.nom)}" > -->
+<!-- 			      		<i class="bi bi-square" th:id="|check${cerem.id}${souhait.participantId}|" th:onClick="|switchSouhait(${cerem.id}, ${souhait.participantId})|"></i> -->
+<!-- 			      	</div> -->
+<!-- 			      </td> -->
+			      
 
-              <div class="phone">
-                <i class="bi bi-telegram"></i>
-                <h4>Telegram:</h4>
-                <p>@Ghislaine</p>
-              </div>
-
-<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
-            </div>
-
+			    </tr>
+			    
+			  </tbody>
+			</table>
+          	
           </div>
-
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="info">
-            <img alt="Aude" src="assets/img/Aude2.jpg" class="img-fluid rounded-circle"><br/><br/>
-            
-            <div class="name">
-                <i class="bi bi-person-vcard-fill"></i>
-                <h4>Aude</h4>
-                <p></p>
-              </div>
-              
-            
-              <div class="address">
-              
-                <i class="bi bi-magic"></i>
-                <h4>La Liseuse des coeurs de cristal</h4>
-                <p></p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-telegram"></i>
-                <h4>Telegram:</h4>
-                <p>@Misseau2</p>
-              </div>
-
-<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="info">
-            <img alt="Clem" src="assets/img/Clem2.jpg" class="img-fluid rounded-circle"><br/><br/>
-            
-              <div class="name">
-                <i class="bi bi-person-vcard-fill"></i>
-                <h4>Clément-Aurélien</h4>
-                <p></p>
-              </div>
-              
-              <div class="address">
-              	
-                <i class="bi bi-magic"></i>
-                <h4>Le Magicien du lieu</h4>
-                <p></p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-telegram"></i>
-                <h4>Telegram:</h4>
-                <p>@ClementAurelien</p>
-              </div>
-
-<!--               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;"></iframe> -->
-            </div>
-
-          </div>
-
-<!--           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch"> -->
-<!--             <form action="forms/contact.php" method="post" role="form" class="php-email-form"> -->
-<!--               <div class="row"> -->
-<!--                 <div class="form-group col-md-6"> -->
-<!--                   <label for="name">Your Name</label> -->
-<!--                   <input type="text" name="name" class="form-control" id="name" required> -->
-<!--                 </div> -->
-<!--                 <div class="form-group col-md-6"> -->
-<!--                   <label for="name">Your Email</label> -->
-<!--                   <input type="email" class="form-control" name="email" id="email" required> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="name">Subject</label> -->
-<!--                 <input type="text" class="form-control" name="subject" id="subject" required> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="name">Message</label> -->
-<!--                 <textarea class="form-control" name="message" rows="10" required></textarea> -->
-<!--               </div> -->
-<!--               <div class="my-3"> -->
-<!--                 <div class="loading">Loading</div> -->
-<!--                 <div class="error-message"></div> -->
-<!--                 <div class="sent-message">Your message has been sent. Thank you!</div> -->
-<!--               </div> -->
-<!--               <div class="text-center"><button type="submit">Send Message</button></div> -->
-<!--             </form> -->
-<!--           </div> -->
 
         </div>
 

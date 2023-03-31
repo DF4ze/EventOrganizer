@@ -30,6 +30,10 @@ public class CeremonieService {
 	return ok;
     }
 
+    public void save(Ceremonie ceremonie) {
+	ceremRepo.save(ceremonie);
+    }
+
     @Deprecated
     public List<Ceremonie> getAllCeremonies() {
 	return ceremRepo.findByOrderByIdAsc();
@@ -40,11 +44,16 @@ public class CeremonieService {
 	displays.add(Display.BOTH);
 	displays.add(display);
 
-	List<Ceremonie> findByDisplay = ceremRepo.findByDisplay(displays);
+	List<Ceremonie> findByDisplay = ceremRepo.findByDisplayAndActif(displays);
 	return findByDisplay;
     }
 
     public Ceremonie getByName(String name) {
 	return ceremRepo.findByNom(name);
     }
+
+    public Ceremonie getCeremonie(long id) {
+	return ceremRepo.findById(id).orElse(null);
+    }
+
 }

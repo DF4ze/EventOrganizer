@@ -42,3 +42,46 @@ function switchHidden( id ){
 	var element = document.getElementById(id);
     element.hidden = !element.hidden; 
 }
+
+//$(document).ready(
+//	function() {
+
+//		// GET REQUEST
+//		$("#switchSouhait").click(function(event) {
+//			event.preventDefault();
+//			ajaxGet();
+//		});
+
+		// DO GET
+		function switchSouhait( ceremId, partId) {
+			$.ajax({
+				type : "GET",
+				url : "api/switchSouhait",
+				data : {
+					"ceremId" : ceremId,
+					"partId" : partId
+				},
+				success : function(result) {
+					if (result == true) {
+						// Get class list string
+				        var classList = $("#check"+ceremId+partId).attr("class");
+				        
+				        // Creating class array by splitting class list string
+				        var classArr = classList.split(/\s+/);
+				        
+				        if( classArr.includes("bi-square") ){
+							$("#check"+ceremId+partId).removeClass("bi-square");
+							$("#check"+ceremId+partId).addClass("bi-check-square-fill");
+						}else{
+							$("#check"+ceremId+partId).removeClass("bi-check-square-fill");
+							$("#check"+ceremId+partId).addClass("bi-square");
+						}
+					} 
+				},
+				error : function(e) {
+					$("#getResultDiv").html("<strong>Error</strong>");
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+	//})
