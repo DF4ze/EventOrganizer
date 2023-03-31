@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### SSL ###
+*.p12
+*.p12.old
