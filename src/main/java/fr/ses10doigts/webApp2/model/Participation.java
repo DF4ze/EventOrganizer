@@ -27,6 +27,7 @@ public class Participation {
     private Ceremonie	ceremonie;
 
     private boolean	prixModifie = false;
+    private boolean	fait	    = false;
 
     private boolean	actif = true;
 
@@ -86,6 +87,13 @@ public class Participation {
 	this.prixModifie = prixModifie;
     }
 
+    public boolean isFait() {
+	return fait;
+    }
+
+    public void setFait(boolean fait) {
+	this.fait = fait;
+    }
 
 
 }

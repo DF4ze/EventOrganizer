@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Participant;
+import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.model.Questionnaire;
 import fr.ses10doigts.webApp2.model.Souhait;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
@@ -28,7 +28,11 @@ public class QuestionnaireService {
     private ParticipantRepository   pRepository;
 
     @Autowired
-    private CeremonieService	    ceremServ;
+    private SouhaitsService	    souhaitsService;
+
+    @Autowired
+    private ParticipationService    participationService;
+
 
     private static final Logger	    logger = LoggerFactory.getLogger(QuestionnaireService.class);
 
@@ -64,8 +68,9 @@ public class QuestionnaireService {
 	questionnaire.setNaissance(qp.naissance);
 
 
-	// Souhaits
+	// Souhaits & Participations
 	List<Souhait> souhaits = new ArrayList<>();
+	List<Participation> participations = new ArrayList<>();
 
 	List<String> nonCerem = new ArrayList<>();
 	nonCerem.add("nom");
@@ -93,34 +98,24 @@ public class QuestionnaireService {
 		    logger.debug("Unable to retrieve data in " + field.getName() + " field");
 		}
 	    }
-	    Souhait souhait = buildSouhaitFromPayLoad(souhaitTxt, participant);
+	    Souhait souhait = souhaitsService.buildSouhaitFromPayLoad(souhaitTxt, participant);
 	    souhaits.add(souhait);
+
+	    Participation participation = participationService.buildParticipationFromSouhait(souhait);
+	    participations.add(participation);
 	}
 
 
 	questionnaire.setParticipant(participant);
 	participant.setQuestionnaire(questionnaire);
 	participant.setSouhaits(souhaits);
+	participant.setParticipations(participations);
 
 	pRepository.save(participant);
 
 	return true;
     }
 
-    private Souhait buildSouhaitFromPayLoad(String souhaitTxt, Participant participant) {
-	Souhait souhait = null;
-	if (souhaitTxt != null) {
-	    Ceremonie ceremonie = ceremServ.getByName(souhaitTxt);
-	    if (ceremonie != null) {
-		souhait = new Souhait();
-		souhait.setCeremonie(ceremonie);
-		souhait.setParticipant(participant);
-	    } else {
-		logger.debug("No ceremonie for name : " + souhaitTxt);
-	    }
-	}
-	return souhait;
-    }
 
     public Questionnaire getQuestionnaire(long id) {
 	Optional<Questionnaire> q = qRepository.findById(id);

@@ -449,9 +449,13 @@ public class MainController {
     @GetMapping("/participation")
     public String participation(Model model) {
 	participationPayload pp = new participationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<Participant> participants = partService.getAllParticipants();
 
 	model.addAttribute("search", null);
 	model.addAttribute("participationPayload", pp);
+	model.addAttribute("ceremonies", ceremonies);
+	model.addAttribute("participants", participants);
 
 	return "participation";
     }

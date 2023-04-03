@@ -135,7 +135,7 @@
 
      
 
-    <!-- ======= Liste Participants Section ======= -->
+    <!-- ======= Liste Participations Section ======= -->
     <section id="about" class="about" >
       <div class="container">
 
@@ -165,16 +165,8 @@
 			  <thead>
 
 			    <tr >
-			      <th > </th>
-			      <th> Actif</th>
-			      <th >Nom</th>
-			      <th >Tel</th>
-			      <th >Email</th>
-			      <th >Urgence</th>
-			      <th >Questionnaire</th>
-			      <th >Souhaits</th>
-			      <th >Participations</th>
-			      <th >Note(s)</th>
+			      <th >Participant</th>
+			      <th  th:each="cerem: ${ceremonies}" th:text="|${cerem.nom}|"></th>
 			    </tr>
 			    
 			  </thead>
