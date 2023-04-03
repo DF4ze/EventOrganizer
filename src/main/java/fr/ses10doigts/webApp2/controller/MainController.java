@@ -30,6 +30,7 @@ import fr.ses10doigts.webApp2.model.payload.NotePayLoad;
 import fr.ses10doigts.webApp2.model.payload.ParticipantPayload;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
 import fr.ses10doigts.webApp2.model.payload.SouhaitsPayLoad;
+import fr.ses10doigts.webApp2.model.payload.participationPayload;
 import fr.ses10doigts.webApp2.security.model.Role;
 import fr.ses10doigts.webApp2.security.model.User;
 import fr.ses10doigts.webApp2.security.model.payload.request.LoginRequest;
@@ -120,39 +121,7 @@ public class MainController {
 
     @GetMapping("/home")
     public String homeParam(Model model) {
-
 	return home(model);
-
-//	User user = null;
-	//
-	//	String view = "home";
-	//	try {
-	//	    user = authenticationFacade.getConnectedUser();
-	//	    model.addAttribute("loggued", true);
-	//	    model.addAttribute("username", user.getUsername());
-	//
-	//	    List<Participant> participants = partService.getAllParticipants();
-	//	    model.addAttribute("participants", participants);
-	//
-	//	    List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.SOUHAIT);
-	//	    model.addAttribute("ceremonies", ceremonies);
-	//
-	//	    List<SouhaitsPayLoad> souhaitsPayLoads = new ArrayList<>();
-	//	    for (Participant participant : participants) {
-	//		SouhaitsPayLoad paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
-	//		souhaitsPayLoads.add(paylLoad);
-	//	    }
-	//	    model.addAttribute("souhaits", souhaitsPayLoads);
-	//
-	//	    logger.debug("Nombre de participants : " + participants.size());
-	//
-	//	} catch (RuntimeException e) {
-	//	    LoginRequest loginRequest = new LoginRequest();
-	//	    model.addAttribute("loginRequest", loginRequest);
-	//	    view = "login";
-	//	}
-	//
-	//	return view;
     }
 
     @GetMapping("/login")
@@ -479,8 +448,11 @@ public class MainController {
 
     @GetMapping("/participation")
     public String participation(Model model) {
-	QuestionnairePayload q = new QuestionnairePayload();
-	model.addAttribute(q);
+	participationPayload pp = new participationPayload();
+
+	model.addAttribute("search", null);
+	model.addAttribute("participationPayload", pp);
+
 	return "participation";
     }
 

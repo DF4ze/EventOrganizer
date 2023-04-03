@@ -53,7 +53,7 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Détails Participant</h2>
+          <h2>Détails Participation</h2>
         </div>
 
 	    <div class="section-body">
@@ -127,56 +127,7 @@
 		         <i th:unless="${search.participations} != null" class="bi bi-bag-x"></i>
 		      </div>
 			</div> 
-		</div>
-		
-	    
-	    	<br/>
-	      <h4 ><u>Note(s)</u> <span class="text-success"><a href="#"><i id="addNote" class="bi bi-clipboard-plus"></i></a></span></h4>
-	      
-	      <div id="addNoteForm"  hidden>
-	      	<form method="post" modelAttribute="notePayload" th:action="@{/participant}" th:object="${notePayload}">
-
-	      		<div class="form-group col-md-6">
-	              <input type="hidden" id="idParticipant" name="idParticipant" th:field="*{idParticipant}"/>
-                  <label for="note">Ajouter une note : </label>
-                  <textarea name="note" class="form-control" id="note" th:field="*{texte}"></textarea>
-	                  
-	            </div>
-	            <div class="form-group col-md-6">
-	            	<button type="submit" name="action" value="validate">Enregistrer la note</button>
-	            </div>
-	      	</form>
-	      </div>
-	      
-	      <div thif="${#lists.size(part.notes)} == 0">
-	      	Pas de notes sur ce participant.<br/>
-	      	Cliquez sur le "+" pour en ajouter une.
-	      </div>
-	      <div th:each="note: ${search.notes}" class="row border border-primary rounded mx-1 mt-2">
-	      		<div class="col-1 bg-danger">
-	      			<i class="bi bi-trash3" th:onClick="|switchHidden('idNote_${note.id}')|"></i>
-	      			<div th:id="|idNote_${note.id}|" hidden>
-	      				Supprimer?<br/>
-	      					
-							<a th:href="|deleteNote${note.id}|">
-							<button type="button" class="btn btn-danger border-dark" name="action" value="deleteNote">Oui</button>
-							</a>
-		      				 
-		      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idNote_${note.id}')|">Non</button>
-	      				
-	      			</div>
-	      		</div>
-	      		<div class="col-1 bg-info" >
-	      			<div th:text="|${note.writer.username}|">
-	      			</div >
-	      			<div th:text="${#dates.format(note.date, 'dd-MM HH:mm')}">
-	      			</div>
-	      		</div>
-	      		<div class="col-10 bg-white" th:text="${note.text}">
-	      		</div>
-	      </div>
-<!-- 		  <span  th:text="${search.remarques}"></span> -->
-		
+		  </div>
         </div>		
       </div>
      </section>
@@ -192,20 +143,18 @@
           <h2>Liste des Participants <a onClick="switchHidden('addParticipant')"><i class="bi bi-clipboard-plus"></i></a></h2>
           
           <div id="addParticipant" hidden>
- 			<form method="post" modelAttribute="participantPayload" th:action="@{/participant}" th:object="${participantPayload}">
+ 			<form method="post" modelAttribute="participantPayload" th:action="@{/participation}" th:object="${participationPayload}">
 			  <div class="row">
 	      		<div class="form-group col-md-6">
-	              <label for="note">Ajouter un participant : </label>
-	              <input type="text" name="prenom" class="form-control mt-2 bg-white" th:field="*{prenom}" placeholder="Prénom"/>
-                  <input type="text" name="nom" class="form-control mt-2 bg-white" th:field="*{nom}" placeholder="Nom"/>
-	              <input type="text" name="tel" class="form-control mt-2 bg-white" th:field="*{tel}" placeholder="Téléphone"/>
-	              <input type="text" name="email" class="form-control mt-2 bg-white" th:field="*{email}" placeholder="Email"/>
-                  <input type="text" name="urgence" class="form-control mt-2 bg-white" th:field="*{urgence}" placeholder="Urgence"/>
+	              <label for="note">Ajouter une participation : </label>
+	              <input type="text" name="participant" class="form-control mt-2 bg-white" th:field="*{participant}" placeholder="participant"/>
+                  <input type="text" name="ceremonie" class="form-control mt-2 bg-white" th:field="*{ceremonie}" placeholder="ceremonie"/>
+	              <input type="text" name="prix" class="form-control mt-2 bg-white" th:field="*{prix}" placeholder="Prix"/>
 	            </div>
 <!-- 	          </div> -->
 <!-- 	          <div class="row"> -->
 	      		  <div class="mt-2 mb-4">
-	            	<button type="submit" name="action" value="addParticipant" class="btn btn-primary">Enregistrer le participant</button>
+	            	<button type="submit" name="action" value="addParticipant" class="btn btn-primary">Enregistrer la participation</button>
 	            </div>
 	          </div>
 	      	</form>

@@ -7,6 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
+/**
+ * @author df4ze
+ *
+ */
 @Entity
 public class Participation {
 
@@ -21,6 +25,8 @@ public class Participation {
     private Souhait	souhait;
     @OneToOne
     private Ceremonie	ceremonie;
+
+    private boolean	prixModifie = false;
 
     private boolean	actif = true;
 
@@ -72,6 +78,13 @@ public class Participation {
 	this.ceremonie = ceremonie;
     }
 
+    public boolean isPrixModifie() {
+	return prixModifie;
+    }
+
+    public void setPrixModifie(boolean prixModifie) {
+	this.prixModifie = prixModifie;
+    }
 
 
 
