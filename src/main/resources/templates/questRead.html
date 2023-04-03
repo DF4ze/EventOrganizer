@@ -62,6 +62,16 @@
 	      <a th:href="|participant?id=${search.participant.id}|"><span th:text="|${search.prenom} ${search.nom}|"></span></a>
 	    </p>
 	    <p>
+	      <h4 ><u>Tous les prénoms</u></h4>
+	      <span th:if="${search.prenoms} == null" th:text="|non renseigné|"></span>
+	      <span th:unless="${search.prenoms} == null" th:text="${search.prenoms}"></span>
+	    </p>
+	    <p>
+	      <h4 ><u>Date de naissance</u></h4>
+	      <span th:if="${search.naissance} == null" th:text="|non renseigné|"></span>
+	      <span th:unless="${search.naissance} == null" th:text="${#dates.format(search.naissance, 'dd/MM/yyyy')}"></span>
+	    </p>
+	    <p>
 	      <h4 ><u>Intention</u></h4>
 	      <span  th:text="${search.intention}"></span>
 		</p>

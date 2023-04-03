@@ -1,5 +1,7 @@
 package fr.ses10doigts.webApp2.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,8 @@ public class Questionnaire {
     private String	defi;
     @Column(length = 50000)
     private String	remarques;
+    private String	prenoms;
+    private Date	naissance;
 
     @OneToOne
     private Participant	participant;
@@ -136,6 +140,22 @@ public class Questionnaire {
 
     public void setRemarques(String remarques) {
 	this.remarques = remarques;
+    }
+
+    public String getPrenoms() {
+	return prenoms;
+    }
+
+    public void setPrenoms(String prenoms) {
+	this.prenoms = prenoms;
+    }
+
+    public Date getNaissance() {
+	return naissance;
+    }
+
+    public void setNaissance(Date naissance) {
+	this.naissance = naissance;
     }
 
 }

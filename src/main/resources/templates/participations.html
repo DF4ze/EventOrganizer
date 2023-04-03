@@ -58,54 +58,38 @@
 
 	    <div class="section-body">
 	    <div class="row">
-		    <div class="form-group col-md-1 text-truncate">
-		      <u class="">Prénom:</u> 
+		    <div class="col-1">
+		      <u>Prénom:</u> 
 		    </div>
-		    <div class="form-group col-md-5">
+		    <div class="col-5">
 		      <span th:text="|${search.prenom}|"></span>
 		    </div>
-		    <div class="form-group col-md-1 text-truncate">
+		    <div class="col-1">
 		      <u>Nom:</u> 
 		    </div>
-		    <div class="form-group col-md-5">
+		    <div class="col-5">
 		      <span th:text="|${search.nom}|"></span>
 		    </div>
 	    </div>
 	    <div class="row">
-		   	<div class="form-group col-md-1 text-truncate">
-		      <u>Prénoms:</u>
-		    </div>
-		    <div class="form-group col-md-5">
-		      <span th:if="${search.prenoms} == null" th:text="|non renseigné|"></span>
-		      <span th:unless="${search.prenoms} == null" th:text="${search.prenoms}"></span>
-		    </div>
-		    <div class="form-group col-md-1 text-truncate">
-		      <u>Naissance:</u>
-		    </div>
-		    <div class="form-group col-md-5">
-		      <span th:if="${search.naissance} == null" th:text="|non renseigné|"></span>
-		      <span th:unless="${search.naissance} == null" th:text="${#dates.format(search.naissance, 'dd/MM/yyyy')}"></span>
-		    </div>
-	    </div>
-	    <div class="row">
-		    <div class="form-group col-md-1 text-truncate">
+		    <div class="col-1">
 		      <u>Tel:</u> 
 		    </div>
-		    <div class="form-group col-md-5">
+		    <div class="col-5">
 		      <span th:text="|${search.tel}|"></span>
 		    </div>
-		    <div class="form-group col-md-1 text-truncate">
+		    <div class="col-1">
 		      <u>Email:</u> 
 		    </div>
-		    <div class="form-group col-md-5">
+		    <div class="col-5">
 		      <span th:text="|${search.email}|"></span>
 		    </div>
 	    </div>
 	    <div class="row">
-	    	<div class="form-group col-md-1 text-truncate">
+	    	<div class="col-1">
 	      		<u>Urgence:</u> 
 	      	</div>
-	      	<div class="form-group col-md-5">
+	      	<div class="col-5">
 	      		<span th:text="|${search.urgence}|"></span>
 	      	</div>
 <!-- 	      	<div class="col-1"> -->
@@ -159,7 +143,7 @@
 	                  
 	            </div>
 	            <div class="form-group col-md-6">
-	            	<button type="submit" name="action" value="addNote">Enregistrer la note</button>
+	            	<button type="submit" name="action" value="validate">Enregistrer la note</button>
 	            </div>
 	      	</form>
 	      </div>

@@ -1,5 +1,6 @@
 package fr.ses10doigts.webApp2.model;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -10,6 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+/**
+ * @author df4ze
+ *
+ */
 @Entity
 public class Participant {
 
@@ -21,6 +26,8 @@ public class Participant {
     private String		email;
     private String		tel;
     private String		urgence;
+    private String		prenoms;
+    private Date		naissance;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Questionnaire	questionnaire;
@@ -91,6 +98,22 @@ public class Participant {
 
     public void setUrgence(String urgence) {
 	this.urgence = urgence;
+    }
+
+    public String getPrenoms() {
+	return prenoms;
+    }
+
+    public void setPrenoms(String prenoms) {
+	this.prenoms = prenoms;
+    }
+
+    public Date getNaissance() {
+	return naissance;
+    }
+
+    public void setNaissance(Date naissance) {
+	this.naissance = naissance;
     }
 
     public Questionnaire getQuestionnaire() {

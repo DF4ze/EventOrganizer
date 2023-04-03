@@ -1,5 +1,9 @@
 package fr.ses10doigts.webApp2.model.payload;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class QuestionnairePayload {
 
     public String nom;
@@ -36,6 +40,10 @@ public class QuestionnairePayload {
     public String grenouille3;
 
     public String remarques;
+
+    public String prenoms;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date	  naissance;
 
 
     public String getNom() {
@@ -236,6 +244,22 @@ public class QuestionnairePayload {
 
     public void setRemarques(String remarques) {
 	this.remarques = remarques;
+    }
+
+    public String getPrenoms() {
+	return prenoms;
+    }
+
+    public void setPrenoms(String prenoms) {
+	this.prenoms = prenoms;
+    }
+
+    public Date getNaissance() {
+	return naissance;
+    }
+
+    public void setNaissance(Date naissance) {
+	this.naissance = naissance;
     }
 
     @Override

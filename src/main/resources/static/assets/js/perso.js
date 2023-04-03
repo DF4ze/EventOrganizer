@@ -43,14 +43,41 @@ function switchHidden( id ){
     element.hidden = !element.hidden; 
 }
 
-//$(document).ready(
-//	function() {
+function setVisible( id ){
+	var element = document.getElementById(id);
+    element.hidden = false; 
+}
 
-//		// GET REQUEST
-//		$("#switchSouhait").click(function(event) {
-//			event.preventDefault();
-//			ajaxGet();
-//		});
+$(document).click(
+	function() {
+		if( $("#grandmereJeudi").is(":checked") ||
+			$("#grandmereVendredi").is(":checked") || 
+			$("#princesse").is(":checked") ||
+			$("#ninos").is(":checked") ){
+			
+			$("#questionnaire").hidden = false;
+			$("#questNav").hidden = false;
+		}else{
+			$("#questionnaire").hidden = true;
+			$("#questNav").hidden = true;
+		}
+});
+
+	function questionnaireVisibility() {
+		if( $("#grandmereJeudi").is(":checked") ||
+			$("#grandmereVendredi").is(":checked") || 
+			$("#princesse").is(":checked") ||
+			$("#ninos").is(":checked") ){
+			
+			$("#questionnaire").prop('hidden', false);
+			$("#questNav").prop('hidden', false);
+			
+		}else{
+			$("#questionnaire").prop('hidden', true);
+			$("#questNav").prop('hidden', true);
+			
+		}
+	}
 
 		// DO GET
 		function switchSouhait( ceremId, partId) {

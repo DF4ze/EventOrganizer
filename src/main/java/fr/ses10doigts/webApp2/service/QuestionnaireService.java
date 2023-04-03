@@ -44,6 +44,8 @@ public class QuestionnaireService {
 	    participant.setPrenom(qp.prenom);
 	    participant.setTel(qp.telephone);
 	    participant.setUrgence(qp.urgence);
+	    participant.setPrenoms(qp.prenoms);
+	    participant.setNaissance(qp.naissance);
 	}
 
 	// Questionnaire
@@ -58,6 +60,8 @@ public class QuestionnaireService {
 	questionnaire.setTelephone(qp.telephone);
 	questionnaire.setUrgence(qp.urgence);
 	questionnaire.setRemarques(qp.remarques);
+	questionnaire.setPrenoms(qp.prenoms);
+	questionnaire.setNaissance(qp.naissance);
 
 
 	// Souhaits
@@ -74,6 +78,8 @@ public class QuestionnaireService {
 	nonCerem.add("telephone");
 	nonCerem.add("urgence");
 	nonCerem.add("remarques");
+	nonCerem.add("naissance");
+	nonCerem.add("prenoms");
 
 	Class<QuestionnairePayload> plc = QuestionnairePayload.class;
 	Field[] declaredFields = plc.getDeclaredFields();

@@ -27,8 +27,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-	<!-- Jquery call -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -49,10 +47,8 @@
         <ul>
           <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Bonjour!</span></a></li>
           <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Pourquoi un questionnaire?</span></a></li>
-          <li><a href="#perso" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Informations personnelles</span></a></li>
-          <li><a href="#activites" class="nav-link scrollto"><i class="bi bi-balloon-heart"></i> <span>Activités</span></a></li>
-          <li><a href="#questionnaire" id="questNav" class="nav-link scrollto" hidden><i class="bi bi-patch-question"></i> <span>Questionnaire</span></a></li>
-          <li><a href="#remarques" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Remarques</span></a></li>
+          <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Informations personnelles</span></a></li>
+          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Questionnaire</span></a></li>
           <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
         </ul>
       </nav><!-- .nav-menu -->
@@ -101,7 +97,7 @@
 <form method="post" modelAttribute="questionnairePayload" th:action="@{/questionnaire}" th:object="${questionnairePayload}">
 <!-- <form action="forms/contact.php" method="post" role="form" class="php-email-form"> -->
     <!-- ======= Skills Section ======= -->
-    <section id="perso" class="skills section-bg">
+    <section id="skills" class="skills section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -144,7 +140,20 @@
 	                <em>(<span class="text-danger">*</span>) Champs obligatoires</em>
 	                
 	              </div>
-
+	              <div class="row">
+	              <div class="mx-1 mt-4 mb-2">
+	               Pour l'accompagnement dans vos énergies de vies, merci de remplir les informations suivantes:
+	              </div>
+	                <div class="form-group col-md-6">
+	                  <label for="name">Tous vos prénoms ainsi que votre nom de naissance</label>
+	                  <input type="text" name="prénoms" class="form-control" id="prénoms" />
+	                </div>
+	                <div class="form-group col-md-6">
+	                  <label for="name">Votre date de naissance</label>
+	                  <input type="date" class="form-control" name="naissance" id="naissance" >
+	                </div>
+	                
+	              </div>
 	            </div>
 			</div>
 			<div class="col-md-4 ">
@@ -155,10 +164,54 @@
       </div>
     </section><!-- End Skills Section -->
 
+    <!-- ======= Resume Section ======= -->
+    <section id="resume" class="resume">
+      <div class="container">
 
+        <div class="section-title">
+          <h2>Questionnaire</h2>
+        </div>
+        <div data-aos="fade-up" class="row">
+        	<div class="col-md-4">
+        		<br/>
+				<img alt="archie" src="assets/img/chaman-sorcier-des-villages-amazonie.jpg" class="img-fluid">
+			</div>
+        
+			<div class="col-md-8">
+	        	<div class="row" >
+	                <div class="form-group col-md-6">
+	                  <label for="name">Quelle est votre intention de départ?<br/> Pourquoi souhaitez-vous faire une cérémonie?*</label>
+	                  <textarea name="intention" class="form-control" id="intention" th:field="*{intention}" required >
+	                  </textarea>
+	                </div>
+	                <div class="form-group col-md-6">
+	                <br/>
+	                  <label for="name">Avez-vous déjà réalisé des expériences similaires?*</label>
+	                  <textarea  class="form-control" name="experiences" id="experiences" th:field="*{experience}" required>
+	                  </textarea>
+	                </div>
+	            </div>
+	            <br/>
+	              <div class="row" >
+	                <div class="form-group col-md-6">
+	                  <label for="name">Avez-vous des problèmes de santé? <br/>Physique ou psychique? Suivez-vous un traitement?* </label>
+	                  <textarea  name="sante" class="form-control" id="sante" th:field="*{sante}" required>
+	                  </textarea>
+	                </div>
+	                <div class="form-group col-md-6">
+	                  <label for="name">Pourriez-vous nous dire votre plus grand défi émotionnel?*</label>
+	                  <textarea  class="form-control" name="defis" id="defis" th:field="*{defi}" required>
+	                  </textarea>
+	                </div>
+	              </div>
+			</div>
+		</div>
+      </div>
+    </section><!-- End Resume Section -->
+    
     
     <!-- ======= Skills Section ======= -->
-    <section id="activites" class="skills section-bg">
+    <section id="envies" class="skills section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -234,7 +287,7 @@
 			  		</div>
                 </div>
                 <div class="form-group col-md-6">
-	                <div class="form-check" onClick="questionnaireVisibility()">
+	                <div class="form-check">
 					  <input class="form-check-input" type="checkbox" value="GM Jeudi" id="grandmereJeudi" th:field="*{grandMereJeudi}" >
 					  <label class="form-check-label" for="grandmereJeudi">
 					    20h20 : <strong>Cérémonie de la Grand-Mère</strong>
@@ -246,7 +299,7 @@
           <br/><u>Vendredi : </u>
 			<div class="row">
                 <div class="form-group col-md-6">
-	                <div class="form-check" onClick="questionnaireVisibility()">
+	                <div class="form-check">
 					  <input class="form-check-input" type="checkbox" th:value="Wilka" id="princesse" th:field="*{princesse}">
 					  <label class="form-check-label" for="princesse">
 					    17h17 : <strong>Cérémonie de la Princesse</strong>
@@ -254,7 +307,7 @@
 			  		</div>
                 </div>
                 <div class="form-group col-md-6">
-	                <div class="form-check" onClick="questionnaireVisibility()">
+	                <div class="form-check">
 					  <input class="form-check-input" type="checkbox" value="GM Vendredi" id="grandmereVendredi" th:field="*{grandMereVendredi}">
 					  <label class="form-check-label" for="grandmereVendredi">
 					    20h20 : <strong>Cérémonie de la Grand-Mère</strong>
@@ -268,7 +321,7 @@
           <br/><u>Samedi : </u>
 			<div class="row">
                 <div class="form-group col-md-6">
-	                <div class="form-check" onClick="questionnaireVisibility()">
+	                <div class="form-check">
 					  <input class="form-check-input" type="checkbox" value="Ninos" id="ninos" th:field="*{ninos}">
 					  <label class="form-check-label" for="ninos">
 					    12h12 : <strong>Cérémonie des Niños</strong>
@@ -343,102 +396,32 @@
 
       </div>
     </section><!-- End Skills Section -->
-
-
-
-
-
-    <!-- ======= Questionnaire Section ======= -->
-    <section id="questionnaire" class="resume" hidden>
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Questionnaire</h2>
-        </div>
-        <div data-aos="fade-up" class="row">
-        	<div class="col-md-4 mt-3">
-        		<br/>
-				<img alt="archie" src="assets/img/chaman-sorcier-des-villages-amazonie.jpg" class="img-fluid">
-			</div>
-        
-			<div class="col-md-8 mt-3" >
-	        	<div class="row" >
-	                <div class="form-group col-md-6">
-	                  <label for="name">Quelle est votre intention de départ?<br/> Pourquoi souhaitez-vous faire une cérémonie?<span class="text-danger">*</span></label>
-	                  <textarea name="intention" class="form-control" id="intention" th:field="*{intention}" required >
-	                  </textarea>
-	                </div>
-	                <div class="form-group col-md-6">
-	                <br/>
-	                  <label for="name">Avez-vous déjà réalisé des expériences similaires?<span class="text-danger">*</span></label>
-	                  <textarea  class="form-control" name="experiences" id="experiences" th:field="*{experience}" required>
-	                  </textarea>
-	                </div>
-	            </div>
-	            <br/>
-	              <div class="row" >
-	                <div class="form-group col-md-6">
-	                  <label for="name">Avez-vous des problèmes de santé? <br/>Physique ou psychique? Suivez-vous un traitement?<span class="text-danger">*</span> </label>
-	                  <textarea  name="sante" class="form-control" id="sante" th:field="*{sante}" required>
-	                  </textarea>
-	                </div>
-	                <div class="form-group col-md-6">
-	                  <label for="name">Pourriez-vous nous dire votre plus grand défi émotionnel?<span class="text-danger">*</span></label>
-	                  <textarea  class="form-control" name="defis" id="defis" th:field="*{defi}" required>
-	                  </textarea>
-	                </div>
-	              </div>
-	              <div class="row">
-	                <div class="mx-1 mt-4 mb-2">
-	                  Pour vous accompagner au mieux dans vos énergies de vies, nous avons quelques questions complémentaires:
-	                </div>
-	                <div class="form-group col-md-6">
-	                  <label for="name">
-	                  	Tous vos prénoms ainsi que votre nom de naissance (nom de jeune fille)<span class="text-danger">*</span>
-	                  </label>
-	                  <input type="text" name="prénoms" class="form-control" id="prénoms" th:field="*{prenoms}" placeholder="ex: Marie, Jeanne, Marguerite BARBATRUC" required/>
-	                </div>
-	                <div class="form-group col-md-6">
-	                <br/>
-	                  <label for="name">Votre date de naissance<span class="text-danger">*</span></label>
-<!-- 	                  <input type="date" class="form-control" name="naissance" id="naissance" th:field="*{naissance}" required/> -->
-	                  <input type="date" name="naissance" class="form-control mt-2 bg-white" th:field="*{naissance}" placeholder="naissance"/>
-	                </div>
-	                
-	                <em>(<span class="text-danger">*</span>) Champs obligatoires</em>
-		          </div>
-			</div>
-		</div>
-      </div>
-    </section><!-- End Resume Section -->
-    
-
     
     
     <!-- ======= Resume Section ======= -->
-    <section id="remarques" class="resume" data-aos="fade-up">
+    <section id="libre" class="resume">
       <div class="container">
 
         <div class="section-title">
           <h2>Questions? Remarques?</h2>
-<!--           <p> -->
+          <p>
           Si vous avez des questions, des remarques ou d'éventuels compléments d'informations, n'hésitez pas à nous écrire ci-dessous :
-<!--           </p> -->
+          </p>
         </div>
-        <div class="row">
-        	<div class="col-md-4 mt-3">
+        <div data-aos="fade-up" class="row">
+        	<div class="col-md-4">
 				<img alt="archie" src="assets/img/initiation-chamanique-amazonie.jpg" class="img-fluid">
 			</div>
         
-			<div class="col-md-8 mt-3">
-	        	<textarea rows="12" name="complements" class="form-control" id="complements" th:field="*{remarques}" placeholder="Questions? Remarques? Compléments d'informations?">
+			<div class="col-md-8">
+	        	<textarea rows="12" name="complements" class="form-control" id="complements" th:field="*{remarques}">
 	            </textarea>
 			</div>
 		</div>
 		<br/>
-		<div  class="row">
+		<div data-aos="fade-up" class="row">
 			<div class="col-md-12">
-			    <h2 class="text-center">N'oubliez pas de valider votre formulaire:</h2>  	
+			    <h2 class="text-center">N'oubliez pas de valider votre formulaire :</h2>  	
 				<div class="my-3">
 		        </div>
 		        <br/>
@@ -613,7 +596,6 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/perso.js"></script>
 
 </body>
 
