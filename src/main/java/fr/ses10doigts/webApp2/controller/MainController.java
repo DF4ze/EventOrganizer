@@ -81,7 +81,7 @@ public class MainController {
 	    List<Participant> participants = partService.getAllParticipants();
 	    model.addAttribute("participants", participants);
 
-	    List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.SOUHAIT);
+	    List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.SOUHAIT);
 	    model.addAttribute("ceremonies", ceremonies);
 
 	    Map<String, Integer> partCerem = new HashMap<>();
@@ -394,7 +394,7 @@ public class MainController {
 	participant.setActif(false);
 	ceremService.save(participant);
 
-	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");
@@ -412,7 +412,7 @@ public class MainController {
 	participant.setActif(true);
 	ceremService.save(participant);
 
-	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");
@@ -434,7 +434,7 @@ public class MainController {
 
 	ceremService.save(cerem);
 
-	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");
