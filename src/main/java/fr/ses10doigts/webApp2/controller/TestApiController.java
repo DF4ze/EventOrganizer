@@ -208,7 +208,7 @@ public class TestApiController {
 	Ceremonie greMar = new Ceremonie();
 	greMar.setActif(true);
 	greMar.setJour(new GregorianCalendar(2023, Calendar.MAY, 2).getTime());
-	greMar.setPrix(120);
+	greMar.setPrix(50);
 	greMar.setType(TypeCeremonie.GRENOUILLE1);
 	greMar.setNom("Kambo Mardi");
 	greMar.setDisplay(Display.CEREMONIE);
@@ -217,7 +217,7 @@ public class TestApiController {
 	Ceremonie greMer = new Ceremonie();
 	greMer.setActif(true);
 	greMer.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
-	greMer.setPrix(120);
+	greMer.setPrix(50);
 	greMer.setType(TypeCeremonie.GRENOUILLE1);
 	greMer.setNom("Kambo Mercredi");
 	greMer.setDisplay(Display.CEREMONIE);
@@ -226,7 +226,7 @@ public class TestApiController {
 	Ceremonie greJeu = new Ceremonie();
 	greJeu.setActif(true);
 	greJeu.setJour(new GregorianCalendar(2023, Calendar.MAY, 4).getTime());
-	greJeu.setPrix(120);
+	greJeu.setPrix(50);
 	greJeu.setType(TypeCeremonie.GRENOUILLE1);
 	greJeu.setNom("Kambo Jeudi");
 	greJeu.setDisplay(Display.CEREMONIE);
@@ -235,7 +235,7 @@ public class TestApiController {
 	Ceremonie greVen = new Ceremonie();
 	greVen.setActif(true);
 	greVen.setJour(new GregorianCalendar(2023, Calendar.MAY, 5).getTime());
-	greVen.setPrix(120);
+	greVen.setPrix(50);
 	greVen.setType(TypeCeremonie.GRENOUILLE1);
 	greVen.setNom("Kambo Vendredi");
 	greVen.setDisplay(Display.CEREMONIE);
@@ -244,7 +244,7 @@ public class TestApiController {
 	Ceremonie greSam = new Ceremonie();
 	greSam.setActif(true);
 	greSam.setJour(new GregorianCalendar(2023, Calendar.MAY, 6).getTime());
-	greSam.setPrix(120);
+	greSam.setPrix(50);
 	greSam.setType(TypeCeremonie.GRENOUILLE1);
 	greSam.setNom("Kambo Samedi");
 	greSam.setDisplay(Display.CEREMONIE);
@@ -253,7 +253,7 @@ public class TestApiController {
 	Ceremonie greDim = new Ceremonie();
 	greDim.setActif(true);
 	greDim.setJour(new GregorianCalendar(2023, Calendar.MAY, 7).getTime());
-	greDim.setPrix(120);
+	greDim.setPrix(50);
 	greDim.setType(TypeCeremonie.GRENOUILLE1);
 	greDim.setNom("Kambo Dimanche");
 	greDim.setDisplay(Display.CEREMONIE);

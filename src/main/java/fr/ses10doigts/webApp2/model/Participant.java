@@ -2,6 +2,7 @@ package fr.ses10doigts.webApp2.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,13 +37,13 @@ public class Participant {
     private List<Note>		notes;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Souhait>	souhaits;
+    private Set<Souhait>       souhaits;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Participation>	participations;
+    private Set<Participation> participations;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Repas>		repas;
+    private Set<Repas>	       repas;
 
-    private boolean		actif = true;
+    private boolean	       actif = true;
 
     public Long getId() {
 	return id;
@@ -132,28 +133,33 @@ public class Participant {
 	this.notes = notes;
     }
 
-    public List<Souhait> getSouhaits() {
+    public Set<Souhait> getSouhaits() {
 	return souhaits;
     }
 
-    public void setSouhaits(List<Souhait> souhaits) {
+    public void setSouhaits(Set<Souhait> souhaits) {
 	this.souhaits = souhaits;
     }
 
-    public List<Participation> getParticipations() {
+    public Set<Participation> getParticipations() {
 	return participations;
     }
 
-    public void setParticipations(List<Participation> participations) {
+    public void setParticipations(Set<Participation> participations) {
 	this.participations = participations;
     }
 
-    public List<Repas> getRepas() {
+    public Set<Repas> getRepas() {
 	return repas;
     }
 
-    public void setRepas(List<Repas> repas) {
+    public void setRepas(Set<Repas> repas) {
 	this.repas = repas;
+    }
+
+    @Override
+    public String toString() {
+	return "Participant [id=" + id + ", nom=" + nom + ", prenom=" + prenom + "]";
     }
 
 }

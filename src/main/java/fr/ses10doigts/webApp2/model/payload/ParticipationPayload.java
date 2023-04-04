@@ -2,7 +2,7 @@ package fr.ses10doigts.webApp2.model.payload;
 
 import fr.ses10doigts.webApp2.model.Participant;
 
-public class participationPayload {
+public class ParticipationPayload {
 
     public Participant participant;
     public String ceremonie;

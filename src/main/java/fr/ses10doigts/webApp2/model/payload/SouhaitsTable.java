@@ -2,7 +2,7 @@ package fr.ses10doigts.webApp2.model.payload;
 
 import java.util.List;
 
-public class SouhaitsPayLoad {
+public class SouhaitsTable {
 
     public String	prenom;
     public Long		participantId;

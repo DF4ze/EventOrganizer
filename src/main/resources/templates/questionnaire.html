@@ -365,13 +365,13 @@
 	        	<div class="row" >
 	                <div class="form-group col-md-6">
 	                  <label for="name">Quelle est votre intention de départ?<br/> Pourquoi souhaitez-vous faire une cérémonie?<span class="text-danger">*</span></label>
-	                  <textarea name="intention" class="form-control" id="intention" th:field="*{intention}" required >
+	                  <textarea name="intention" class="form-control" id="intention" th:field="*{intention}"  >
 	                  </textarea>
 	                </div>
 	                <div class="form-group col-md-6">
 	                <br/>
 	                  <label for="name">Avez-vous déjà réalisé des expériences similaires?<span class="text-danger">*</span></label>
-	                  <textarea  class="form-control" name="experiences" id="experiences" th:field="*{experience}" required>
+	                  <textarea  class="form-control" name="experiences" id="experiences" th:field="*{experience}" >
 	                  </textarea>
 	                </div>
 	            </div>
@@ -379,12 +379,12 @@
 	              <div class="row" >
 	                <div class="form-group col-md-6">
 	                  <label for="name">Avez-vous des problèmes de santé? <br/>Physique ou psychique? Suivez-vous un traitement?<span class="text-danger">*</span> </label>
-	                  <textarea  name="sante" class="form-control" id="sante" th:field="*{sante}" required>
+	                  <textarea  name="sante" class="form-control" id="sante" th:field="*{sante}" >
 	                  </textarea>
 	                </div>
 	                <div class="form-group col-md-6">
 	                  <label for="name">Pourriez-vous nous dire votre plus grand défi émotionnel?<span class="text-danger">*</span></label>
-	                  <textarea  class="form-control" name="defis" id="defis" th:field="*{defi}" required>
+	                  <textarea  class="form-control" name="defis" id="defis" th:field="*{defi}" >
 	                  </textarea>
 	                </div>
 	              </div>
@@ -396,7 +396,7 @@
 	                  <label for="name">
 	                  	Tous vos prénoms ainsi que votre nom de naissance (nom de jeune fille)<span class="text-danger">*</span>
 	                  </label>
-	                  <input type="text" name="prénoms" class="form-control" id="prénoms" th:field="*{prenoms}" placeholder="ex: Marie, Jeanne, Marguerite BARBATRUC" required/>
+	                  <input type="text" name="prenoms" class="form-control" id="prenoms" th:field="*{prenoms}" placeholder="ex: Marie, Jeanne, Marguerite BARBATRUC" />
 	                </div>
 	                <div class="form-group col-md-6">
 	                <br/>

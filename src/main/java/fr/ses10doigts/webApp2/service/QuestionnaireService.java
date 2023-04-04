@@ -2,8 +2,10 @@ package fr.ses10doigts.webApp2.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,8 +71,8 @@ public class QuestionnaireService {
 
 
 	// Souhaits & Participations
-	List<Souhait> souhaits = new ArrayList<>();
-	List<Participation> participations = new ArrayList<>();
+	Set<Souhait> souhaits = new HashSet<>();
+	Set<Participation> participations = new HashSet<>();
 
 	List<String> nonCerem = new ArrayList<>();
 	nonCerem.add("nom");
@@ -97,12 +99,16 @@ public class QuestionnaireService {
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 		    logger.debug("Unable to retrieve data in " + field.getName() + " field");
 		}
-	    }
-	    Souhait souhait = souhaitsService.buildSouhaitFromPayLoad(souhaitTxt, participant);
-	    souhaits.add(souhait);
 
-	    Participation participation = participationService.buildParticipationFromSouhait(souhait);
-	    participations.add(participation);
+		if (souhaitTxt != null) {
+		    Souhait souhait = souhaitsService.buildSouhaitFromPayLoad(souhaitTxt, participant);
+
+		    souhaits.add(souhait);
+
+		    Participation participation = participationService.buildParticipationFromSouhait(souhait);
+		    participations.add(participation);
+		}
+	    }
 	}
 
 
@@ -123,7 +129,7 @@ public class QuestionnaireService {
     }
 
     public List<Questionnaire> getAllQuestionnaires() {
-	List<Questionnaire> findAll = qRepository.findAll();
+	List<Questionnaire> findAll = qRepository.findByActivParticipant();
 	return findAll;
     }
 }

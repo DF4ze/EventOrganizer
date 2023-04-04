@@ -28,9 +28,10 @@ import fr.ses10doigts.webApp2.model.Souhait;
 import fr.ses10doigts.webApp2.model.payload.CeremoniePayload;
 import fr.ses10doigts.webApp2.model.payload.NotePayLoad;
 import fr.ses10doigts.webApp2.model.payload.ParticipantPayload;
+import fr.ses10doigts.webApp2.model.payload.ParticipationPayload;
+import fr.ses10doigts.webApp2.model.payload.ParticipationsTable;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
-import fr.ses10doigts.webApp2.model.payload.SouhaitsPayLoad;
-import fr.ses10doigts.webApp2.model.payload.participationPayload;
+import fr.ses10doigts.webApp2.model.payload.SouhaitsTable;
 import fr.ses10doigts.webApp2.security.model.Role;
 import fr.ses10doigts.webApp2.security.model.User;
 import fr.ses10doigts.webApp2.security.model.payload.request.LoginRequest;
@@ -40,6 +41,7 @@ import fr.ses10doigts.webApp2.security.service.IAuthenticationFacade;
 import fr.ses10doigts.webApp2.service.CeremonieService;
 import fr.ses10doigts.webApp2.service.NoteService;
 import fr.ses10doigts.webApp2.service.ParticipantService;
+import fr.ses10doigts.webApp2.service.ParticipationService;
 import fr.ses10doigts.webApp2.service.QuestionnaireService;
 import fr.ses10doigts.webApp2.service.SouhaitsService;
 
@@ -61,6 +63,8 @@ public class MainController {
     private SouhaitsService	  souhaitService;
     @Autowired
     private NoteService		  noteService;
+    @Autowired
+    private ParticipationService  participationService;
 
     private static final Logger	  logger = LoggerFactory.getLogger(MainController.class);
 
@@ -78,7 +82,7 @@ public class MainController {
 	    model.addAttribute("loggued", true);
 	    model.addAttribute("username", user.getUsername());
 
-	    List<Participant> participants = partService.getAllParticipants();
+	    List<Participant> participants = partService.getAllActiveParticipants();
 	    model.addAttribute("participants", participants);
 
 	    List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.SOUHAIT);
@@ -101,9 +105,9 @@ public class MainController {
 	    }
 	    model.addAttribute("souhaitsParCeremonie", partCerem);
 
-	    List<SouhaitsPayLoad> souhaitsPayLoads = new ArrayList<>();
+	    List<SouhaitsTable> souhaitsPayLoads = new ArrayList<>();
 	    for (Participant participant : participants) {
-		SouhaitsPayLoad paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
+		SouhaitsTable paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
 		souhaitsPayLoads.add(paylLoad);
 	    }
 	    model.addAttribute("souhaits", souhaitsPayLoads);
@@ -236,6 +240,8 @@ public class MainController {
 	participant.setPrenom(dto.prenom);
 	participant.setTel(dto.tel);
 	participant.setUrgence(dto.urgence);
+	participant.setPrenoms(dto.prenoms);
+	participant.setNaissance(dto.naissance);
 
 	partService.save(participant);
 
@@ -448,14 +454,15 @@ public class MainController {
 
     @GetMapping("/participation")
     public String participation(Model model) {
-	participationPayload pp = new participationPayload();
+	ParticipationPayload pp = new ParticipationPayload();
 	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
-	List<Participant> participants = partService.getAllParticipants();
+	//List<Participant> participants = partService.getAllParticipants();
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
 
 	model.addAttribute("search", null);
 	model.addAttribute("participationPayload", pp);
 	model.addAttribute("ceremonies", ceremonies);
-	model.addAttribute("participants", participants);
+	model.addAttribute("participations", participations);
 
 	return "participation";
     }

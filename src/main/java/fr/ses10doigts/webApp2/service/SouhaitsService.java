@@ -1,7 +1,9 @@
 package fr.ses10doigts.webApp2.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Souhait;
-import fr.ses10doigts.webApp2.model.payload.SouhaitsPayLoad;
+import fr.ses10doigts.webApp2.model.payload.SouhaitsTable;
 import fr.ses10doigts.webApp2.repository.SouhaitRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class SouhaitsService {
 
     @Autowired
     private SouhaitRepository souhaitRepo;
+
+    @Autowired
+    private ParticipantService	participantService;
 
     @Autowired
     private CeremonieService  ceremServ;
@@ -29,18 +34,30 @@ public class SouhaitsService {
 	return souhaitRepo.findByParticipant(participant);
     }
 
-    public SouhaitsPayLoad buildSouhaitsPaylLoads(Participant participant) {
-	SouhaitsPayLoad spl = new SouhaitsPayLoad();
+    public List<SouhaitsTable> getAllSouhaitsTable() {
+	List<Participant> parts = participantService.getAllActiveParticipants();
+	List<SouhaitsTable> souhaits = new ArrayList<>();
 
-	List<Souhait> souhaits = participant.getSouhaits();
-	List<String> souhaitsTxt = new ArrayList<String>();
+	for (Participant participant : parts) {
+	    SouhaitsTable payLoad = buildSouhaitsPaylLoads(participant);
+	    souhaits.add(payLoad);
+	}
+
+	return souhaits;
+    }
+
+    public SouhaitsTable buildSouhaitsPaylLoads(Participant participant) {
+	SouhaitsTable spl = new SouhaitsTable();
+
+	Set<Souhait> souhaits = participant.getSouhaits();
+	Set<String> souhaitsTxt = new HashSet<>();
 
 	for (Souhait souhait : souhaits) {
 	    souhaitsTxt.add(souhait.getCeremonie().getNom());
 	}
 	spl.prenom = participant.getPrenom() + " " + participant.getNom();
 	spl.participantId = participant.getId();
-	spl.souhaits = souhaitsTxt;
+	spl.souhaits = new ArrayList<>(souhaitsTxt);
 	if (participant.getQuestionnaire() != null) {
 	    spl.questionnaireId = participant.getQuestionnaire().getId();
 	}
@@ -61,6 +78,14 @@ public class SouhaitsService {
 	    }
 	}
 	return souhait;
+    }
+
+    public void delete(long id) {
+	souhaitRepo.deleteById(id);
+    }
+
+    public Souhait save(Souhait souhait) {
+	return souhaitRepo.save(souhait);
     }
 
 }

@@ -27,6 +27,10 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+	<!-- jQuery -->
+<!-- 	<script src="jquery-3.6.3.min.js"></script> -->
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -212,11 +216,13 @@
 			  <div class="row">
 	      		<div class="form-group col-md-6">
 	              <label for="note">Ajouter un participant : </label>
-	              <input type="text" name="prenom" class="form-control mt-2 bg-white" th:field="*{prenom}" placeholder="Prénom"/>
+	              <input type="text" name="prenom" class="form-control mt-2 bg-white" th:field="*{prenom}" placeholder="Prénom" />
                   <input type="text" name="nom" class="form-control mt-2 bg-white" th:field="*{nom}" placeholder="Nom"/>
 	              <input type="text" name="tel" class="form-control mt-2 bg-white" th:field="*{tel}" placeholder="Téléphone"/>
 	              <input type="text" name="email" class="form-control mt-2 bg-white" th:field="*{email}" placeholder="Email"/>
                   <input type="text" name="urgence" class="form-control mt-2 bg-white" th:field="*{urgence}" placeholder="Urgence"/>
+				  <input type="text" name="prenoms" class="form-control mt-2 bg-white" th:field="*{prenoms}" placeholder="Tous les prénoms"/>
+                  <input type="date" name="naissance" class="form-control mt-2 bg-white" th:field="*{naissance}" />
 	            </div>
 <!-- 	          </div> -->
 <!-- 	          <div class="row"> -->
@@ -324,7 +330,8 @@
 			      	<i class="bi bi-bag-x"></i>
 			      </td>
 			      
-			      <td th:text="${#lists.size(part.notes)}"/>
+			      <td  th:if="${ part.notes != null }" th:text="${#lists.size(part.notes)}"/>
+			      <td  th:unless:if="${ part.notes != null }" th:text="|0|"/>
 			      	
 			    </tr>
 			  </tbody>

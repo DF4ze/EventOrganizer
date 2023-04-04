@@ -87,4 +87,9 @@ public class Ceremonie {
 	this.jour = jour;
     }
 
+    @Override
+    public String toString() {
+	return "Ceremonie [id=" + id + ", nom=" + nom + "]";
+    }
+
 }

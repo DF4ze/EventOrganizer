@@ -27,6 +27,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+	<!-- jQuery -->
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -161,96 +163,75 @@
 	      </div>
           
           <div class="row table-responsive "> <!-- table-responsive -->
-			<table class="table table-striped">
+			<table class="table table-striped table-bordered">
 			  <thead>
 
 			    <tr >
+			      <th ></th>
+			      <th ></th>
+			      <th colspan="2" th:each="cerem: ${ceremonies}" th:text="|${cerem.nom}|"></th>
+			      <th>Total</th>
+			    </tr>
+			    <tr >
+			      <th ></th>
 			      <th >Participant</th>
-			      <th  th:each="cerem: ${ceremonies}" th:text="|${cerem.nom}|"></th>
+			      <div th:each="cerem: ${ceremonies}">
+			      	<th>qte</th>
+			      	<th>prix</th>
+			      </div>
 			    </tr>
 			    
 			  </thead>
 			  <tbody>
-			    <tr th:each="part: ${participants}">
-			      <td>
-			      	<span class="text-danger"><i class="bi bi-trash3" th:onClick="|switchHidden('idPart_${part.id}')|"></i></span>
-	      			<div th:id="|idPart_${part.id}|" hidden>
-	      				Supprimer?<br/>
-	      					
-							<a th:href="|deleteParticipant${part.id}|">
-							<button type="button" class="btn btn-danger border-dark" name="action" value="deleteParticipant">Oui</button>
-							</a>
-		      				 
-		      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPart_${part.id}')|">Non</button>
-	      				
-	      			</div>
-			      </td>
-			      
-			      <td th:if="${part.actif}">
-			      	<i class="bi bi-check-square-fill" th:onClick="|switchHidden('idPartActif_${part.id}')|"></i>
-			      	<div th:id="|idPartActif_${part.id}|" hidden>
-	      				Désactiver?<br/>
-						<a th:href="|desactiverParticipant${part.id}|">
-							<button type="button" class="btn btn-danger border-dark" name="action" value="desactiverParticipant">Oui</button>
-						</a>
-	      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPartActif_${part.id}')|">Non</button>
-	      			</div>
-			      </td>
-			      <td th:unless="${part.actif}" th:onClick="|switchHidden('idPartActif_${part.id}')|">
-			      	<i class="bi bi-square"></i>
-			      	<div th:id="|idPartActif_${part.id}|" hidden>
-	      				Activer?<br/>
-						<a th:href="|activerParticipant${part.id}|">
-							<button type="button" class="btn btn-danger border-dark" name="action" value="activerParticipant">Oui</button>
-						</a>
-	      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPartActif_${part.id}')|">Non</button>
-	      			</div>
-			      </td>
-			      
-
-			      
+			    <tr th:each="part: ${participations}">
+				  <td><i class="bi bi-currency-euro"></i></td>
 			      
 			      <td>
-			      	<a th:href="|participant${part.id}|"><span th:text="|${part.prenom} ${part.nom}|"></span></a>
+			      	<a th:href="|participant${part.idParticipant}|"><span th:text="|${part.nomParticipant}|"></span></a>
 			      </td>
-			     			      			      
-			      <td th:text="${part.tel}"/>
-			      <td th:text="${part.email}"/>
-			      <td th:text="${part.urgence}"/>
-			      
-			      <td th:if="${ part.questionnaire != null }">
-			      	<a th:href="|questRead${part.questionnaire.id}|"><i class="bi bi-patch-question"></i></a>
-			      </td>
-			      <td th:unless="${ part.questionnaire != null }" >
-			      	<i class="bi bi-bag-x"></i>
-			      </td>
-			      
-			      
-<!-- 			      REMPLACER 		-->
-<!-- 			      PAR 				-->
-<!-- 			      SOUHAITS 			-->
-<!-- 			      ET 				-->
-<!-- 			      CEREMONIE  		-->
-<!-- 			      PAR  				-->
-<!-- 			      LA 				-->
-<!-- 			      SUITE 			-->
-			      
-			      <td th:if="${ part.souhaits != null }">
-			      	<a th:href="|souhaitsRead${part.id}|"><i class="bi bi-chat-right-heart"></i></a>
-			      </td>
-			      <td th:unless="${ part.souhaits != null }" >
-			      	<i class="bi bi-bag-x"></i>
+			     			
+			     <div th:each="cerem: ${ceremonies}" >      			      
+			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}"  >
+			      	<div th:id="|qte${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
+			      		<span th:id="|txtqte${part.idParticipant}${cerem.id}" th:text="${part.qte.get(cerem.nom)}" ></span>
+			      	</div>
+			      	<div class="row">
+			      		<input type="text" th:id="|inqte${part.idParticipant}${cerem.id}" th:value="${part.qte.get(cerem.nom)}" hidden/>
+			      	</div>
+			      	<div class="text-success">
+			      		<i class="bi bi-check-circle-fill" th:onClick="|validateParticipation(${part.idParticipant}, ${cerem.id})|"></i>
+			      	</div>
 			      </td>
 			      
-			      <td th:if="${ part.participations != null }">
-			      	<a th:href="|participationsRead${part.id}|"><i class="bi bi-airplane-engines"></i></a>
-			      </td>
-			      <td th:unless="${ part.participations != null }" >
-			      	<i class="bi bi-bag-x"></i>
+			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}">
+			      	<div th:id="|prix${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant})|">
+			      		<span th:id="|txtprix${part.idParticipant}${cerem.id}" th:text="${part.prix.get(cerem.nom)}"></span>
+			      	</div>
+			      	<div class="row" th:id="|divinprix${part.idParticipant}${cerem.id}" hidden>
+				      	<input type="text"  th:id="|inprix${part.idParticipant}${cerem.id}" th:value="${part.prix.get(cerem.nom)} "/>
+				      	<button class="btn" th:onClick="|saveParticipation(${part.idParticipant}, ${cerem.id})|" ><i class="bi bi-check2"></i></button>
+			      	</div>
 			      </td>
 			      
-			      <td th:text="${#lists.size(part.notes)}"/>
-			      	
+			      <td colspan="2" th:unless="${#lists.contains(part.nomCeremonies, cerem.nom)}">
+			      	<div th:id="|divpen${part.idParticipant}${cerem.id}|">
+			      		<i class="bi bi-pencil-square" th:onClick="|switchHiddenParticipationPen(${cerem.id}, ${part.idParticipant})|"></i>
+					</div>
+					<div class="row" th:id="|indivpen${part.idParticipant}${cerem.id}|" hidden>
+						<input type="text"  th:id="|inqte${part.idParticipant}${cerem.id}" value="1"/>
+						<input type="text"  th:id="|inprix${part.idParticipant}${cerem.id}" th:value="${cerem.prix} "/>
+						<button class="btn" th:onClick="|saveParticipationPen(${part.idParticipant}, ${cerem.id})|" ><i class="bi bi-check2"></i></button>
+					</div>
+					<div th:id="|textpen${part.idParticipant}${cerem.id}|" hidden>
+						<span th:id="|txtqte${part.idParticipant}${cerem.id}"></span> |  <span th:id="|txtprix${part.idParticipant}${cerem.id}"></span>
+					</div>
+			      </td>
+			      
+			     </div>
+			     
+			     <td>
+			     	<b th:text="${part.total}" ></b>
+			     </td> 	
 			    </tr>
 			  </tbody>
 			</table>
