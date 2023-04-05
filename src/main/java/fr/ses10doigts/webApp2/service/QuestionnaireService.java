@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.ses10doigts.webApp2.model.Facture;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.model.Questionnaire;
@@ -52,6 +53,9 @@ public class QuestionnaireService {
 	    participant.setUrgence(qp.urgence);
 	    participant.setPrenoms(qp.prenoms);
 	    participant.setNaissance(qp.naissance);
+	    Facture f = new Facture();
+	    f.setParticipant(participant);
+	    participant.setFacture(f);
 	}
 
 	// Questionnaire

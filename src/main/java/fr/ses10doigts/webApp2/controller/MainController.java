@@ -21,11 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Display;
+import fr.ses10doigts.webApp2.model.Facture;
 import fr.ses10doigts.webApp2.model.Note;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Questionnaire;
 import fr.ses10doigts.webApp2.model.Souhait;
 import fr.ses10doigts.webApp2.model.payload.CeremoniePayload;
+import fr.ses10doigts.webApp2.model.payload.FactureTable;
 import fr.ses10doigts.webApp2.model.payload.NotePayLoad;
 import fr.ses10doigts.webApp2.model.payload.ParticipantPayload;
 import fr.ses10doigts.webApp2.model.payload.ParticipationPayload;
@@ -39,6 +41,7 @@ import fr.ses10doigts.webApp2.security.model.payload.request.SignupRequest;
 import fr.ses10doigts.webApp2.security.repository.RoleRepository;
 import fr.ses10doigts.webApp2.security.service.IAuthenticationFacade;
 import fr.ses10doigts.webApp2.service.CeremonieService;
+import fr.ses10doigts.webApp2.service.FactureService;
 import fr.ses10doigts.webApp2.service.NoteService;
 import fr.ses10doigts.webApp2.service.ParticipantService;
 import fr.ses10doigts.webApp2.service.ParticipationService;
@@ -65,6 +68,8 @@ public class MainController {
     private NoteService		  noteService;
     @Autowired
     private ParticipationService  participationService;
+    @Autowired
+    private FactureService	  factureService;
 
     private static final Logger	  logger = LoggerFactory.getLogger(MainController.class);
 
@@ -242,6 +247,9 @@ public class MainController {
 	participant.setUrgence(dto.urgence);
 	participant.setPrenoms(dto.prenoms);
 	participant.setNaissance(dto.naissance);
+	Facture f = new Facture();
+	f.setParticipant(participant);
+	participant.setFacture(f);
 
 	partService.save(participant);
 
@@ -472,7 +480,7 @@ public class MainController {
 	ParticipationPayload pp = new ParticipationPayload();
 	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
 	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
-	ParticipationsTable search = participationService.getParticipationTable(id);
+	FactureTable search = factureService.buildFactureTableFromParticipant(id);
 
 	ModelAndView modelAndView = new ModelAndView("participation");
 	modelAndView.addObject("search", search);

@@ -12,7 +12,7 @@ public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long	 id;
-    private int		 somme = 0;
+    private int		 valeur	= 0;
     @OneToOne
     private Note	 note;
     private TypePaiement moyen = TypePaiement.LIQUIDE;
@@ -25,12 +25,12 @@ public class Paiement {
 	this.id = id;
     }
 
-    public int getSomme() {
-	return somme;
+    public int getValeur() {
+	return valeur;
     }
 
-    public void setSomme(int somme) {
-	this.somme = somme;
+    public void setValeur(int valeur) {
+	this.valeur = valeur;
     }
 
     public Note getNote() {

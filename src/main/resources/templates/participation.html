@@ -62,7 +62,7 @@
 		    <div class="row">
 			    <div class="col-6">
 			      <u>Participant:</u> 
-			       <span th:text="|${search.nomParticipant}|"></span>
+			       <a th:href="|/participant${search.idParticipant}|" th:text="|${search.nomParticipant}|"></a>
 			    </div>
 			    <div class="col-6">
 			      <u>Nombre Cérémonie:</u> 
@@ -76,24 +76,59 @@
 			  <thead>
 			    <tr >
 			      <th>Cérémonie</th>
-			      <th>Tarif</th>
+			      <th colspan="2">Tarif</th>
 			      <th>Total</th>
 			    </tr>
 			  </thead>
 			  <tbody>
 			    <tr th:each="nomCerem: ${search.nomCeremonies}">
 				  <td th:text="${nomCerem}"></td>
-			      <td th:text="|${search.qte.get(nomCerem)} x ${search.prix.get(nomCerem)}|"></td>
-			      <td th:text="|${search.qte.get(nomCerem) * search.prix.get(nomCerem)}|"></td>
+			      <td colspan="2" th:text="|${search.qtes.get(nomCerem)} x ${search.prix.get(nomCerem)}€|"></td>
+			      <td th:text="|${search.qtes.get(nomCerem) * search.prix.get(nomCerem)}€|"></td>
 			    </tr>
 			    <tr>
 				  <td></td>
-			      <td><b>Total Cérémonies</b></td>
-			      <td><b><span th:text="|${search.total}|"></span></b></td>
+			      <td colspan="2"><b>Total Cérémonies</b></td>
+			      <td><b><span th:text="|${search.total}€|"></span></b></td>
 			    </tr>
+			    
 			    <tr>
 				  <td></td>
 			      <td colspan="2"><b>Réduction(s)</b></td>
+			      <td><b th:text="|${search.totalReduction}€|"></b></td>
+			    </tr>
+<!-- 			    <tr th:if="|${#lists.size(search.reductions) == 0}|"> -->
+<!-- 			    	<td></td> -->
+<!-- 			    	<td colspan="2"> </td> -->
+<!-- 			    	<td>Pas de réductions </td> -->
+<!-- 			    </tr> -->
+			    <tr th:unless="|${#lists.size(search.reductions) == 0}|" th:each="reduc: ${search.reductions}">
+			      <td></td>
+			      <td colspan="2" th:text="${reduc.note.text}"></td>
+			      <td th:text="|${reduc.valeur}€|"></td>
+			    </tr>
+			    
+			    <tr>
+				  <td></td>
+			      <td colspan="2"><b>Paiement(s)</b></td>
+			      <td><b th:text="|${search.totalPaiement}€|"></b></td>
+			    </tr>
+<!-- 			    <tr th:if="|${#lists.size(search.paiements) == 0}|"> -->
+<!-- 					<td></td> -->
+<!-- 			    	<td colspan="2"> </td> -->
+<!-- 			    	<td>Pas de paiements </td> -->
+<!-- 			    </tr> -->
+			    <tr th:unless="|${#lists.size(search.paiements) == 0}|" th:each="paiement: ${search.paiements}">
+			      <td></td>
+			      <td th:text="${paiement.note.text}"></td>
+			      <td th:text="${paiement.moyen}"></td>
+			      <td th:text="|${paiement.valeur}€|"></td>
+			    </tr>
+			    
+			    <tr>
+			      <td></td>
+			      <td colspan="2"><b class="text-danger">Reste à payer</b></td>
+			      <td><b class="text-danger" th:text="|${search.total - search.totalReduction - search.totalPaiement}€|"></b></td>
 			    </tr>
 			  </tbody>
 			</table>

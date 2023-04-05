@@ -151,6 +151,10 @@ public class Participant {
     }
 
     public Facture getFacture() {
+	if (facture == null) {
+	    facture = new Facture();
+	    facture.setParticipant(this);
+	}
 	return facture;
     }
 
