@@ -59,77 +59,46 @@
         </div>
 
 	    <div class="section-body">
-	    <div class="row">
-		    <div class="col-1">
-		      <u>Prénom:</u> 
-		    </div>
-		    <div class="col-5">
-		      <span th:text="|${search.prenom}|"></span>
-		    </div>
-		    <div class="col-1">
-		      <u>Nom:</u> 
-		    </div>
-		    <div class="col-5">
-		      <span th:text="|${search.nom}|"></span>
-		    </div>
-	    </div>
-	    <div class="row">
-		    <div class="col-1">
-		      <u>Tel:</u> 
-		    </div>
-		    <div class="col-5">
-		      <span th:text="|${search.tel}|"></span>
-		    </div>
-		    <div class="col-1">
-		      <u>Email:</u> 
-		    </div>
-		    <div class="col-5">
-		      <span th:text="|${search.email}|"></span>
-		    </div>
-	    </div>
-	    <div class="row">
-	    	<div class="col-1">
-	      		<u>Urgence:</u> 
-	      	</div>
-	      	<div class="col-5">
-	      		<span th:text="|${search.urgence}|"></span>
-	      	</div>
-<!-- 	      	<div class="col-1"> -->
-<!-- 	      		<u>id :</u>  -->
-<!-- 	      	</div> -->
-<!-- 	      	<div class="col-5"> -->
-<!-- 	      		<span th:text="|${search.id}|"></span> -->
-<!-- 	      	</div> -->
-	    </div>
-	    <div class="row mt-3">
-		    <br/>
-		    <div class="col-4">	  
-		     <div >  
-		      	<u>Questionnaire:</u>
-		      	<a th:if="${search.questionnaire} != null" th:href="|questRead${search.questionnaire.id}|"><i class="bi bi-patch-question"></i></a>
-		      	<i th:unless="${search.questionnaire} != null" class="bi bi-bag-x"></i>
-		      </div>
+		    <div class="row">
+			    <div class="col-6">
+			      <u>Participant:</u> 
+			       <span th:text="|${search.nomParticipant}|"></span>
+			    </div>
+			    <div class="col-6">
+			      <u>Nombre Cérémonie:</u> 
+			       <span th:text="|${#lists.size(search.nomCeremonies)}|"></span>
+			    </div>
 		    </div>
 		    
 		    
-<!-- 		    REMPLACER PAR SOUHAITS ET PARTICIPATION 	-->
-<!-- 		    PAR LA SUITE 								-->
-		    
-		    <div class="col-4">  
-		      <div >  
-		         <u>Souhaits:</u>
-		         <a th:if="${search.souhaits} != null" th:href="|souhaitsRead${search.id}|"><i class="bi bi-chat-right-heart"></i></a>
-		         <i th:unless="${search.souhaits} != null" class="bi bi-bag-x"></i>
-		       </div>
-		     </div>
-		    <div class="col-4">  
-		      <div >  
-		         <u>Participations:</u>
-		         <a th:if="${search.participations} != null" th:href="|participationsRead${search.id}|"><i class="bi bi-airplane-engines"></i></a>
-		         <i th:unless="${search.participations} != null" class="bi bi-bag-x"></i>
-		      </div>
-			</div> 
+         <div class="row table-responsive mt-4"> <!-- table-responsive -->
+			<table class="table table-striped table-bordered">
+			  <thead>
+			    <tr >
+			      <th>Cérémonie</th>
+			      <th>Tarif</th>
+			      <th>Total</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="nomCerem: ${search.nomCeremonies}">
+				  <td th:text="${nomCerem}"></td>
+			      <td th:text="|${search.qte.get(nomCerem)} x ${search.prix.get(nomCerem)}|"></td>
+			      <td th:text="|${search.qte.get(nomCerem) * search.prix.get(nomCerem)}|"></td>
+			    </tr>
+			    <tr>
+				  <td></td>
+			      <td><b>Total Cérémonies</b></td>
+			      <td><b><span th:text="|${search.total}|"></span></b></td>
+			    </tr>
+			    <tr>
+				  <td></td>
+			      <td colspan="2"><b>Réduction(s)</b></td>
+			    </tr>
+			  </tbody>
+			</table>
 		  </div>
+
         </div>		
       </div>
      </section>

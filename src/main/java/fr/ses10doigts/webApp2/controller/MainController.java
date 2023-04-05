@@ -456,7 +456,6 @@ public class MainController {
     public String participation(Model model) {
 	ParticipationPayload pp = new ParticipationPayload();
 	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
-	//List<Participant> participants = partService.getAllParticipants();
 	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
 
 	model.addAttribute("search", null);
@@ -465,6 +464,23 @@ public class MainController {
 	model.addAttribute("participations", participations);
 
 	return "participation";
+    }
+
+    @GetMapping("/participation{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView participationById(@PathVariable("id") long id) {
+	ParticipationPayload pp = new ParticipationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+	ParticipationsTable search = participationService.getParticipationTable(id);
+
+	ModelAndView modelAndView = new ModelAndView("participation");
+	modelAndView.addObject("search", search);
+	modelAndView.addObject("participationPayload", pp);
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("participations", participations);
+
+	return modelAndView;
     }
 
     /**** Test section ****/

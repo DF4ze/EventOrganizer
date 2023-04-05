@@ -63,34 +63,45 @@ public class ParticipationService {
 	return p;
     }
 
+    public ParticipationsTable getParticipationTable(Participant participant) {
+	ParticipationsTable pt = new ParticipationsTable();
+	pt.idParticipant = participant.getId();
+	pt.nomParticipant = participant.getPrenom() + " " + participant.getNom();
+
+	List<String> nomPart = new ArrayList<>();
+	Map<String, Integer> prices = new HashMap<>();
+	Map<String, Integer> qtes = new HashMap<>();
+	Map<String, Boolean> fait = new HashMap<>();
+	int total = 0;
+	for (Participation participation : participant.getParticipations()) {
+
+	    nomPart.add(participation.getCeremonie().getNom());
+	    prices.put(participation.getCeremonie().getNom(), participation.getPrix());
+	    qtes.put(participation.getCeremonie().getNom(), participation.getQuantite());
+	    fait.put(participation.getCeremonie().getNom(), participation.isFait());
+	    total += participation.getQuantite() * participation.getPrix();
+	}
+	pt.nomCeremonies = nomPart;
+	pt.prix = prices;
+	pt.qte = qtes;
+	pt.fait = fait;
+	pt.total = total;
+
+	return pt;
+    }
+
+    public ParticipationsTable getParticipationTable(long id) {
+	Participant participant = participantService.getParticipant(id);
+
+	return getParticipationTable(participant);
+    }
+
     public List<ParticipationsTable> getAllParticipationsTable() {
 	List<Participant> participants = participantService.getAllActiveParticipants();
 	List<ParticipationsTable> table = new ArrayList<>();
 
 	for (Participant participant : participants) {
-	    ParticipationsTable pt = new ParticipationsTable();
-	    pt.idParticipant = participant.getId();
-	    pt.nomParticipant = participant.getPrenom() + " " + participant.getNom();
-
-	    List<String> nomPart = new ArrayList<>();
-	    Map<String, Integer> prices = new HashMap<>();
-	    Map<String, Integer> qtes = new HashMap<>();
-	    Map<String, Boolean> fait = new HashMap<>();
-	    int total = 0;
-	    for (Participation participation : participant.getParticipations()) {
-
-		nomPart.add(participation.getCeremonie().getNom());
-		prices.put(participation.getCeremonie().getNom(), participation.getPrix());
-		qtes.put(participation.getCeremonie().getNom(), participation.getQuantite());
-		fait.put(participation.getCeremonie().getNom(), participation.isFait());
-		total += participation.getQuantite() * participation.getPrix();
-	    }
-	    pt.nomCeremonies = nomPart;
-	    pt.prix = prices;
-	    pt.qte = qtes;
-	    pt.fait = fait;
-	    pt.total = total;
-
+	    ParticipationsTable pt = getParticipationTable(participant);
 	    table.add(pt);
 	}
 
@@ -104,4 +115,9 @@ public class ParticipationService {
     public void delete(long partId) {
 	participationRepo.deleteById(partId);
     }
+
+    public Participation getParticipation(long id) {
+	return participationRepo.findById(id).orElse(null);
+    }
+
 }

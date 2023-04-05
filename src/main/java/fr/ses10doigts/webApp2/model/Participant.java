@@ -40,8 +40,9 @@ public class Participant {
     private Set<Souhait>       souhaits;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Participation> participations;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Repas>	       repas;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Facture	       facture;
 
     private boolean	       actif = true;
 
@@ -149,12 +150,12 @@ public class Participant {
 	this.participations = participations;
     }
 
-    public Set<Repas> getRepas() {
-	return repas;
+    public Facture getFacture() {
+	return facture;
     }
 
-    public void setRepas(Set<Repas> repas) {
-	this.repas = repas;
+    public void setFacture(Facture facture) {
+	this.facture = facture;
     }
 
     @Override

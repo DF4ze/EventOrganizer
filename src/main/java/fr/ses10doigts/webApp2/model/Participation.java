@@ -29,7 +29,7 @@ public class Participation {
     @ManyToOne
     @NotNull
     private Participant	participant;
-    @OneToOne
+    @OneToOne(optional = true)
     @Nullable
     private Souhait	souhait;
     @OneToOne
