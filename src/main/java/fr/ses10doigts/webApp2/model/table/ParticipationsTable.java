@@ -1,4 +1,4 @@
-package fr.ses10doigts.webApp2.model.payload;
+package fr.ses10doigts.webApp2.model.table;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,7 @@ public class ParticipationsTable {
 
     public String		nomParticipant;
     public long			idParticipant;
+    public long			idFacture;
     public List<String>		nomCeremonies;
     public Map<String, Integer>	qte;
     public Map<String, Integer>	prix;
@@ -27,6 +28,14 @@ public class ParticipationsTable {
 
     public void setIdParticipant(long idParticipant) {
 	this.idParticipant = idParticipant;
+    }
+
+    public long getIdFacture() {
+	return idFacture;
+    }
+
+    public void setIdFacture(long idFacture) {
+	this.idFacture = idFacture;
     }
 
     public List<String> getNomCeremonies() {

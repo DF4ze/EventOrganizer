@@ -57,16 +57,16 @@ public class TestApiController {
 	tambour1.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
 	tambour1.setPrix(120);
 	tambour1.setType(TypeCeremonie.TAMBOUR1);
-	tambour1.setNom("Tambours 1");
+	tambour1.setNom("Tambour 33");
 	tambour1.setDisplay(Display.CEREMONIE);
 	cerems.add(tambour1);
 
 	Ceremonie tambour2 = new Ceremonie();
 	tambour2.setActif(true);
 	tambour2.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
-	tambour2.setPrix(130);
+	tambour2.setPrix(150);
 	tambour2.setType(TypeCeremonie.TAMBOUR2);
-	tambour2.setNom("Tambours 2");
+	tambour2.setNom("Tambour 36");
 	tambour2.setDisplay(Display.CEREMONIE);
 	cerems.add(tambour2);
 
@@ -75,7 +75,7 @@ public class TestApiController {
 	tambour3.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
 	tambour3.setPrix(150);
 	tambour3.setType(TypeCeremonie.TAMBOUR3);
-	tambour3.setNom("Tambours 3");
+	tambour3.setNom("Tambour 38");
 	tambour3.setDisplay(Display.CEREMONIE);
 	cerems.add(tambour3);
 
@@ -84,7 +84,7 @@ public class TestApiController {
 	tambourSouhait.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
 	tambourSouhait.setPrix(150);
 	tambourSouhait.setType(TypeCeremonie.TAMBOUR1);
-	tambourSouhait.setNom("Tambours");
+	tambourSouhait.setNom("Tambour");
 	tambourSouhait.setDisplay(Display.SOUHAIT);
 	cerems.add(tambourSouhait);
 

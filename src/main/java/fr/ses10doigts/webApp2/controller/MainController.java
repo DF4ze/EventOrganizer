@@ -27,13 +27,15 @@ import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Questionnaire;
 import fr.ses10doigts.webApp2.model.Souhait;
 import fr.ses10doigts.webApp2.model.payload.CeremoniePayload;
-import fr.ses10doigts.webApp2.model.payload.FactureTable;
 import fr.ses10doigts.webApp2.model.payload.NotePayLoad;
+import fr.ses10doigts.webApp2.model.payload.PaiementPayload;
 import fr.ses10doigts.webApp2.model.payload.ParticipantPayload;
 import fr.ses10doigts.webApp2.model.payload.ParticipationPayload;
-import fr.ses10doigts.webApp2.model.payload.ParticipationsTable;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
-import fr.ses10doigts.webApp2.model.payload.SouhaitsTable;
+import fr.ses10doigts.webApp2.model.payload.ReducPayload;
+import fr.ses10doigts.webApp2.model.table.FactureTable;
+import fr.ses10doigts.webApp2.model.table.ParticipationsTable;
+import fr.ses10doigts.webApp2.model.table.SouhaitsTable;
 import fr.ses10doigts.webApp2.security.model.Role;
 import fr.ses10doigts.webApp2.security.model.User;
 import fr.ses10doigts.webApp2.security.model.payload.request.LoginRequest;
@@ -482,11 +484,122 @@ public class MainController {
 	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
 	FactureTable search = factureService.buildFactureTableFromParticipant(id);
 
+	ReducPayload reduc = new ReducPayload();
+	reduc.idParticipant = search.idParticipant;
+	PaiementPayload paiement = new PaiementPayload();
+	paiement.idParticipant = search.idParticipant;
+
 	ModelAndView modelAndView = new ModelAndView("participation");
 	modelAndView.addObject("search", search);
 	modelAndView.addObject("participationPayload", pp);
 	modelAndView.addObject("ceremonies", ceremonies);
 	modelAndView.addObject("participations", participations);
+	modelAndView.addObject("reducPayload", reduc);
+	modelAndView.addObject("paiementPayload", paiement);
+
+	return modelAndView;
+    }
+
+    @PostMapping(value = "/participation", params = "action=addReduc")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView addReduc(@ModelAttribute ReducPayload dto) {
+	ParticipationPayload pp = new ParticipationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+
+	if (dto.valeur != 0) {
+	    factureService.addReduction(dto);
+	}
+
+	FactureTable search = factureService.buildFactureTableFromParticipant(dto.idParticipant);
+	PaiementPayload paiement = new PaiementPayload();
+	paiement.idParticipant = search.idParticipant;
+
+	ModelAndView modelAndView = new ModelAndView("participation");
+	modelAndView.addObject("search", search);
+	modelAndView.addObject("participationPayload", pp);
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("participations", participations);
+	modelAndView.addObject("reducPayload", dto);
+	modelAndView.addObject("paiementPayload", paiement);
+
+	return modelAndView;
+    }
+
+    @PostMapping(value = "/participation", params = "action=addPaiement")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView addPaiement(@ModelAttribute PaiementPayload dto) {
+	ParticipationPayload pp = new ParticipationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+
+	if (dto.valeur != 0) {
+	    factureService.addPaiement(dto);
+	}
+
+	FactureTable search = factureService.buildFactureTableFromParticipant(dto.idParticipant);
+	PaiementPayload paiement = new PaiementPayload();
+	paiement.idParticipant = search.idParticipant;
+
+	ModelAndView modelAndView = new ModelAndView("participation");
+	modelAndView.addObject("search", search);
+	modelAndView.addObject("participationPayload", pp);
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("participations", participations);
+	modelAndView.addObject("reducPayload", dto);
+	modelAndView.addObject("paiementPayload", paiement);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/deleteReduc{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView deleteReduc(@PathVariable("id") long id) {
+	ParticipationPayload pp = new ParticipationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+
+	Facture facture = factureService.deleteReduction(id);
+	FactureTable search = factureService.buildFactureTableFromParticipant(facture.getParticipant().getId());
+
+	ReducPayload reduc = new ReducPayload();
+	reduc.idParticipant = search.idParticipant;
+	PaiementPayload paiement = new PaiementPayload();
+	paiement.idParticipant = search.idParticipant;
+
+	ModelAndView modelAndView = new ModelAndView("participation");
+	modelAndView.addObject("search", search);
+	modelAndView.addObject("participationPayload", pp);
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("participations", participations);
+	modelAndView.addObject("reducPayload", reduc);
+	modelAndView.addObject("paiementPayload", paiement);
+
+	return modelAndView;
+    }
+
+    @GetMapping("/deletePaiement{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView deletePaiement(@PathVariable("id") long id) {
+	ParticipationPayload pp = new ParticipationPayload();
+	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+
+	Facture facture = factureService.deletePaiement(id);
+	FactureTable search = factureService.buildFactureTableFromParticipant(facture.getParticipant().getId());
+
+	ReducPayload reduc = new ReducPayload();
+	reduc.idParticipant = search.idParticipant;
+	PaiementPayload paiement = new PaiementPayload();
+	paiement.idParticipant = search.idParticipant;
+
+	ModelAndView modelAndView = new ModelAndView("participation");
+	modelAndView.addObject("search", search);
+	modelAndView.addObject("participationPayload", pp);
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("participations", participations);
+	modelAndView.addObject("reducPayload", reduc);
+	modelAndView.addObject("paiementPayload", paiement);
 
 	return modelAndView;
     }

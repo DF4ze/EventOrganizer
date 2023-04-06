@@ -12,7 +12,7 @@ import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.model.Souhait;
-import fr.ses10doigts.webApp2.model.payload.ParticipationsTable;
+import fr.ses10doigts.webApp2.model.table.ParticipationsTable;
 import fr.ses10doigts.webApp2.repository.ParticipationRepository;
 
 @Service
@@ -67,6 +67,13 @@ public class ParticipationService {
 	ParticipationsTable pt = new ParticipationsTable();
 	pt.idParticipant = participant.getId();
 	pt.nomParticipant = participant.getPrenom() + " " + participant.getNom();
+
+	// TODO Temp a supprimer
+	if (participant.getFacture().getId() == null) {
+	    participant = participantService.save(participant);
+	}
+	pt.idFacture = participant.getFacture().getId();
+
 
 	List<String> nomPart = new ArrayList<>();
 	Map<String, Integer> prices = new HashMap<>();

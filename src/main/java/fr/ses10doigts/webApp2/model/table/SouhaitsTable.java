@@ -1,4 +1,4 @@
-package fr.ses10doigts.webApp2.model.payload;
+package fr.ses10doigts.webApp2.model.table;
 
 import java.util.List;
 

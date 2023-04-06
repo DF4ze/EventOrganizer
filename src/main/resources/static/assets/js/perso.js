@@ -45,11 +45,13 @@ function switchHidden( id ){
 	
 }
 
-function switchHiddenParticipation(ceremId, partId){
-	switchHidden('qte'+partId+ceremId);
-	switchHidden('inqte'+partId+ceremId);
-	switchHidden('prix'+partId+ceremId);
-	switchHidden('divinprix'+partId+ceremId);
+function switchHiddenParticipation(ceremId, partId, fait = false){
+	if( !fait ){
+		switchHidden('qte'+partId+ceremId);
+		switchHidden('inqte'+partId+ceremId);
+		switchHidden('prix'+partId+ceremId);
+		switchHidden('divinprix'+partId+ceremId);
+	}
 }
 function switchHiddenParticipationPen(ceremId, partId){
 	switchHidden('divpen'+partId+ceremId);
@@ -205,8 +207,10 @@ function validateParticipation( partId, ceremId ){
 			        var classArr = classList.split(/\s+/);
 					if( classArr.includes("bg-success") ){
 						$("#qte"+partId+ceremId).removeClass("bg-success");
+						$("#prix"+partId+ceremId).removeClass("bg-success");
 					}else{
 						$("#qte"+partId+ceremId).addClass("bg-success");
+						$("#prix"+partId+ceremId).addClass("bg-success");
 					}
 				}
 			} 

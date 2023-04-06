@@ -1,9 +1,11 @@
 package fr.ses10doigts.webApp2.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -12,10 +14,11 @@ public class Reduction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long   id;
-    private String nom;
     private int	   valeur = 0;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Note   note;
+    @ManyToOne
+    private Facture facture;
 
     public Long getId() {
 	return id;
@@ -23,14 +26,6 @@ public class Reduction {
 
     public void setId(Long id) {
 	this.id = id;
-    }
-
-    public String getNom() {
-	return nom;
-    }
-
-    public void setNom(String nom) {
-	this.nom = nom;
     }
 
     public int getValeur() {
@@ -48,5 +43,15 @@ public class Reduction {
     public void setNote(Note note) {
 	this.note = note;
     }
+
+    public Facture getFacture() {
+	return facture;
+    }
+
+    public void setFacture(Facture facture) {
+	this.facture = facture;
+    }
+
+
 
 }

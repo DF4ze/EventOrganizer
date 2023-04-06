@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Souhait;
-import fr.ses10doigts.webApp2.model.payload.SouhaitsTable;
+import fr.ses10doigts.webApp2.model.table.SouhaitsTable;
 import fr.ses10doigts.webApp2.repository.SouhaitRepository;
 
 @Service

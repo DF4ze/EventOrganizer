@@ -33,8 +33,8 @@ public class ParticipantService {
 	return partRepo.findById(id).orElse(null);
     }
 
-    public void save(Participant participant) {
-	partRepo.save(participant);
+    public Participant save(Participant participant) {
+	return partRepo.save(participant);
     }
 
     public void delete(long id) {

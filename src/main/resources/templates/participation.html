@@ -29,6 +29,8 @@
 
 	<!-- jQuery -->
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Jquery Call -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -94,33 +96,87 @@
 			    
 			    <tr>
 				  <td></td>
-			      <td colspan="2"><b>Réduction(s)</b></td>
+			      <td colspan="2"><b>Réduction(s)</b> <input value="+" type="button" class="btn btn-outline-primary" onClick="switchHidden('reducForm')"/></td>
 			      <td><b th:text="|${search.totalReduction}€|"></b></td>
 			    </tr>
-<!-- 			    <tr th:if="|${#lists.size(search.reductions) == 0}|"> -->
-<!-- 			    	<td></td> -->
-<!-- 			    	<td colspan="2"> </td> -->
-<!-- 			    	<td>Pas de réductions </td> -->
-<!-- 			    </tr> -->
-			    <tr th:unless="|${#lists.size(search.reductions) == 0}|" th:each="reduc: ${search.reductions}">
+			    
+			    <tr id="reducForm" hidden>
+			    	<form method="post" modelAttribute="reducPayload" th:action="@{/participation}" th:object="${reducPayload}">
+				  		<div class="row">
+				  			<input type="hidden" th:field="*{idParticipant}"/>
+				  		</div>
+				  		<td></td>
+				  		<td></td>
+						<td><input type="text" th:field="*{note}" placeholder="Indiquer motif" required/></td>
+					  	<td>
+					  	    <input type="text" th:field="*{valeur}" placeholder="Valeur de la réduction" required/><br/>
+					  		<button type="submit" name="action" value="addReduc" class="btn btn-primary">Valider la réduction</button>
+					  	</td>
+				  	</form>
+			    </tr>
+			    
+			    <tr th:if="|${#lists.size(search.reductions) != 0}|" th:each="reduc, iter: ${search.reductions}">
 			      <td></td>
-			      <td colspan="2" th:text="${reduc.note.text}"></td>
+			      <td>
+			        <span class="text-danger"><i class="bi bi-trash3" th:onClick="|switchHidden('idRedu_${reduc.id}')|"></i></span>
+			        <span th:text="${reduc.note.text}"></span>
+	      			<div th:id="|idRedu_${reduc.id}|" hidden>
+	      				Supprimer?<br/>
+	      					
+							<a th:href="|deleteReduc${reduc.id}|">
+							<button type="button" class="btn btn-danger border-dark" name="action" value="deleteParticipant">Oui</button>
+							</a>
+		      				 
+		      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idRedu_${reduc.id}')|">Non</button>
+
+	      			</div>
+			      </td>
+			      <td ></td>
 			      <td th:text="|${reduc.valeur}€|"></td>
 			    </tr>
 			    
 			    <tr>
-				  <td></td>
-			      <td colspan="2"><b>Paiement(s)</b></td>
+				  <td>
+				  </td>
+			      <td colspan="2"><b>Paiement(s)</b> <input value="+" type="button" class="btn btn-outline-primary" onClick="switchHidden('paiementForm')"/> </td>
 			      <td><b th:text="|${search.totalPaiement}€|"></b></td>
 			    </tr>
-<!-- 			    <tr th:if="|${#lists.size(search.paiements) == 0}|"> -->
-<!-- 					<td></td> -->
-<!-- 			    	<td colspan="2"> </td> -->
-<!-- 			    	<td>Pas de paiements </td> -->
-<!-- 			    </tr> -->
-			    <tr th:unless="|${#lists.size(search.paiements) == 0}|" th:each="paiement: ${search.paiements}">
+			    
+			    <tr  id="paiementForm" hidden>
+	    			<form method="post" modelAttribute="paiementPayload" th:action="@{/participation}" th:object="${paiementPayload}">
+					  	<td></td>
+					  	<td>
+					  		<input type="hidden" th:field="*{idParticipant}"/>
+							<input type="text" th:field="*{note}" placeholder="Une Note?"/>
+						</td>
+						<td>
+						  	<select th:field="*{moyenPaiement}">
+							    <option th:each="colorOpt : ${T(fr.ses10doigts.webApp2.model.TypePaiement).values()}" 
+							         th:value="${colorOpt}" th:text="${colorOpt}"></option>
+							</select>
+						</td>
+						<td>
+							<input type="text" th:field="*{valeur}" placeholder="Valeur du paiement"/><br/>
+						  	<button type="submit" name="action" value="addPaiement" class="btn btn-primary">Valider le paiement</button>
+					  	</td>
+				  	</form>
+			    </tr>
+			    
+			    <tr th:if="|${#lists.size(search.paiements) != 0}|" th:each="paiement: ${search.paiements}">
 			      <td></td>
-			      <td th:text="${paiement.note.text}"></td>
+			      <td >
+			        <span class="text-danger"><i class="bi bi-trash3" th:onClick="|switchHidden('idPaie_${paiement.id}')|"></i></span>
+			        <span th:text="${paiement.note.text}" ></span>
+	      			<div th:id="|idPaie_${paiement.id}|" hidden>
+	      				Supprimer?<br/>
+	      					
+						<a th:href="|deletePaiement${paiement.id}|">
+						<button type="button" class="btn btn-danger border-dark" name="action" value="deletePaiement">Oui</button>
+						</a>
+	      				 
+	      				<button type="button" class="btn btn-primary" th:onClick="|switchHidden('idPaie_${paiement.id}')|">Non</button>
+	      			</div>
+			      </td>
 			      <td th:text="${paiement.moyen}"></td>
 			      <td th:text="|${paiement.valeur}€|"></td>
 			    </tr>
@@ -188,7 +244,7 @@
 			  </thead>
 			  <tbody>
 			    <tr th:each="part: ${participations}">
-				  <td><i class="bi bi-currency-euro"></i></td>
+				  <td><a th:href="|/participation${part.idParticipant}|"><i class="bi bi-currency-euro"></i></a></td>
 			      
 			      <td>
 			      	<a th:href="|participant${part.idParticipant}|"><span th:text="|${part.nomParticipant}|"></span></a>
@@ -196,7 +252,7 @@
 			     			
 			     <div th:each="cerem: ${ceremonies}" >      			      
 			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}"  >
-			      	<div th:id="|qte${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
+			      	<div th:id="|qte${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
 			      		<span th:id="|txtqte${part.idParticipant}${cerem.id}" th:text="${part.qte.get(cerem.nom)}" ></span>
 			      	</div>
 			      	<div class="row">
@@ -208,7 +264,7 @@
 			      </td>
 			      
 			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}">
-			      	<div th:id="|prix${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant})|">
+			      	<div th:id="|prix${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
 			      		<span th:id="|txtprix${part.idParticipant}${cerem.id}" th:text="${part.prix.get(cerem.nom)}"></span>
 			      	</div>
 			      	<div class="row" th:id="|divinprix${part.idParticipant}${cerem.id}" hidden>

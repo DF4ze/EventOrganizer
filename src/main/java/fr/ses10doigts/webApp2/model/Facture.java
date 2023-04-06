@@ -1,7 +1,7 @@
 package fr.ses10doigts.webApp2.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,14 +16,14 @@ public class Facture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long	   id;
+    private Long	    id;
     @OneToOne
-    private Participant	   participant;
+    private Participant	    participant;
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Paiement>  paiements  = new HashSet<>();
-    @OneToMany
-    private Set<Reduction> reductions = new HashSet<>();
-    private boolean	   paye	= false;
+    private List<Paiement>  paiements  = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Reduction> reductions = new ArrayList<>();
+    private boolean	    paye       = false;
 
     public Long getId() {
 	return id;
@@ -41,19 +41,19 @@ public class Facture {
 	this.participant = participant;
     }
 
-    public Set<Paiement> getPaiements() {
+    public List<Paiement> getPaiements() {
 	return paiements;
     }
 
-    public void setPaiements(Set<Paiement> paiements) {
+    public void setPaiements(List<Paiement> paiements) {
 	this.paiements = paiements;
     }
 
-    public Set<Reduction> getReductions() {
+    public List<Reduction> getReductions() {
 	return reductions;
     }
 
-    public void setReductions(Set<Reduction> reductions) {
+    public void setReductions(List<Reduction> reductions) {
 	this.reductions = reductions;
     }
 

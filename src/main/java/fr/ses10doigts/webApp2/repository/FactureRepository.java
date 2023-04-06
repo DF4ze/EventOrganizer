@@ -8,4 +8,6 @@ import fr.ses10doigts.webApp2.model.Facture;
 @Repository
 public interface FactureRepository extends JpaRepository<Facture, Long> {
 
+    //    @Query(value = "SELECT f FROM Facture f WHERE f.reductions.id = ?1")
+    //    Facture findByReductionId(long id);
 }

@@ -1,5 +1,6 @@
-package fr.ses10doigts.webApp2.model.payload;
+package fr.ses10doigts.webApp2.model.table;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,8 +19,8 @@ public class FactureTable {
     public Integer		totalPaiement;
     public Integer		totalReduction;
 
-    public Set<Paiement>	paiements;
-    public Set<Reduction>	reductions;
+    public List<Paiement>	paiements;
+    public List<Reduction>	reductions;
     public Boolean		paye;
 
     public Long getIdParticipant() {
@@ -86,19 +87,19 @@ public class FactureTable {
 	this.prix = prix;
     }
 
-    public Set<Paiement> getPaiements() {
+    public List<Paiement> getPaiements() {
 	return paiements;
     }
 
-    public void setPaiements(Set<Paiement> paiements) {
+    public void setPaiements(List<Paiement> paiements) {
 	this.paiements = paiements;
     }
 
-    public Set<Reduction> getReductions() {
+    public List<Reduction> getReductions() {
 	return reductions;
     }
 
-    public void setReductions(Set<Reduction> reductions) {
+    public void setReductions(List<Reduction> reductions) {
 	this.reductions = reductions;
     }
 
