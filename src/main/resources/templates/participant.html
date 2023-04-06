@@ -136,14 +136,14 @@
 		    <div class="col-4">  
 		      <div >  
 		         <u>Souhaits:</u>
-		         <a th:if="${search.souhaits} != null" th:href="|souhaitsRead${search.id}|"><i class="bi bi-chat-right-heart"></i></a>
+		         <a th:if="${search.souhaits} != null" href="/"><i class="bi bi-chat-right-heart"></i></a>
 		         <i th:unless="${search.souhaits} != null" class="bi bi-bag-x"></i>
 		       </div>
 		     </div>
 		    <div class="col-4">  
 		      <div >  
 		         <u>Participations:</u>
-		         <a th:if="${search.participations} != null" th:href="|participationsRead${search.id}|"><i class="bi bi-airplane-engines"></i></a>
+		         <a th:if="${search.participations} != null" th:href="|participation${search.id}|"><i class="bi bi-airplane-engines"></i></a>
 		         <i th:unless="${search.participations} != null" class="bi bi-bag-x"></i>
 		      </div>
 			</div> 

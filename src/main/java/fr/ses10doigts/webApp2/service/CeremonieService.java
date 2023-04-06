@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Display;
+import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.repository.CeremonieRepository;
+import fr.ses10doigts.webApp2.repository.ParticipationRepository;
 
 @Service
 public class CeremonieService {
 
     @Autowired
     private CeremonieRepository ceremRepo;
+    @Autowired
+    private ParticipationRepository participationRepo;
 
     public boolean saveAll(List<Ceremonie> cerems) {
 
@@ -59,6 +63,19 @@ public class CeremonieService {
 
     public Ceremonie getCeremonie(long id) {
 	return ceremRepo.findById(id).orElse(null);
+    }
+
+    public void setActif(long id, boolean actif) {
+	Ceremonie ceremonie = getCeremonie(id);
+	ceremonie.setActif(actif);
+
+	List<Participation> parts = participationRepo.findByCeremonieAndActif(ceremonie, !actif);
+	for (Participation participation : parts) {
+	    participation.setActif(actif);
+	}
+	parts = participationRepo.saveAll(parts);
+
+	save(ceremonie);
     }
 
 }

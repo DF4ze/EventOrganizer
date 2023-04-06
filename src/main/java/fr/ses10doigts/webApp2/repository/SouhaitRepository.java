@@ -12,7 +12,7 @@ import fr.ses10doigts.webApp2.model.Souhait;
 @Repository
 public interface SouhaitRepository extends JpaRepository<Souhait, Long> {
 
-    List<Souhait> findByParticipant(Participant participant);
+    List<Souhait> findByParticipantAndActif(Participant participant, Boolean actif);
 
     List<Souhait> findByCeremonie(Ceremonie ceremonie);
 }

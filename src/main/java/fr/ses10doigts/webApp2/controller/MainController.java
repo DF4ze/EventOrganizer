@@ -114,7 +114,7 @@ public class MainController {
 
 	    List<SouhaitsTable> souhaitsPayLoads = new ArrayList<>();
 	    for (Participant participant : participants) {
-		SouhaitsTable paylLoad = souhaitService.buildSouhaitsPaylLoads(participant);
+		SouhaitsTable paylLoad = souhaitService.buildSouhaitsTables(participant);
 		souhaitsPayLoads.add(paylLoad);
 	    }
 	    model.addAttribute("souhaits", souhaitsPayLoads);
@@ -292,8 +292,7 @@ public class MainController {
     public ModelAndView desactiverParticipant(@PathVariable("id") long id) {
 
 	Participant participant = partService.getParticipant(id);
-	participant.setActif(false);
-	partService.save(participant);
+	participant = partService.desactiver(participant);
 
 	List<Participant> allParticipants = partService.getAllParticipants();
 	ParticipantPayload pp = new ParticipantPayload();
@@ -313,8 +312,7 @@ public class MainController {
     public ModelAndView activerParticipant(@PathVariable("id") long id) {
 
 	Participant participant = partService.getParticipant(id);
-	participant.setActif(true);
-	partService.save(participant);
+	participant = partService.activer(participant);
 
 	List<Participant> allParticipants = partService.getAllParticipants();
 	ParticipantPayload pp = new ParticipantPayload();
@@ -406,11 +404,9 @@ public class MainController {
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView desactiverCeremonie(@PathVariable("id") long id) {
 
-	Ceremonie participant = ceremService.getCeremonie(id);
-	participant.setActif(false);
-	ceremService.save(participant);
+	ceremService.setActif(id, false);
 
-	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");
@@ -424,11 +420,9 @@ public class MainController {
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView activerCeremonie(@PathVariable("id") long id) {
 
-	Ceremonie participant = ceremService.getCeremonie(id);
-	participant.setActif(true);
-	ceremService.save(participant);
+	ceremService.setActif(id, true);
 
-	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");
@@ -450,7 +444,7 @@ public class MainController {
 
 	ceremService.save(cerem);
 
-	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
 	CeremoniePayload pp = new CeremoniePayload();
 
 	ModelAndView modelAndView = new ModelAndView("ceremonie");

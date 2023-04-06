@@ -31,7 +31,7 @@ public class SouhaitsService {
     private static final Logger	logger = LoggerFactory.getLogger(SouhaitsService.class);
 
     public List<Souhait> findAllByParticipant(Participant participant) {
-	return souhaitRepo.findByParticipant(participant);
+	return souhaitRepo.findByParticipantAndActif(participant, true);
     }
 
     public List<SouhaitsTable> getAllSouhaitsTable() {
@@ -39,21 +39,23 @@ public class SouhaitsService {
 	List<SouhaitsTable> souhaits = new ArrayList<>();
 
 	for (Participant participant : parts) {
-	    SouhaitsTable payLoad = buildSouhaitsPaylLoads(participant);
+	    SouhaitsTable payLoad = buildSouhaitsTables(participant);
 	    souhaits.add(payLoad);
 	}
 
 	return souhaits;
     }
 
-    public SouhaitsTable buildSouhaitsPaylLoads(Participant participant) {
+    public SouhaitsTable buildSouhaitsTables(Participant participant) {
 	SouhaitsTable spl = new SouhaitsTable();
 
 	Set<Souhait> souhaits = participant.getSouhaits();
 	Set<String> souhaitsTxt = new HashSet<>();
 
 	for (Souhait souhait : souhaits) {
-	    souhaitsTxt.add(souhait.getCeremonie().getNom());
+	    if (souhait.isActif()) {
+		souhaitsTxt.add(souhait.getCeremonie().getNom());
+	    }
 	}
 	spl.prenom = participant.getPrenom() + " " + participant.getNom();
 	spl.participantId = participant.getId();
@@ -65,7 +67,7 @@ public class SouhaitsService {
 	return spl;
     }
 
-    public Souhait buildSouhaitFromPayLoad(String souhaitTxt, Participant participant) {
+    public Souhait buildSouhaitFromCeremonieName(String souhaitTxt, Participant participant) {
 	Souhait souhait = null;
 	if (souhaitTxt != null) {
 	    Ceremonie ceremonie = ceremServ.getByName(souhaitTxt);

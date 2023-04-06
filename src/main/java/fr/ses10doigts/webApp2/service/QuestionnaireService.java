@@ -105,7 +105,7 @@ public class QuestionnaireService {
 		}
 
 		if (souhaitTxt != null) {
-		    Souhait souhait = souhaitsService.buildSouhaitFromPayLoad(souhaitTxt, participant);
+		    Souhait souhait = souhaitsService.buildSouhaitFromCeremonieName(souhaitTxt, participant);
 
 		    souhaits.add(souhait);
 

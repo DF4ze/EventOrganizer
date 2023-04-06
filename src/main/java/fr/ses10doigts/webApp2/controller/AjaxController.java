@@ -149,8 +149,23 @@ public class AjaxController {
 	}
 
 	if (!participation.isFait()) {
-	    participation.setPrix(prix);
-	    participation.setQuantite(qte);
+	    if (qte == 0) {
+		participant.getParticipations().remove(participation);
+		participationService.delete(participation.getId());
+
+		if (participation.getSouhait() != null) {
+		    long souhaitId = participation.getSouhait().getId();
+		    participant.getSouhaits().remove(participation.getSouhait());
+		    participation.setSouhait(null);
+		    participant = partService.save(participant);
+		    souhaitService.delete(souhaitId);
+		}
+
+
+	    } else {
+		participation.setPrix(prix);
+		participation.setQuantite(qte);
+	    }
 	}
 
 	partService.save(participant);

@@ -55,17 +55,17 @@ public class FactureService {
 	ft.idParticipant = participant.getId();
 	ft.nomParticipant = participant.getPrenom()+" "+participant.getNom();
 
-
-
 	Set<String> nomsCerem = new HashSet<>();
 	Map<String, Integer> qtes = new HashMap<>();
 	Map<String, Integer> prix = new HashMap<>();
 	int total = 0;
 	for (Participation p : participant.getParticipations()) {
-	    nomsCerem.add(p.getCeremonie().getNom());
-	    qtes.put(p.getCeremonie().getNom(), p.getQuantite());
-	    prix.put(p.getCeremonie().getNom(), p.getPrix());
-	    total += p.getPrix();
+	    if (p.isActif()) {
+		nomsCerem.add(p.getCeremonie().getNom());
+		qtes.put(p.getCeremonie().getNom(), p.getQuantite());
+		prix.put(p.getCeremonie().getNom(), p.getPrix());
+		total += p.getPrix() * p.getQuantite();
+	    }
 	}
 	ft.nomCeremonies = nomsCerem;
 	ft.prix = prix;
