@@ -50,6 +50,7 @@ public class TestApiController {
 	temMar.setType(TypeCeremonie.TEMAZCAL);
 	temMar.setNom("Temaz Mardi");
 	temMar.setDisplay(Display.BOTH);
+	temMar.setOrdre(0);
 	cerems.add(temMar);
 
 	Ceremonie tambour1 = new Ceremonie();
@@ -59,6 +60,7 @@ public class TestApiController {
 	tambour1.setType(TypeCeremonie.TAMBOUR1);
 	tambour1.setNom("Tambour 33");
 	tambour1.setDisplay(Display.CEREMONIE);
+	tambour1.setOrdre(10);
 	cerems.add(tambour1);
 
 	Ceremonie tambour2 = new Ceremonie();
@@ -68,6 +70,7 @@ public class TestApiController {
 	tambour2.setType(TypeCeremonie.TAMBOUR2);
 	tambour2.setNom("Tambour 36");
 	tambour2.setDisplay(Display.CEREMONIE);
+	tambour2.setOrdre(20);
 	cerems.add(tambour2);
 
 	Ceremonie tambour3 = new Ceremonie();
@@ -77,6 +80,7 @@ public class TestApiController {
 	tambour3.setType(TypeCeremonie.TAMBOUR3);
 	tambour3.setNom("Tambour 38");
 	tambour3.setDisplay(Display.CEREMONIE);
+	tambour3.setOrdre(30);
 	cerems.add(tambour3);
 
 	Ceremonie tambourSouhait = new Ceremonie();
@@ -86,6 +90,7 @@ public class TestApiController {
 	tambourSouhait.setType(TypeCeremonie.TAMBOUR1);
 	tambourSouhait.setNom("Tambour");
 	tambourSouhait.setDisplay(Display.SOUHAIT);
+	tambourSouhait.setOrdre(40);
 	cerems.add(tambourSouhait);
 
 	Ceremonie mineraux = new Ceremonie();
@@ -95,6 +100,7 @@ public class TestApiController {
 	mineraux.setType(TypeCeremonie.MINERAUX);
 	mineraux.setNom("Mineraux");
 	mineraux.setDisplay(Display.BOTH);
+	mineraux.setOrdre(50);
 	cerems.add(mineraux);
 
 	Ceremonie rome = new Ceremonie();
@@ -104,6 +110,7 @@ public class TestApiController {
 	rome.setType(TypeCeremonie.ROME);
 	rome.setNom("Cercle Romé");
 	rome.setDisplay(Display.BOTH);
+	rome.setOrdre(60);
 	cerems.add(rome);
 
 	Ceremonie chants = new Ceremonie();
@@ -113,6 +120,7 @@ public class TestApiController {
 	chants.setType(TypeCeremonie.CHANT);
 	chants.setNom("Cercle Chants");
 	chants.setDisplay(Display.BOTH);
+	chants.setOrdre(70);
 	cerems.add(chants);
 
 	Ceremonie prepa = new Ceremonie();
@@ -122,6 +130,7 @@ public class TestApiController {
 	prepa.setType(TypeCeremonie.PREPA_INTENTIONS);
 	prepa.setNom("Prepa intent");
 	prepa.setDisplay(Display.BOTH);
+	prepa.setOrdre(80);
 	cerems.add(prepa);
 
 	Ceremonie gmJeudi = new Ceremonie();
@@ -131,6 +140,7 @@ public class TestApiController {
 	gmJeudi.setType(TypeCeremonie.GRANDMERE);
 	gmJeudi.setNom("GM Jeudi");
 	gmJeudi.setDisplay(Display.BOTH);
+	gmJeudi.setOrdre(90);
 	cerems.add(gmJeudi);
 
 	Ceremonie gmVend = new Ceremonie();
@@ -140,6 +150,7 @@ public class TestApiController {
 	gmVend.setType(TypeCeremonie.GRANDMERE);
 	gmVend.setNom("GM Vendredi");
 	gmVend.setDisplay(Display.BOTH);
+	gmVend.setOrdre(100);
 	cerems.add(gmVend);
 
 	Ceremonie wilka = new Ceremonie();
@@ -149,6 +160,7 @@ public class TestApiController {
 	wilka.setType(TypeCeremonie.PRINCESSE);
 	wilka.setNom("Wilka");
 	wilka.setDisplay(Display.BOTH);
+	wilka.setOrdre(110);
 	cerems.add(wilka);
 
 	Ceremonie ninos = new Ceremonie();
@@ -158,6 +170,7 @@ public class TestApiController {
 	ninos.setType(TypeCeremonie.NINOS);
 	ninos.setNom("Ninos");
 	ninos.setDisplay(Display.BOTH);
+	ninos.setOrdre(120);
 	cerems.add(ninos);
 
 	Ceremonie homm = new Ceremonie();
@@ -167,6 +180,7 @@ public class TestApiController {
 	homm.setType(TypeCeremonie.HOMMAGE);
 	homm.setNom("Hom Lieu");
 	homm.setDisplay(Display.BOTH);
+	homm.setOrdre(130);
 	cerems.add(homm);
 
 	Ceremonie temDim = new Ceremonie();
@@ -176,6 +190,7 @@ public class TestApiController {
 	temDim.setType(TypeCeremonie.TEMAZCAL);
 	temDim.setNom("Temaz Dim");
 	temDim.setDisplay(Display.BOTH);
+	temDim.setOrdre(140);
 	cerems.add(temDim);
 
 	Ceremonie gre1 = new Ceremonie();
@@ -185,6 +200,7 @@ public class TestApiController {
 	gre1.setType(TypeCeremonie.GRENOUILLE1);
 	gre1.setNom("Kambo x1");
 	gre1.setDisplay(Display.SOUHAIT);
+	gre1.setOrdre(150);
 	cerems.add(gre1);
 
 	Ceremonie gre2 = new Ceremonie();
@@ -194,6 +210,7 @@ public class TestApiController {
 	gre2.setType(TypeCeremonie.GRENOUILLE2);
 	gre2.setNom("Kambo x2");
 	gre2.setDisplay(Display.SOUHAIT);
+	gre2.setOrdre(160);
 	cerems.add(gre2);
 
 	Ceremonie gre3 = new Ceremonie();
@@ -203,6 +220,7 @@ public class TestApiController {
 	gre3.setType(TypeCeremonie.GRENOUILLE3);
 	gre3.setNom("Kambo x3");
 	gre3.setDisplay(Display.SOUHAIT);
+	gre3.setOrdre(170);
 	cerems.add(gre3);
 
 	Ceremonie greMar = new Ceremonie();
@@ -212,6 +230,7 @@ public class TestApiController {
 	greMar.setType(TypeCeremonie.GRENOUILLE1);
 	greMar.setNom("Kambo Mardi");
 	greMar.setDisplay(Display.CEREMONIE);
+	greMar.setOrdre(180);
 	cerems.add(greMar);
 
 	Ceremonie greMer = new Ceremonie();
@@ -221,6 +240,7 @@ public class TestApiController {
 	greMer.setType(TypeCeremonie.GRENOUILLE1);
 	greMer.setNom("Kambo Mercredi");
 	greMer.setDisplay(Display.CEREMONIE);
+	greMer.setOrdre(190);
 	cerems.add(greMer);
 
 	Ceremonie greJeu = new Ceremonie();
@@ -230,6 +250,7 @@ public class TestApiController {
 	greJeu.setType(TypeCeremonie.GRENOUILLE1);
 	greJeu.setNom("Kambo Jeudi");
 	greJeu.setDisplay(Display.CEREMONIE);
+	greJeu.setOrdre(200);
 	cerems.add(greJeu);
 
 	Ceremonie greVen = new Ceremonie();
@@ -239,6 +260,7 @@ public class TestApiController {
 	greVen.setType(TypeCeremonie.GRENOUILLE1);
 	greVen.setNom("Kambo Vendredi");
 	greVen.setDisplay(Display.CEREMONIE);
+	greVen.setOrdre(210);
 	cerems.add(greVen);
 
 	Ceremonie greSam = new Ceremonie();
@@ -248,6 +270,7 @@ public class TestApiController {
 	greSam.setType(TypeCeremonie.GRENOUILLE1);
 	greSam.setNom("Kambo Samedi");
 	greSam.setDisplay(Display.CEREMONIE);
+	greSam.setOrdre(220);
 	cerems.add(greSam);
 
 	Ceremonie greDim = new Ceremonie();
@@ -257,6 +280,7 @@ public class TestApiController {
 	greDim.setType(TypeCeremonie.GRENOUILLE1);
 	greDim.setNom("Kambo Dimanche");
 	greDim.setDisplay(Display.CEREMONIE);
+	greDim.setOrdre(230);
 	cerems.add(greDim);
 
 	Ceremonie repas = new Ceremonie();
@@ -266,6 +290,7 @@ public class TestApiController {
 	repas.setType(TypeCeremonie.REPAS);
 	repas.setNom("Repas");
 	repas.setDisplay(Display.CEREMONIE);
+	repas.setOrdre(240);
 	cerems.add(repas);
 
 	Ceremonie dej = new Ceremonie();
@@ -275,6 +300,7 @@ public class TestApiController {
 	dej.setType(TypeCeremonie.REPAS_DEJ);
 	dej.setNom("Déjeuné");
 	dej.setDisplay(Display.CEREMONIE);
+	dej.setOrdre(250);
 	cerems.add(dej);
 
 	Ceremonie lieu = new Ceremonie();
@@ -284,6 +310,7 @@ public class TestApiController {
 	lieu.setType(TypeCeremonie.LIEU);
 	lieu.setNom("Lieu");
 	lieu.setDisplay(Display.CEREMONIE);
+	lieu.setOrdre(260);
 	cerems.add(lieu);
 
 	String msg = "cérémonie enregistrée en base de données";

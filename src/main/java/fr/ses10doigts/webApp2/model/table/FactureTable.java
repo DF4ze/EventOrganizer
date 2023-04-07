@@ -2,8 +2,8 @@ package fr.ses10doigts.webApp2.model.table;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Paiement;
 import fr.ses10doigts.webApp2.model.Reduction;
 
@@ -12,7 +12,7 @@ public class FactureTable {
     public Long			idParticipant;
     public String		nomParticipant;
 
-    public Set<String>		nomCeremonies;
+    public List<Ceremonie>	nomCeremonies;
     public Map<String, Integer>	qtes;
     public Map<String, Integer>	prix;
     public Integer		total;
@@ -71,11 +71,11 @@ public class FactureTable {
 	this.nomParticipant = nomParticipant;
     }
 
-    public Set<String> getNomCeremonies() {
+    public List<Ceremonie> getNomCeremonies() {
 	return nomCeremonies;
     }
 
-    public void setNomCeremonies(Set<String> nomCeremonies) {
+    public void setNomCeremonies(List<Ceremonie> nomCeremonies) {
 	this.nomCeremonies = nomCeremonies;
     }
 

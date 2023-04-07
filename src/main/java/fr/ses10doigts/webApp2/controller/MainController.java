@@ -34,6 +34,7 @@ import fr.ses10doigts.webApp2.model.payload.ParticipationPayload;
 import fr.ses10doigts.webApp2.model.payload.QuestionnairePayload;
 import fr.ses10doigts.webApp2.model.payload.ReducPayload;
 import fr.ses10doigts.webApp2.model.table.FactureTable;
+import fr.ses10doigts.webApp2.model.table.ParticipationsByCeremonieTable;
 import fr.ses10doigts.webApp2.model.table.ParticipationsTable;
 import fr.ses10doigts.webApp2.model.table.SouhaitsTable;
 import fr.ses10doigts.webApp2.security.model.Role;
@@ -432,6 +433,22 @@ public class MainController {
 	return modelAndView;
     }
 
+    @GetMapping("/deleteCeremonie{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView deleteCeremonie(@PathVariable("id") long id) {
+
+	ceremService.delete(id);
+
+	List<Ceremonie> ceremonies = ceremService.getAllCeremoniesByDisplay(Display.CEREMONIE);
+	CeremoniePayload pp = new CeremoniePayload();
+
+	ModelAndView modelAndView = new ModelAndView("ceremonie");
+	modelAndView.addObject("ceremonies", ceremonies);
+	modelAndView.addObject("ceremoniePayload", pp);
+
+	return modelAndView;
+    }
+
     @PostMapping(value = "/ceremonie", params = "action=addCeremonie")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView addCeremonie(@ModelAttribute CeremoniePayload dto) {
@@ -441,6 +458,7 @@ public class MainController {
 	cerem.setNom(dto.nom);
 	cerem.setPrix(dto.prix);
 	cerem.setType(dto.type);
+	cerem.setOrdre(dto.ordre);
 
 	ceremService.save(cerem);
 
@@ -461,11 +479,13 @@ public class MainController {
 	ParticipationPayload pp = new ParticipationPayload();
 	List<Ceremonie> ceremonies = ceremService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
 	List<ParticipationsTable> participations = participationService.getAllParticipationsTable();
+	List<ParticipationsByCeremonieTable> partByCerem = participationService.getAllParticipationByCeremonieTables();
 
 	model.addAttribute("search", null);
 	model.addAttribute("participationPayload", pp);
 	model.addAttribute("ceremonies", ceremonies);
 	model.addAttribute("participations", participations);
+	model.addAttribute("partByCerem", partByCerem);
 
 	return "participation";
     }
@@ -597,6 +617,7 @@ public class MainController {
 
 	return modelAndView;
     }
+
 
     /**** Test section ****/
     @GetMapping("/register")

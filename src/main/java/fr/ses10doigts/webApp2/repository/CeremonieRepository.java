@@ -16,10 +16,10 @@ public interface CeremonieRepository extends JpaRepository<Ceremonie, Long> {
 
     List<Ceremonie> findByOrderByIdAsc();
 
-    @Query(value = "SELECT c FROM Ceremonie c WHERE c.display IN :displays ORDER BY c.id ASC")
+    @Query(value = "SELECT c FROM Ceremonie c WHERE c.display IN :displays ORDER BY c.ordre ASC")
     List<Ceremonie> findByDisplay(@Param("displays") Set<Display> set);
 
-    @Query(value = "SELECT c FROM Ceremonie c WHERE c.display IN :displays AND c.actif = true ORDER BY c.id ASC")
+    @Query(value = "SELECT c FROM Ceremonie c WHERE c.display IN :displays AND c.actif = true ORDER BY c.ordre ASC")
     List<Ceremonie> findByDisplayAndActif(@Param("displays") Set<Display> set);
 
     Ceremonie findByNom(String nom);

@@ -76,7 +76,7 @@ public class QuestionnaireService {
 
 	// Souhaits & Participations
 	Set<Souhait> souhaits = new HashSet<>();
-	Set<Participation> participations = new HashSet<>();
+	List<Participation> participations = new ArrayList<>();
 
 	List<String> nonCerem = new ArrayList<>();
 	nonCerem.add("nom");

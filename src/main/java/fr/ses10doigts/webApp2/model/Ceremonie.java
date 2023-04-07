@@ -1,6 +1,7 @@
 package fr.ses10doigts.webApp2.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Ceremonie {
@@ -22,10 +24,14 @@ public class Ceremonie {
     private TypeCeremonie type;
     private Integer	  prix;
     private Date	  jour;
+    @OneToMany
+    private List<Participation>	participations;
 
     @Enumerated(EnumType.STRING)
     private Display	  display;
     private boolean	  actif	= true;
+
+    private Integer	  ordre;
 
 
     public boolean isActif() {
@@ -38,6 +44,14 @@ public class Ceremonie {
 
 
 
+
+    public List<Participation> getParticipations() {
+	return participations;
+    }
+
+    public void setParticipations(List<Participation> participations) {
+	this.participations = participations;
+    }
 
     public Display getDisplay() {
 	return display;
@@ -85,6 +99,14 @@ public class Ceremonie {
 
     public void setJour(Date jour) {
 	this.jour = jour;
+    }
+
+    public Integer getOrdre() {
+	return ordre;
+    }
+
+    public void setOrdre(Integer ordre) {
+	this.ordre = ordre;
     }
 
     @Override

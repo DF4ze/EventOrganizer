@@ -70,6 +70,7 @@
 	              <input type="text" name="prix" class="form-control mt-2 bg-white" th:field="*{prix}" placeholder="Prix"/>
 	              <input type="text" name="type" class="form-control mt-2 bg-white" th:field="*{type}" placeholder="Type"/>
                   <input type="date" name="jour" class="form-control mt-2 bg-white" th:field="*{jour}" placeholder="jour"/>
+                  <input type="text" name="ordre" class="form-control mt-2 bg-white" th:field="*{ordre}" placeholder="ordre"/>
 	            </div>
 <!-- 	          </div> -->
 <!-- 	          <div class="row"> -->
@@ -91,6 +92,7 @@
 			      <th >Prix</th>
 			      <th >Type</th>
 			      <th >Jour</th>
+			      <th >Ordre Affichage</th>
 			    </tr>
 			    
 			  </thead>
@@ -137,6 +139,8 @@
 			      <td th:text="${cerem.prix}"/>
 			      <td th:text="${cerem.type}"/>
 			      <td th:text="${#dates.format(cerem.jour, 'dd/MM/yyyy')}"/>
+			      <td th:text="${cerem.ordre}"/>
+			      
 			    </tr>
 			  </tbody>
 			</table>

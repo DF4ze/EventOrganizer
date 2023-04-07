@@ -13,6 +13,7 @@ public class CeremoniePayload {
     public TypeCeremonie type;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date		 jour;
+    public Integer	 ordre;
 
     public String getNom() {
 	return nom;
@@ -44,6 +45,14 @@ public class CeremoniePayload {
 
     public void setJour(Date jour) {
 	this.jour = jour;
+    }
+
+    public Integer getOrdre() {
+	return ordre;
+    }
+
+    public void setOrdre(Integer ordre) {
+	this.ordre = ordre;
     }
 
 }

@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.webApp2.model.Ceremonie;
+import fr.ses10doigts.webApp2.model.Display;
 import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.model.Souhait;
+import fr.ses10doigts.webApp2.model.table.ParticipationsByCeremonieTable;
 import fr.ses10doigts.webApp2.model.table.ParticipationsTable;
 import fr.ses10doigts.webApp2.repository.ParticipationRepository;
 
@@ -34,31 +36,36 @@ public class ParticipationService {
     public Participation buildParticipationFromSouhait(Souhait souhait) {
 	Participation p = new Participation();
 
+	Ceremonie ceremonie = souhait.getCeremonie();
 	p.setParticipant(souhait.getParticipant());
 	p.setPrix(souhait.getCeremonie().getPrix());
 	p.setSouhait(souhait);
-	p.setCeremonie(souhait.getCeremonie());
+	p.setCeremonie(ceremonie);
 	p.setQuantite(1);
 
-	if (souhait.getCeremonie().getNom().equals("Tambours")) {
-	    Ceremonie ceremonie = ceremonieService.getByName("Tambours 1");
+	if (souhait.getCeremonie().getNom().equals("Tambour")) {
+	    ceremonie = ceremonieService.getByName("Tambour 33");
 	    p.setCeremonie(ceremonie);
 
 	} else if (souhait.getCeremonie().getNom().equals("Kambo x1")) {
-	    Ceremonie ceremonie = ceremonieService.getByName("Kambo Mardi");
+	    ceremonie = ceremonieService.getByName("Kambo Mardi");
 	    p.setCeremonie(ceremonie);
 
 	} else if (souhait.getCeremonie().getNom().equals("Kambo x2")) {
-	    Ceremonie ceremonie = ceremonieService.getByName("Kambo Mardi");
+	    ceremonie = ceremonieService.getByName("Kambo Mardi");
 	    p.setCeremonie(ceremonie);
 	    p.setQuantite(2);
 
 	} else if (souhait.getCeremonie().getNom().equals("Kambo x3")) {
-	    Ceremonie ceremonie = ceremonieService.getByName("Kambo Mardi");
+	    ceremonie = ceremonieService.getByName("Kambo Mardi");
 	    p.setCeremonie(ceremonie);
 	    p.setQuantite(3);
 
 	}
+
+	ceremonie.getParticipations().add(p);
+	p = participationRepo.save(p);
+	ceremonieService.save(ceremonie);
 
 	return p;
     }
@@ -68,10 +75,6 @@ public class ParticipationService {
 	pt.idParticipant = participant.getId();
 	pt.nomParticipant = participant.getPrenom() + " " + participant.getNom();
 
-	// TODO Temp a supprimer
-	if (participant.getFacture().getId() == null) {
-	    participant = participantService.save(participant);
-	}
 	pt.idFacture = participant.getFacture().getId();
 
 
@@ -115,11 +118,57 @@ public class ParticipationService {
 	return table;
     }
 
-    public void save(Participation p) {
-	participationRepo.save(p);
+    public List<ParticipationsByCeremonieTable> getAllParticipationByCeremonieTables() {
+	ArrayList<ParticipationsByCeremonieTable> table = new ArrayList<>();
+
+	List<Ceremonie> ceremonies = ceremonieService.getAllActivesCeremoniesByDisplay(Display.CEREMONIE);
+	for (Ceremonie cerem : ceremonies) {
+	    ParticipationsByCeremonieTable pct = getParticipationByCeremonieTable(cerem);
+	    table.add(pct);
+	}
+
+	return table;
+    }
+
+    public ParticipationsByCeremonieTable getParticipationByCeremonieTable(Ceremonie cerem) {
+	ParticipationsByCeremonieTable pct = new ParticipationsByCeremonieTable();
+
+	pct.nomCeremonie = cerem.getNom();
+	pct.quantite = 0;
+	pct.nbParticipants = 0;
+	pct.nbParticipantsConfirmes = 0;
+	pct.total = 0;
+	pct.totalConfirmes = 0;
+	for (Participation p : cerem.getParticipations()) {
+	    if (p.isActif()) {
+		pct.nbParticipants++;
+		pct.total += p.getPrix() * p.getQuantite(); // TODO quid Kambo
+		pct.quantite += p.getQuantite();
+		if (p.isFait()) {
+		    pct.nbParticipantsConfirmes++;
+		    pct.totalConfirmes += p.getPrix() * p.getQuantite(); // TODO quid Kambo
+		}
+	    }
+	}
+
+	return pct;
+    }
+
+    public Participation save(Participation p) {
+	return participationRepo.save(p);
     }
 
     public void delete(long partId) {
+	Participation participation = participationRepo.findById(partId).orElse(null);
+	List<Participation> participations = participation.getCeremonie().getParticipations();
+	for (Participation p : participations) {
+	    if (p.getId() == partId) {
+		participations.remove(p);
+		break;
+	    }
+	}
+	ceremonieService.save(participation.getCeremonie());
+
 	participationRepo.deleteById(partId);
     }
 

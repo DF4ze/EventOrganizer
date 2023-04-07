@@ -78,4 +78,8 @@ public class CeremonieService {
 	save(ceremonie);
     }
 
+    public void delete(long id) {
+	ceremRepo.deleteById(id);
+    }
+
 }

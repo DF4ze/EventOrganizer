@@ -39,7 +39,7 @@ public class Participant {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Souhait>       souhaits;
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Participation> participations;
+    private List<Participation>	participations;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Facture	       facture;
@@ -142,11 +142,11 @@ public class Participant {
 	this.souhaits = souhaits;
     }
 
-    public Set<Participation> getParticipations() {
+    public List<Participation> getParticipations() {
 	return participations;
     }
 
-    public void setParticipations(Set<Participation> participations) {
+    public void setParticipations(List<Participation> participations) {
 	this.participations = participations;
     }
 

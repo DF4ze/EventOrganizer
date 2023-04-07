@@ -90,11 +90,7 @@ public class AjaxController {
 
 	    Participation participation = existingPart;
 	    if (existingPart == null) {
-		participation = new Participation();
-		participation.setCeremonie(ceremonie);
-		participation.setParticipant(participant);
-		participation.setPrix(ceremonie.getPrix());
-		participation.setSouhait(souhait);
+		participation = participationService.buildParticipationFromSouhait(souhait);
 
 		participant.getParticipations().add(participation);
 	    } else {
@@ -129,6 +125,7 @@ public class AjaxController {
 	}
 
 	Participation participation = null;
+	// Est-ce que nous avons déjà une participation pour cette cérémonie?
 	for (Participation p : participant.getParticipations()) {
 	    if (p.getCeremonie().getId().equals(ceremId)) {
 		participation = p;
@@ -136,6 +133,7 @@ public class AjaxController {
 	    }
 	}
 
+	// Pas de participation pour cette cérémonie, alors on la crée
 	if (participation == null) {
 	    participation = new Participation();
 	    Ceremonie ceremonie = ceremService.getCeremonie(ceremId);
@@ -146,13 +144,30 @@ public class AjaxController {
 	    participation.setCeremonie(ceremonie);
 	    participation.setParticipant(participant);
 	    participant.getParticipations().add(participation);
+	    ceremonie.getParticipations().add(participation);
+	    participation = participationService.save(participation);
+	    ceremService.save(participation.getCeremonie());
 	}
 
+	// Si la participation n'est pas vérouillée
 	if (!participation.isFait()) {
+	    // QTE == 0 : On supprime
 	    if (qte == 0) {
+		// Il faut retirer la participation de la cérémonie
+		for (Participation p : participation.getCeremonie().getParticipations()) {
+		    if (p.getId() == participation.getId()) {
+			participation.getCeremonie().getParticipations().remove(p);
+			break;
+		    }
+		}
+		ceremService.save(participation.getCeremonie());
+
+		// la retirer du participant
 		participant.getParticipations().remove(participation);
+		// puis on peut la retirer de la db
 		participationService.delete(participation.getId());
 
+		// On retire le souhait associé
 		if (participation.getSouhait() != null) {
 		    long souhaitId = participation.getSouhait().getId();
 		    participant.getSouhaits().remove(participation.getSouhait());
@@ -165,10 +180,12 @@ public class AjaxController {
 	    } else {
 		participation.setPrix(prix);
 		participation.setQuantite(qte);
+
 	    }
 	}
 
 	partService.save(participant);
+
 
 	return true;
     }

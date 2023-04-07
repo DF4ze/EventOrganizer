@@ -1,14 +1,16 @@
 package fr.ses10doigts.webApp2.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.ses10doigts.webApp2.model.Ceremonie;
 import fr.ses10doigts.webApp2.model.Facture;
 import fr.ses10doigts.webApp2.model.Note;
 import fr.ses10doigts.webApp2.model.Paiement;
@@ -22,6 +24,7 @@ import fr.ses10doigts.webApp2.repository.FactureRepository;
 import fr.ses10doigts.webApp2.repository.PaiementRepository;
 import fr.ses10doigts.webApp2.repository.ReductionRepository;
 import fr.ses10doigts.webApp2.security.service.IAuthenticationFacade;
+import fr.ses10doigts.webApp2.service.tool.CeremonieComparator;
 
 @Service
 public class FactureService {
@@ -37,6 +40,8 @@ public class FactureService {
     private ReductionRepository	  reducRepository;
     @Autowired
     private PaiementRepository	  paieRepository;
+    @Autowired
+    private CeremonieService	  ceremServ;
 
     public Facture getFactureByParticipant(long particpantId) {
 	Participant participant = partServ.getParticipant(particpantId);
@@ -55,18 +60,56 @@ public class FactureService {
 	ft.idParticipant = participant.getId();
 	ft.nomParticipant = participant.getPrenom()+" "+participant.getNom();
 
-	Set<String> nomsCerem = new HashSet<>();
+	List<Ceremonie> nomsCerem = new ArrayList<>();
 	Map<String, Integer> qtes = new HashMap<>();
 	Map<String, Integer> prix = new HashMap<>();
+
+	int countKambo = 0;
 	int total = 0;
 	for (Participation p : participant.getParticipations()) {
 	    if (p.isActif()) {
-		nomsCerem.add(p.getCeremonie().getNom());
-		qtes.put(p.getCeremonie().getNom(), p.getQuantite());
-		prix.put(p.getCeremonie().getNom(), p.getPrix());
-		total += p.getPrix() * p.getQuantite();
+		if (p.getCeremonie().getNom().startsWith("Kambo")) {
+		    countKambo += p.getQuantite();
+		} else {
+		    nomsCerem.add(p.getCeremonie());
+		    qtes.put(p.getCeremonie().getNom(), p.getQuantite());
+		    prix.put(p.getCeremonie().getNom(), p.getPrix());
+		    total += p.getPrix() * p.getQuantite();
+		}
 	    }
 	}
+
+	if(countKambo == 1) {
+	    Ceremonie byName = ceremServ.getByName("Kambo x1");
+	    nomsCerem.add(byName);
+	    qtes.put(byName.getNom(), 1);
+	    prix.put(byName.getNom(), byName.getPrix());
+	    total += byName.getPrix();
+
+	} else if (countKambo == 2) {
+	    Ceremonie byName = ceremServ.getByName("Kambo x2");
+	    nomsCerem.add(byName);
+	    qtes.put(byName.getNom(), 1);
+	    prix.put(byName.getNom(), byName.getPrix());
+	    total += byName.getPrix();
+
+	} else if (countKambo == 3) {
+	    Ceremonie byName = ceremServ.getByName("Kambo x3");
+	    nomsCerem.add(byName);
+	    qtes.put(byName.getNom(), 1);
+	    prix.put(byName.getNom(), byName.getPrix());
+	    total += byName.getPrix();
+
+	} else if (countKambo > 3) {
+	    Ceremonie byName = ceremServ.getByName("Kambo x1");
+	    nomsCerem.add(byName);
+	    qtes.put(byName.getNom(), countKambo);
+	    prix.put(byName.getNom(), byName.getPrix());
+	    total += byName.getPrix();
+
+	}
+
+	Collections.sort(nomsCerem, new CeremonieComparator());
 	ft.nomCeremonies = nomsCerem;
 	ft.prix = prix;
 	ft.qtes = qtes;
