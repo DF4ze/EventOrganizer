@@ -27,8 +27,7 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-	<!-- jQuery -->
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <!-- Jquery Call -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
@@ -243,20 +242,22 @@
 			    
 			  </thead>
 			  <tbody>
+				<!-- == DEBUT DES LIGNES == -->
 			    <tr th:each="part: ${participations}">
 				  <td><a th:href="|/participation${part.idParticipant}|"><i class="bi bi-currency-euro"></i></a></td>
 			      
 			      <td>
 			      	<a th:href="|participant${part.idParticipant}|"><span th:text="|${part.nomParticipant}|"></span></a>
 			      </td>
-			     			
+			     
+				  <!-- Pour toutes les cérémonies -->
 			     <div th:each="cerem: ${ceremonies}" >      			      
 			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}"  >
-			      	<div th:id="|qte${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
+			      	<div th:id="|qte${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)}, 'inqte')|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
 			      		<span th:id="|txtqte${part.idParticipant}${cerem.id}" th:text="${part.qte.get(cerem.nom)}" ></span>
 			      	</div>
 			      	<div class="row">
-			      		<input type="text" th:id="|inqte${part.idParticipant}${cerem.id}" th:value="${part.qte.get(cerem.nom)}" hidden/>
+			      		<input type="text" th:id="|inqte${part.idParticipant}${cerem.id}" th:value="${part.qte.get(cerem.nom)}" pattern="[0-9]*" inputmode="numeric" hidden/>
 			      	</div>
 			      	<div class="text-success">
 			      		<i class="bi bi-check-circle-fill" th:onClick="|validateParticipation(${part.idParticipant}, ${cerem.id})|"></i>
@@ -264,22 +265,22 @@
 			      </td>
 			      
 			      <td th:if="${#lists.contains(part.nomCeremonies, cerem.nom)}">
-			      	<div th:id="|prix${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)})|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
+			      	<div th:id="|prix${part.idParticipant}${cerem.id}" th:onClick="|switchHiddenParticipation(${cerem.id}, ${part.idParticipant}, ${part.fait.get(cerem.nom)}, 'inprix')|" th:classappend="${part.fait.get(cerem.nom)} ? bg-success : '' ">
 			      		<span th:id="|txtprix${part.idParticipant}${cerem.id}" th:text="${part.prix.get(cerem.nom)}"></span>
 			      	</div>
 			      	<div class="row" th:id="|divinprix${part.idParticipant}${cerem.id}" hidden>
-				      	<input type="text"  th:id="|inprix${part.idParticipant}${cerem.id}" th:value="${part.prix.get(cerem.nom)} "/>
+				      	<input type="text"  th:id="|inprix${part.idParticipant}${cerem.id}" th:value="${part.prix.get(cerem.nom)}" pattern="[0-9]*" inputmode="numeric" />
 				      	<button class="btn" th:onClick="|saveParticipation(${part.idParticipant}, ${cerem.id})|" ><i class="bi bi-check2"></i></button>
 			      	</div>
 			      </td>
 			      
 			      <td colspan="2" th:unless="${#lists.contains(part.nomCeremonies, cerem.nom)}">
 			      	<div th:id="|divpen${part.idParticipant}${cerem.id}|">
-			      		<i class="bi bi-pencil-square" th:onClick="|switchHiddenParticipationPen(${cerem.id}, ${part.idParticipant})|"></i>
+			      		<i class="bi bi-pencil-square" th:onClick="|switchHiddenParticipationPen(${cerem.id}, ${part.idParticipant}, 'inprixpen')|"></i>
 					</div>
 					<div class="row" th:id="|indivpen${part.idParticipant}${cerem.id}|" hidden>
-						<input type="text"  th:id="|inqte${part.idParticipant}${cerem.id}" value="1"/>
-						<input type="text"  th:id="|inprix${part.idParticipant}${cerem.id}" th:value="${cerem.prix} "/>
+						<input type="text"  th:id="|inqtepen${part.idParticipant}${cerem.id}" value="1" pattern="[0-9]*" inputmode="numeric"/>
+						<input type="text"  th:id="|inprixpen${part.idParticipant}${cerem.id}" th:value="${cerem.prix}" pattern="[0-9]*" inputmode="numeric"/>
 						<button class="btn" th:onClick="|saveParticipationPen(${part.idParticipant}, ${cerem.id})|" ><i class="bi bi-check2"></i></button>
 					</div>
 					<div th:id="|textpen${part.idParticipant}${cerem.id}|" hidden>
@@ -287,7 +288,7 @@
 					</div>
 			      </td>
 			      
-			     </div>
+			     </div> <!-- fin toutes ceremonies -->
 			     
 			     <td>
 			     	<b th:text="${part.total}" ></b>

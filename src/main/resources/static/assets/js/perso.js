@@ -45,18 +45,31 @@ function switchHidden( id ){
 	
 }
 
-function switchHiddenParticipation(ceremId, partId, fait = false){
+function switchHiddenParticipation(ceremId, partId, fait = false, focusBaseId){
 	if( !fait ){
 		switchHidden('qte'+partId+ceremId);
 		switchHidden('inqte'+partId+ceremId);
 		switchHidden('prix'+partId+ceremId);
 		switchHidden('divinprix'+partId+ceremId);
+		if( focusBaseId != undefined )
+			$("#"+focusBaseId+partId+ceremId).select();
 	}
 }
-function switchHiddenParticipationPen(ceremId, partId){
+function switchHiddenParticipationPen(ceremId, partId, focusBaseId){
 	switchHidden('divpen'+partId+ceremId);
 	switchHidden('indivpen'+partId+ceremId);
+	if( focusBaseId != undefined )
+			$("#"+focusBaseId+partId+ceremId).select();
 }
+
+$("input[type='text']").on("click", function () {
+   $(this).select();
+});
+
+// Refresh the page when the document gains focus
+$(window).focus(function() {
+  location.reload(true);
+});
 
 function setVisible( id ){
 	var element = document.getElementById(id);
@@ -131,6 +144,10 @@ function switchSouhait( ceremId, partId) {
 					$("#check"+ceremId+partId).removeClass("bi-check-square-fill");
 					$("#check"+ceremId+partId).addClass("bi-square");
 				}
+				
+//				setTimeout(function (){
+//				  location.reload(true);        
+//				}, 50);
 			} 
 		},
 		error : function(e) {
@@ -149,11 +166,16 @@ function saveParticipation( partId, ceremId){
 	sendSaveParticipation(partId, ceremId, qte, prix);
 	
 	switchHiddenParticipation(ceremId, partId);
+	
+//	setTimeout(function (){
+//	  location.reload(true);        
+//	}, 500);
+	
 }
 
 function saveParticipationPen( partId, ceremId ){
-	var idQte = "#inqte"+partId+ceremId;
-	var idPrix = "#inprix"+partId+ceremId;
+	var idQte = "#inqtepen"+partId+ceremId;
+	var idPrix = "#inprixpen"+partId+ceremId;
 	
 	var qte = $(idQte).val();
 	var prix = $(idPrix).val();
@@ -162,6 +184,10 @@ function saveParticipationPen( partId, ceremId ){
 	
 	switchHidden('indivpen'+partId+ceremId);
 	switchHidden('textpen'+partId+ceremId);
+	
+//	setTimeout(function (){
+//	  location.reload(true);        
+//	}, 500);
 	
 }
 
@@ -207,10 +233,10 @@ function validateParticipation( partId, ceremId ){
 			        var classArr = classList.split(/\s+/);
 					if( classArr.includes("bg-success") ){
 						$("#qte"+partId+ceremId).removeClass("bg-success");
-						$("#prix"+partId+ceremId).removeClass("bg-success");
+						$("#indivprix"+partId+ceremId).removeClass("bg-success");
 					}else{
 						$("#qte"+partId+ceremId).addClass("bg-success");
-						$("#prix"+partId+ceremId).addClass("bg-success");
+						$("#indivprix"+partId+ceremId).addClass("bg-success");
 					}
 				}
 			} 
