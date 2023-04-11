@@ -17,6 +17,7 @@ public class QuestionnairePayload {
     public String sante;
     public String defi;
 
+    public String cacao;
     public String temazcalMardi;
 
     public String tambour;
@@ -45,6 +46,14 @@ public class QuestionnairePayload {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date	  naissance;
 
+
+    public String getCacao() {
+	return cacao;
+    }
+
+    public void setCacao(String cacao) {
+	this.cacao = cacao;
+    }
 
     public String getNom() {
 	return nom;

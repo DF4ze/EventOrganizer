@@ -56,6 +56,7 @@ public class QuestionnaireService {
 	    Facture f = new Facture();
 	    f.setParticipant(participant);
 	    participant.setFacture(f);
+	    participant = pRepository.save(participant);
 	}
 
 	// Questionnaire
@@ -106,7 +107,7 @@ public class QuestionnaireService {
 
 		if (souhaitTxt != null) {
 		    Souhait souhait = souhaitsService.buildSouhaitFromCeremonieName(souhaitTxt, participant);
-
+		    souhait = souhaitsService.save(souhait);
 		    souhaits.add(souhait);
 
 		    Participation participation = participationService.buildParticipationFromSouhait(souhait);

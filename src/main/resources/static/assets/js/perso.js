@@ -163,6 +163,11 @@ function saveParticipation( partId, ceremId){
 	element = document.getElementById("inprix"+partId+ceremId);
 	var prix = element.value;
 	
+	if( qte == "" )
+		qte = 0;
+	if( prix == "" )
+	    prix = 0;
+	
 	sendSaveParticipation(partId, ceremId, qte, prix);
 	
 	switchHiddenParticipation(ceremId, partId);

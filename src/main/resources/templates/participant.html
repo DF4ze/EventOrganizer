@@ -112,12 +112,7 @@
 	      	<div class="form-group col-md-5">
 	      		<span th:text="|${search.urgence}|"></span>
 	      	</div>
-<!-- 	      	<div class="col-1"> -->
-<!-- 	      		<u>id :</u>  -->
-<!-- 	      	</div> -->
-<!-- 	      	<div class="col-5"> -->
-<!-- 	      		<span th:text="|${search.id}|"></span> -->
-<!-- 	      	</div> -->
+
 	    </div>
 	    <div class="row mt-3">
 		    <br/>
@@ -129,10 +124,7 @@
 		      </div>
 		    </div>
 		    
-		    
-<!-- 		    REMPLACER PAR SOUHAITS ET PARTICIPATION 	-->
-<!-- 		    PAR LA SUITE 								-->
-		    
+    
 		    <div class="col-4">  
 		      <div >  
 		         <u>Souhaits:</u>
@@ -307,24 +299,16 @@
 			      </td>
 			      
 			      
-<!-- 			      REMPLACER 		-->
-<!-- 			      PAR 				-->
-<!-- 			      SOUHAITS 			-->
-<!-- 			      ET 				-->
-<!-- 			      CEREMONIE  		-->
-<!-- 			      PAR  				-->
-<!-- 			      LA 				-->
-<!-- 			      SUITE 			-->
 			      
 			      <td th:if="${ part.souhaits != null }">
-			      	<a th:href="|souhaitsRead${part.id}|"><i class="bi bi-chat-right-heart"></i></a>
+			      	<a th:href="|/|"><i class="bi bi-chat-right-heart"></i></a>
 			      </td>
 			      <td th:unless="${ part.souhaits != null }" >
 			      	<i class="bi bi-bag-x"></i>
 			      </td>
 			      
 			      <td th:if="${ part.participations != null }">
-			      	<a th:href="|participationsRead${part.id}|"><i class="bi bi-airplane-engines"></i></a>
+			      	<a th:href="|participation${part.id}|"><i class="bi bi-airplane-engines"></i></a>
 			      </td>
 			      <td th:unless="${ part.participations != null }" >
 			      	<i class="bi bi-bag-x"></i>

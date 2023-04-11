@@ -43,6 +43,16 @@ public class TestApiController {
 
 	List<Ceremonie> cerems = new ArrayList<>();
 
+	Ceremonie cacao = new Ceremonie();
+	cacao.setActif(true);
+	cacao.setJour(new GregorianCalendar(2023, Calendar.MAY, 2).getTime());
+	cacao.setPrix(44);
+	cacao.setType(TypeCeremonie.CHANT);
+	cacao.setNom("Cacao");
+	cacao.setDisplay(Display.BOTH);
+	cacao.setOrdre(-10);
+	cerems.add(cacao);
+
 	Ceremonie temMar = new Ceremonie();
 	temMar.setActif(true);
 	temMar.setJour(new GregorianCalendar(2023, Calendar.MAY, 2).getTime());
@@ -56,7 +66,7 @@ public class TestApiController {
 	Ceremonie tambour1 = new Ceremonie();
 	tambour1.setActif(true);
 	tambour1.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
-	tambour1.setPrix(120);
+	tambour1.setPrix(150);
 	tambour1.setType(TypeCeremonie.TAMBOUR1);
 	tambour1.setNom("Tambour 33");
 	tambour1.setDisplay(Display.CEREMONIE);
@@ -96,7 +106,7 @@ public class TestApiController {
 	Ceremonie mineraux = new Ceremonie();
 	mineraux.setActif(true);
 	mineraux.setJour(new GregorianCalendar(2023, Calendar.MAY, 3).getTime());
-	mineraux.setPrix(20);
+	mineraux.setPrix(11);
 	mineraux.setType(TypeCeremonie.MINERAUX);
 	mineraux.setNom("Mineraux");
 	mineraux.setDisplay(Display.BOTH);
@@ -136,7 +146,7 @@ public class TestApiController {
 	Ceremonie gmJeudi = new Ceremonie();
 	gmJeudi.setActif(true);
 	gmJeudi.setJour(new GregorianCalendar(2023, Calendar.MAY, 4).getTime());
-	gmJeudi.setPrix(120);
+	gmJeudi.setPrix(140);
 	gmJeudi.setType(TypeCeremonie.GRANDMERE);
 	gmJeudi.setNom("GM Jeudi");
 	gmJeudi.setDisplay(Display.BOTH);
@@ -146,7 +156,7 @@ public class TestApiController {
 	Ceremonie gmVend = new Ceremonie();
 	gmVend.setActif(true);
 	gmVend.setJour(new GregorianCalendar(2023, Calendar.MAY, 5).getTime());
-	gmVend.setPrix(120);
+	gmVend.setPrix(140);
 	gmVend.setType(TypeCeremonie.GRANDMERE);
 	gmVend.setNom("GM Vendredi");
 	gmVend.setDisplay(Display.BOTH);
@@ -156,7 +166,7 @@ public class TestApiController {
 	Ceremonie wilka = new Ceremonie();
 	wilka.setActif(true);
 	wilka.setJour(new GregorianCalendar(2023, Calendar.MAY, 5).getTime());
-	wilka.setPrix(120);
+	wilka.setPrix(60);
 	wilka.setType(TypeCeremonie.PRINCESSE);
 	wilka.setNom("Wilka");
 	wilka.setDisplay(Display.BOTH);
@@ -166,7 +176,7 @@ public class TestApiController {
 	Ceremonie ninos = new Ceremonie();
 	ninos.setActif(true);
 	ninos.setJour(new GregorianCalendar(2023, Calendar.MAY, 6).getTime());
-	ninos.setPrix(120);
+	ninos.setPrix(130);
 	ninos.setType(TypeCeremonie.NINOS);
 	ninos.setNom("Ninos");
 	ninos.setDisplay(Display.BOTH);
@@ -176,7 +186,7 @@ public class TestApiController {
 	Ceremonie homm = new Ceremonie();
 	homm.setActif(true);
 	homm.setJour(new GregorianCalendar(2023, Calendar.MAY, 7).getTime());
-	homm.setPrix(120);
+	homm.setPrix(0);
 	homm.setType(TypeCeremonie.HOMMAGE);
 	homm.setNom("Hom Lieu");
 	homm.setDisplay(Display.BOTH);
@@ -206,7 +216,7 @@ public class TestApiController {
 	Ceremonie gre2 = new Ceremonie();
 	gre2.setActif(true);
 	gre2.setJour(null);
-	gre2.setPrix(100);
+	gre2.setPrix(80);
 	gre2.setType(TypeCeremonie.GRENOUILLE2);
 	gre2.setNom("Kambo x2");
 	gre2.setDisplay(Display.SOUHAIT);
@@ -286,7 +296,7 @@ public class TestApiController {
 	Ceremonie repas = new Ceremonie();
 	repas.setActif(true);
 	repas.setJour(null);
-	repas.setPrix(15);
+	repas.setPrix(13);
 	repas.setType(TypeCeremonie.REPAS);
 	repas.setNom("Repas");
 	repas.setDisplay(Display.CEREMONIE);
@@ -296,7 +306,7 @@ public class TestApiController {
 	Ceremonie dej = new Ceremonie();
 	dej.setActif(true);
 	dej.setJour(null);
-	dej.setPrix(10);
+	dej.setPrix(5);
 	dej.setType(TypeCeremonie.REPAS_DEJ);
 	dej.setNom("Déjeuné");
 	dej.setDisplay(Display.CEREMONIE);
