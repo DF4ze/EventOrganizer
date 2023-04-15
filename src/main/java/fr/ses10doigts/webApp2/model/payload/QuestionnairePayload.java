@@ -22,6 +22,8 @@ public class QuestionnairePayload {
 
     public String tambour;
     public String mineraux;
+    public String arbre;
+    public String terre;
     public String rome;
     public String chant;
 
@@ -46,6 +48,22 @@ public class QuestionnairePayload {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date	  naissance;
 
+
+    public String getArbre() {
+	return arbre;
+    }
+
+    public void setArbre(String arbre) {
+	this.arbre = arbre;
+    }
+
+    public String getTerre() {
+	return terre;
+    }
+
+    public void setTerre(String terre) {
+	this.terre = terre;
+    }
 
     public String getCacao() {
 	return cacao;

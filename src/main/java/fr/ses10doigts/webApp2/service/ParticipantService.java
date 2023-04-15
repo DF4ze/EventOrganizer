@@ -1,6 +1,7 @@
 package fr.ses10doigts.webApp2.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,18 @@ import fr.ses10doigts.webApp2.model.Participant;
 import fr.ses10doigts.webApp2.model.Participation;
 import fr.ses10doigts.webApp2.model.Souhait;
 import fr.ses10doigts.webApp2.repository.ParticipantRepository;
+import fr.ses10doigts.webApp2.repository.ParticipationRepository;
+import fr.ses10doigts.webApp2.repository.SouhaitRepository;
 
 @Service
 public class ParticipantService {
 
     @Autowired
     private ParticipantRepository partRepo;
+    @Autowired
+    private ParticipationRepository participationRepository;
+    @Autowired
+    private SouhaitRepository	    souhaitRepository;
 
 
     public List<Participant> getAllParticipants() {
@@ -40,6 +47,17 @@ public class ParticipantService {
     }
 
     public void delete(long id) {
+	Participant p = partRepo.findById(id).orElse(null);
+	p.getParticipations().clear();
+	Set<Souhait> souhaits = p.getSouhaits();
+	for (Souhait souhait : souhaits) {
+	    souhaitRepository.delete(souhait);
+	}
+	p.getSouhaits().clear();
+	partRepo.save(p);
+	partRepo.flush();
+
+
 	partRepo.deleteById(id);
     }
 
