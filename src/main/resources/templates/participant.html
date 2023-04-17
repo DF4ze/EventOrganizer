@@ -201,7 +201,7 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Liste des Participants <a onClick="switchHidden('addParticipant')"><i class="bi bi-clipboard-plus"></i></a></h2>
+          <h2>Liste des Participants - <span th:text="${#lists.size(participants)}" ></span> participants <a onClick="switchHidden('addParticipant')"><i class="bi bi-clipboard-plus"></i></a></h2>
           
           <div id="addParticipant" hidden>
  			<form method="post" modelAttribute="participantPayload" th:action="@{/participant}" th:object="${participantPayload}">

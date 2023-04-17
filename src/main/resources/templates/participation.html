@@ -201,7 +201,7 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Liste des Participations </h2>
+          <h2>Liste des Participations - <span th:text="${#lists.size(participations)}" ></span> participants </h2>
           
           <div id="addParticipation" hidden>
  			<form method="post" modelAttribute="participantPayload" th:action="@{/participation}" th:object="${participationPayload}">
