@@ -46,18 +46,25 @@ public class QuestionnaireService {
 	Participant participant = pRepository.findByNomAndPrenom(qp.nom, qp.prenom).orElse(null);
 	if (participant == null) {
 	    participant = new Participant();
-	    participant.setEmail(qp.email);
-	    participant.setNom(qp.nom);
-	    participant.setPrenom(qp.prenom);
-	    participant.setTel(qp.telephone);
-	    participant.setUrgence(qp.urgence);
-	    participant.setPrenoms(qp.prenoms);
-	    participant.setNaissance(qp.naissance);
+
 	    Facture f = new Facture();
 	    f.setParticipant(participant);
 	    participant.setFacture(f);
 	    participant = pRepository.save(participant);
+
+	} else {
+	    participant.getParticipations().clear();
+	    participant.getSouhaits().clear();
+	    pRepository.save(participant);
+	    pRepository.flush();
 	}
+	participant.setEmail(qp.email);
+	participant.setNom(qp.nom);
+	participant.setPrenom(qp.prenom);
+	participant.setTel(qp.telephone);
+	participant.setUrgence(qp.urgence);
+	participant.setPrenoms(qp.prenoms);
+	participant.setNaissance(qp.naissance);
 
 	// Questionnaire
 	Questionnaire questionnaire = new Questionnaire();
@@ -92,6 +99,15 @@ public class QuestionnaireService {
 	nonCerem.add("remarques");
 	nonCerem.add("naissance");
 	nonCerem.add("prenoms");
+
+	// nettoyage si Kambo x1 et x2 et x3
+	if (qp.getGrenouille3() != null && (qp.getGrenouille1() != null || qp.getGrenouille2() != null)) {
+	    qp.setGrenouille1(null);
+	    qp.setGrenouille2(null);
+
+	} else if (qp.getGrenouille2() != null && qp.getGrenouille1() != null) {
+	    qp.setGrenouille1(null);
+	}
 
 	Class<QuestionnairePayload> plc = QuestionnairePayload.class;
 	Field[] declaredFields = plc.getDeclaredFields();

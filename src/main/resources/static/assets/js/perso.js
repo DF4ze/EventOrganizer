@@ -252,3 +252,16 @@ function validateParticipation( partId, ceremId ){
 		}
 	});
 }
+
+
+function tableFixHead(evt) {
+  const el = evt.currentTarget,
+    sT = el.scrollTop;
+  el.querySelectorAll("thead th").forEach(th =>
+    th.style.transform = `translateY(${sT}px)`
+  );
+}
+
+document.querySelectorAll(".tableFixHead").forEach(el =>
+  el.addEventListener("scroll", tableFixHead)
+);

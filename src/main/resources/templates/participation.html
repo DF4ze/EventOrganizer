@@ -243,7 +243,16 @@
 			  </thead>
 			  <tbody>
 				<!-- == DEBUT DES LIGNES == -->
-			    <tr th:each="part: ${participations}">
+				
+				<div th:each="part, iter: ${participations}">
+			    <tr th:if="${iter.count} % 7 == 0" >
+			      <th ></th>
+			      <th >Participant</th>
+			      <th colspan="2" th:each="cerem: ${ceremonies}" th:text="|${cerem.nom}|"></th>
+			      <th>Total</th>
+			    </tr>
+				
+			    <tr >
 				  <td><a th:href="|/participation${part.idParticipant}|"><i class="bi bi-currency-euro"></i></a></td>
 			      
 			      <td>
@@ -294,6 +303,7 @@
 			     	<b th:text="${part.total}" ></b>
 			     </td> 	
 			    </tr>
+			    </div>
 			  </tbody>
 			</table>
           	
